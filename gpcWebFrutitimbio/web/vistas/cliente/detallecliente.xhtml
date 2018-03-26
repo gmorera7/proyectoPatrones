@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./principalCliente.xhtml">
+
+            <ui:define name="top">
+                <div style="float: left;">                     
+                    <p:graphicImage name="./imagenes/logo2.png" width="350" height="100"/>                        
+                </div>
+                <div style="float: left;padding: 36px;width: 60%;">                    
+                    <div style="font: 16pt/18pt sans-serif;margin: auto;text-align: center;"> DETALLE DE CLIENTE</div>
+                </div> 
+            </ui:define>
+
+            <ui:define name="left">
+                <p:panel>
+                    <h:form>
+                        <p:growl id="messages" showDetail="false"/>
+                        <p:menu>                                
+                            <p:submenu label="Menú">
+                                <p:menuitem value="Lista de Usuarios" outcome="/vistas/usuario/listaUsuario" rendered="#{loginBean.renderBooton}"/>
+                                <p:menuitem value="Lista de Clientes" outcome="/vistas/cliente/listaclientes"/> 
+                                <p:menuitem value="Nueva Compra" outcome="/vistas/detalleCompra/nuevaCompraDetalle"/>
+                                <p:menuitem value="Lista de Productos" outcome="/vistas/producto/listarProductos"/>
+                                <p:menuitem value="Lista de Proveedores" outcome="/vistas/proveedor/listarproveedores"/>
+                                <p:menuitem value="Nueva Venta" outcome="/vistas/detalleVenta/nuevaDetalleVenta"/>
+                            </p:submenu>
+                        </p:menu>
+                    </h:form>
+                </p:panel>
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form>
+                    <p:panel>
+                        <h:panelGrid>
+                            <p:outputLabel value="Datos Cliente"/>
+                        </h:panelGrid>
+                        <p:separator/>
+                        <br/>
+                        <p:panel>
+                            <h:panelGrid columns="8" style="alignment-adjust: central">
+                                &nbsp;<p:outputLabel value="#{bundle.ViewClienteLabel_nit}"/>&nbsp;
+                                &nbsp;<p:inputText disabled="true" value="#{clienteController.selected.nit}" title="#{bundle.ViewClienteTitle_nit}"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;<p:outputLabel value="#{bundle.ViewClienteLabel_nombre}"/>&nbsp;
+                                &nbsp;<p:inputText disabled="true" value="#{clienteController.selected.nombre}" title="#{bundle.ViewClienteTitle_nombre}"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;<p:outputLabel value="#{bundle.ViewClienteLabel_representanteLegal}"/>
+                                &nbsp;<p:inputText disabled="true" value="#{clienteController.selected.representanteLegal}" title="#{bundle.ViewClienteTitle_representanteLegal}"/>&nbsp;
+                                &nbsp;<p:outputLabel value="#{bundle.ViewClienteLabel_departamento}"/>&nbsp;
+                                &nbsp;<p:inputText disabled="true" value="#{clienteController.selected.departamento}" title="#{bundle.ViewClienteTitle_departamento}"/>&nbsp;
+                                &nbsp;<p:outputLabel value="#{bundle.ViewClienteLabel_municipio}"/>&nbsp;
+                                &nbsp;<p:inputText disabled="true" value="#{clienteController.selected.municipio}" title="#{bundle.ViewClienteTitle_municipio}"/>
+                                &nbsp;<p:outputLabel value="#{bundle.ViewClienteLabel_direccion}"/>&nbsp;
+                                &nbsp;<p:inputText disabled="true" value="#{clienteController.selected.direccion}" title="#{bundle.ViewClienteTitle_direccion}"/>
+                                &nbsp;<p:outputLabel value="#{bundle.ViewClienteLabel_tipoTelefono}"/>&nbsp;
+                                &nbsp;<p:inputText disabled="true" value="#{clienteController.selected.tipoTelefono}" title="#{bundle.ViewClienteTitle_tipoTelefono}"/>
+                                &nbsp;<p:outputLabel value="#{bundle.ViewClienteLabel_numeroTelefono}"/>&nbsp;
+                                &nbsp;<p:inputText disabled="true" value="#{clienteController.selected.numeroTelefono}" title="#{bundle.ViewClienteTitle_numeroTelefono}"/>
+                                &nbsp;<p:outputLabel value="#{bundle.ViewClienteLabel_email}"/>&nbsp;
+                                &nbsp;<p:inputText disabled="true" value="#{clienteController.selected.email}" title="#{bundle.ViewClienteTitle_email}"/>
+                                &nbsp;<p:outputLabel value="#{bundle.ViewClienteLabel_estado}"/>&nbsp;
+                                &nbsp;<p:inputText disabled="true" value="#{clienteController.selected.estado}" title="#{bundle.ViewClienteTitle_estado}"/>
+                            </h:panelGrid>
+                        </p:panel>
+                        <br />
+                        <p:separator/> 
+                        <br />
+                        <p:panel>
+                            <!--<p:panel style="background: #459e00">-->                    
+
+                            <h:panelGrid columns="10">
+                                <span class="ui-separator">
+                                    <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                </span>
+                                <h:commandLink action="#{clienteController.destroyAndView}" title="Eliminar Cliente">                        
+                                    <p:graphicImage id="imgEliminar2" name="./imagenes/eliminar.png" width="30" height="30"/>                        
+                                </h:commandLink >
+                                <span class="ui-separator">
+                                    <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                </span>
+                                <h:commandLink action="editarcliente" title="Editar Cliente">                        
+                                    <p:graphicImage id="imgEdit2" name="./imagenes/editar.png" width="30" height="30"/>                        
+                                </h:commandLink >
+                                <span class="ui-separator">
+                                    <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                </span>
+                                <h:commandLink action="#{clienteController.prepareCreate}" title="Nuevo Cliente">                        
+                                    <p:graphicImage id="imgNuevo2" name="./imagenes/agregar.png" width="30" height="30"/>                        
+                                </h:commandLink >
+                                <span class="ui-separator">
+                                    <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                </span>
+                                <h:commandLink action="#{clienteController.prepareList}" title="Listar Clientes">                        
+                                    <p:graphicImage id="imgListar2" name="./imagenes/listar.png" width="30" height="30"/>                        
+                                </h:commandLink >
+                                <span class="ui-separator">
+                                    <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                </span> 
+                                <h:link outcome="/index">
+                                    <img src="../../resources/imagenes/inicio.png" width="30" height="30" alt="inicio" title="Inicio"/>
+                                </h:link>
+                            </h:panelGrid>
+
+                        </p:panel>
+                    </p:panel>
+                </h:form>
+            </ui:define>
+
+            <ui:define name="bottom">
+                <div align="center">
+                    GPC Frutitimbio, Copyright © 2015
+                    <br></br>
+                    Todos los derechos reservados.
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

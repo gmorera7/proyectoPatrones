@@ -1,0 +1,88 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./templatePrinCategoria.xhtml">
+
+            <ui:define name="top">
+                <h:panelGrid id="cabeceraCate" columns="2" style="alignment-adjust: 10px">                        
+                    <p:graphicImage name="./imagenes/logo2.png" width="350" height="100"/>
+                    <p:outputLabel value="EDITAR CATEGORIA SELECCIONADA"/>
+                </h:panelGrid> 
+            </ui:define>
+
+            <ui:define name="left">
+                <p:panel>
+                    <h:form>
+                        <p:growl id="messages" showDetail="false"/>
+                        <p:menu>                                
+                            <p:submenu label="Menú">
+                                <p:menuitem value="Lista de Categorias" outcome="/vistas/categoria/listarcategoria"/>
+                                <p:menuitem value="Lista de Clientes" outcome="/vistas/cliente/listaclientes"/> 
+                                <p:menuitem value="Lista de Compras" outcome="/vistas/detalleCompra/nuevaCompra"/>
+                                <p:menuitem value="Lista de Productos" outcome="/vistas/producto/listarProductos"/>
+                                <p:menuitem value="Lista de Proveedores" outcome="/vistas/proveedor/listarproveedores"/>
+                                <p:menuitem value="Nueva Venta" outcome="/vistas/venta/nuevaVenta"/>
+                            </p:submenu>
+                        </p:menu>
+                    </h:form>
+                </p:panel>
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form>
+                    <p:outputLabel value="Editar Categoria" />
+                    <p:separator/>
+                    <p:panel>
+                        <h:panelGrid columns="2">
+                            <p:outputLabel value="#{bundle.EditCategoriaLabel_codigo}" for="codigo" />
+                            <p:inputText id="codigo" value="#{categoriaController.selected.codigo}" title="#{bundle.EditCategoriaTitle_codigo}" required="true" requiredMessage="#{bundle.EditCategoriaRequiredMessage_codigo}"/>
+                            <p:outputLabel value="#{bundle.EditCategoriaLabel_descripcion}" for="descripcion" />
+                            <p:inputText id="descripcion" value="#{categoriaController.selected.descripcion}" title="#{bundle.EditCategoriaTitle_descripcion}" />
+                        </h:panelGrid>
+                    </p:panel>
+                    <p:panel>
+
+                        <h:panelGrid columns="6">
+                            <h:commandLink action="#{categoriaController.update}">                        
+                                <img src="../../resources/imagenes/guardar.png" width="30" height="30" alt="eliminar"/>
+                            </h:commandLink>
+
+                            <span class="ui-separator">
+                                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                            </span>
+
+                            <h:commandLink action="#{categoriaController.prepareList}">                        
+                                <img src="../../resources/imagenes/listar.png" width="30" height="30" alt="listar"/>                        
+                            </h:commandLink >
+
+                            <span class="ui-separator">
+                                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                            </span>
+
+                            <h:link outcome="/index">
+                                <img src="../../resources/imagenes/inicio.png" width="30" height="30" alt="inicio"/>
+                            </h:link>
+
+                            <span class="ui-separator">
+                                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                            </span>
+                        </h:panelGrid>
+
+                    </p:panel>
+                </h:form>
+            </ui:define>
+
+            <ui:define name="bottom">
+                bottom
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

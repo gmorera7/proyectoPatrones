@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./pincipalProducto.xhtml">
+
+            <ui:define name="top">
+                <h:panelGrid id="cabeceraCate" columns="2" style="alignment-adjust: 10px">                        
+                    <p:graphicImage name="./imagenes/logo2.png" width="350" height="100"/>
+                    <p:outputLabel value="EDITAR PRODUCTO"/>
+                </h:panelGrid>
+            </ui:define>
+
+            <ui:define name="left">
+                <p:panel>
+                    <h:form>
+                        <p:growl id="messages" showDetail="false"/>
+                        <p:menu>                                
+                            <p:submenu label="Menú">
+                                <p:menuitem value="Lista de Usuarios" outcome="/vistas/usuario/listaUsuario" rendered="#{loginBean.renderBooton}"/>
+                                <p:menuitem value="Lista de Clientes" outcome="/vistas/cliente/listaclientes"/> 
+                                <p:menuitem value="Nueva Compra" outcome="/vistas/detalleCompra/nuevaCompraDetalle"/>
+                                <p:menuitem value="Lista de Productos" outcome="/vistas/producto/listarProductos"/>
+                                <p:menuitem value="Lista de Proveedores" outcome="/vistas/proveedor/listarproveedores"/>
+                                <p:menuitem value="Nueva Venta" outcome="/vistas/detalleVenta/nuevaDetalleVenta"/>
+                            </p:submenu>
+                        </p:menu>
+                    </h:form>
+                </p:panel>
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form>
+                    <p:panel>
+                        <h:panelGrid>
+                            <p:outputLabel value="Actualizar Producto"/>
+                        </h:panelGrid>
+                        <p:separator/>
+                        <br/>
+                        <p:panel>
+                            <h:form>
+                                <h:panelGrid columns="8">
+                                    &nbsp;<p:outputLabel value="#{bundle.EditProductoLabel_codigo}" for="codigo" />
+                                    &nbsp;<p:inputText id="codigo" value="#{productoController.selected.codigo}" title="#{bundle.EditProductoTitle_codigo}" required="true" requiredMessage="#{bundle.EditProductoRequiredMessage_codigo}"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;<p:outputLabel value="#{bundle.EditProductoLabel_nombre}" for="nombre" />
+                                    &nbsp;<p:inputText id="nombre" value="#{productoController.selected.nombre}" title="#{bundle.EditProductoTitle_nombre}" required="true" requiredMessage="#{bundle.EditProductoRequiredMessage_nombre}"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;<p:outputLabel value="#{bundle.EditProductoLabel_cantidad}" for="cantidad" />
+                                    &nbsp;<p:inputText id="cantidad" value="#{productoController.selected.cantidad}" title="#{bundle.EditProductoTitle_cantidad}" required="true" requiredMessage="#{bundle.EditProductoRequiredMessage_cantidad}"/>
+                                    &nbsp;<p:outputLabel value="#{bundle.EditProductoLabel_precioCompra}" for="precioCompra" />
+                                    &nbsp;<p:inputText id="precioCompra" value="#{productoController.selected.precioCompra}" title="#{bundle.EditProductoTitle_precioCompra}" required="true" requiredMessage="#{bundle.EditProductoRequiredMessage_precioCompra}"/>
+                                    &nbsp;<p:outputLabel value="#{bundle.EditProductoLabel_precioVenta}" for="precioVenta" />
+                                    &nbsp;<p:inputText id="precioVenta" value="#{productoController.selected.precioVenta}" title="#{bundle.EditProductoTitle_precioVenta}" required="true" requiredMessage="#{bundle.EditProductoRequiredMessage_precioVenta}"/>
+                                    &nbsp;<p:outputLabel value="#{bundle.EditProductoLabel_estado}" for="estado" />
+                                    &nbsp;<p:inputText id="estado" value="#{productoController.selected.estado}" title="#{bundle.EditProductoTitle_estado}" required="true" requiredMessage="#{bundle.EditProductoRequiredMessage_estado}"/>
+                                    &nbsp;<p:outputLabel value="#{bundle.EditProductoLabel_ganancia}" for="ganancia" />
+                                    &nbsp;<p:inputText id="ganancia" value="#{productoController.selected.ganancia}" title="#{bundle.EditProductoTitle_ganancia}" required="true" requiredMessage="#{bundle.EditProductoRequiredMessage_ganancia}"/>
+                                    &nbsp;<p:outputLabel value="#{bundle.EditProductoLabel_categoriaCodigo}" for="categoriaCodigo" />
+                                    &nbsp;<p:selectOneMenu id="categoriaCodigo" value="#{productoController.selected.categoriaCodigo}" required="true" requiredMessage="#{bundle.EditProductoRequiredMessage_categoriaCodigo}">
+                                        <f:selectItems value="#{categoriaController.itemsAvailableSelectOne}"/>
+                                    </p:selectOneMenu>
+                                </h:panelGrid>
+                            </h:form>
+                        </p:panel>
+                        <br />
+                        <p:separator/> 
+                        <br />
+                        <p:panel>
+                            <h:panelGrid columns="9">
+                                <span class="ui-separator">
+                                    <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                </span>
+                                <h:commandLink action="#{productoController.update}" title="Actualizar Producto">
+                                    <img src="../../resources/imagenes/actualizar.png" width="30" height="30" alt="eliminar"/>
+                                </h:commandLink>
+                                <span class="ui-separator">
+                                    <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                </span>
+                                <h:link outcome="detalleProducto" title="Detalle de Producto">
+                                    <img src="../../resources/imagenes/detalle.png" width="30" height="30" alt="Detalle Cliente"/>
+                                </h:link> 
+                                <span class="ui-separator">
+                                    <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                </span>
+                                <h:commandLink action="#{productoController.prepareList}" immediate="true" title="Listar Productos">
+                                    <img src="../../resources/imagenes/listar.png" width="30" height="30" alt="listar"/>                        
+                                </h:commandLink >
+                                <span class="ui-separator">
+                                    <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                </span>
+                                <h:link outcome="/index" title="Inicio">
+                                    <img src="../../resources/imagenes/inicio.png" width="30" height="30" alt="inicio"/>
+                                </h:link>
+                            </h:panelGrid>
+                        </p:panel>
+
+                    </p:panel>
+                </h:form>
+            </ui:define>
+
+            <ui:define name="bottom">
+                bottom
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

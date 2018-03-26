@@ -1,0 +1,6 @@
+.icono_Nuevo{
+    width: 64px;
+    height: 64px;
+    background-image: url(#{resource['imagenes:nuevo.png']}) !importan;     
+}
+

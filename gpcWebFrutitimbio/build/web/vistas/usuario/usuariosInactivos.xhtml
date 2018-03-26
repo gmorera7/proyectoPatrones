@@ -1,0 +1,136 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:view contentType="text/html">  
+        <body>
+
+            <ui:composition template="./PrincipalUsuario.xhtml">
+
+                <ui:define name="top">
+                    <div style="float: left;">                     
+                        <p:graphicImage name="./imagenes/logo2.png" width="350" height="100"/>                        
+                    </div>
+                    <div style="float: left; padding: 20px; width: 60%;">                    
+                        <div style="font: 16pt/18pt sans-serif;margin: auto;text-align: center;">USUARIOS INACTIVOS</div>
+                    </div> 
+                    <div style="float: right; padding: 4px;">                   
+                        <h:form id="Form" styleClass="Form">       
+                            <p:commandButton actionListener="#{loginBean.logout}" value="Cerrar Sesión"  icon="ui-icon-power"/>
+                        </h:form>                   
+                    </div>                  
+                </ui:define>
+
+                <ui:define name="left">
+                    <p:panel>
+                        <h:form>
+                            <p:growl id="messages" showDetail="false"/>
+                            <p:menu>                                
+                                <p:submenu label="Menú">
+                                    <p:menuitem value="Lista de Usuarios" outcome="/vistas/usuario/listaUsuario" rendered="#{loginBean.renderBooton}"/>
+                                    <p:menuitem value="Lista de Clientes" outcome="/vistas/cliente/listaclientes"/> 
+                                    <p:menuitem value="Nueva Compra" outcome="/vistas/detalleCompra/nuevaCompraDetalle"/>
+                                    <p:menuitem value="Lista de Productos" outcome="/vistas/producto/listarProductos"/>
+                                    <p:menuitem value="Lista de Proveedores" outcome="/vistas/proveedor/listarproveedores"/>
+                                    <p:menuitem value="Nueva Venta" outcome="/vistas/detalleVenta/nuevaDetalleVenta"/>
+                                </p:submenu>
+                            </p:menu>
+                        </h:form>
+                    </p:panel>
+                </ui:define>
+
+                <ui:define name="content">
+                    <h:panelGroup id="pnlGroupFormularioUsuarios" styleClass="pnlGroupFormularioUsuarios">
+                        <h:panelGroup id="messagePanel" layout="block">
+                            <p:growl />
+                        </h:panelGroup>
+
+                        <h:form id="formularioUsuariosInact" styleClass="formularioUsuariosInact">
+                            <p:panel>
+                                <h:panelGrid>
+                                    <p:outputLabel value="Listado de Usuarios Inactivos"/>
+                                </h:panelGrid>
+                                <p:separator/>
+
+                                <p:outputLabel escape="false" value="#{bundle.ListClienteEmpty}" rendered="#{usuarioController.items.rowCount == 0}"/>
+
+                                <h:panelGroup rendered="#{usuarioController.items.rowCount > 0}">
+                                    <p:outputLabel value="#{usuarioController.pagination.pageFirstItem + 1}..#{usuarioController.pagination.pageLastItem + 1}/#{usuarioController.pagination.itemsCount}"/>&nbsp;
+
+                                    <p:dataTable id="tblListClientes" var="item" value="#{usuarioController.listUsuariosInactivos}"                                                
+                                                 selection="#{usuarioController.usuarioSelect}"
+                                                 selectionMode="single"
+                                                 rowKey="#{item}" emptyMessage="No Existe registros de Usuarios.!!!"
+                                                 paginator="true" rows="10" paginatorAlwaysVisible="false" 
+                                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <p:outputLabel value="#{bundle.ListUsuarioTitle_usuario}"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.usuario}"/>
+                                        </p:column>
+
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <p:outputLabel value="Rol"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.rolId.nombre}"/>
+                                        </p:column>
+
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <p:outputLabel value="Descripción del Usuario"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.rolId.descripcion}"/>
+                                        </p:column>
+
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <p:outputLabel value="E mail"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.email}"/>
+                                        </p:column>
+                                    </p:dataTable>
+
+                                    <p:separator/>
+                                    <!--************* PANEL BOTONES EDITAR, LISTAR Y DESACTIVAR **************-->
+                                    <p:panel>
+                                        <div align="center">
+                                            <h:panelGrid columns="5">
+                                                  <h:link outcome="/menu" title="Inicio">
+                                                    <img src="../../resources/imagenes/inicio.png" width="30" height="30" alt="inicio"/>
+                                                </h:link>                                                 
+                                                <span class="ui-separator">
+                                                    <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                                </span>
+                                                <p:commandLink update="@(.formularioUsuariosInact)" actionListener="#{usuarioController.activarUsuario(usuarioController.usuarioSelect)}"  ajax="fale">
+                                                    <img src="../../resources/imagenes/activarUsuario.png" width="30" height="30" alt="nuevo"  title="Activar Usuario" align="center"/>
+                                                </p:commandLink>
+                                                <span class="ui-separator">
+                                                    <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                                </span>
+                                                <p:commandLink action="/vistas/usuario/listaUsuario?faces-redirect=true" value="Usuarios Activos"/>
+                                            </h:panelGrid>
+                                        </div>
+                                    </p:panel>                                       
+                                </h:panelGroup> 
+                            </p:panel>                   
+                        </h:form>
+                    </h:panelGroup>
+                </ui:define>
+
+                <ui:define name="bottom">
+                    <div align="center">
+                        GPC Frutitimbio, Copyright © 2015
+                        <br></br>
+                        Todos los derechos reservados.
+                    </div>
+                </ui:define>
+
+            </ui:composition>
+        </body>
+    </f:view>
+</html>

@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./pincipalProducto.xhtml">
+
+            <ui:define name="top">                
+                <div style="float: left;">                     
+                    <p:graphicImage name="./imagenes/logo2.png" width="350" height="100"/>                        
+                </div>
+                <div style="float: left; padding: 20px; width: 60%;">                    
+                    <div style="font: 16pt/18pt sans-serif;margin: auto;text-align: center;">NUEVO PRODUCTO</div>
+                </div> 
+                <div style="float: right; padding: 4px;">                   
+                    <h:form id="Form" styleClass="Form">       
+                        <p:commandButton actionListener="#{loginBean.logout}" value="Cerrar Sesión"  icon="ui-icon-power"/>
+                    </h:form>                   
+                </div>
+            </ui:define>
+
+            <ui:define name="left">
+                <p:panel>
+                    <h:form>
+                        <p:growl id="messages" showDetail="false"/>
+                        <p:menu>                                
+                            <p:submenu label="Menú">
+                                <p:menuitem value="Lista de Usuarios" outcome="/vistas/usuario/listaUsuario" rendered="#{loginBean.renderBooton}"/>
+                                <p:menuitem value="Lista de Clientes" outcome="/vistas/cliente/listaclientes"/> 
+                                <p:menuitem value="Nueva Compra" outcome="/vistas/detalleCompra/nuevaCompraDetalle"/>
+                                <p:menuitem value="Lista de Productos" outcome="/vistas/producto/listarProductos"/>
+                                <p:menuitem value="Lista de Proveedores" outcome="/vistas/proveedor/listarproveedores"/>
+                                <p:menuitem value="Nueva Venta" outcome="/vistas/detalleVenta/nuevaDetalleVenta"/>
+                            </p:submenu>
+                        </p:menu>
+                    </h:form>
+                </p:panel>
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form>
+                    <p:panel>
+                        <h:panelGrid>
+                            <p:outputLabel value="Nuevo Producto" />
+                            <p:outputLabel value="Los campos con asterisco (*) son obligatorios." style="color: red;"/>
+                        </h:panelGrid>
+                        <p:separator/>
+                        <br/>
+                        <p:panel>
+                            <h:panelGrid columns="8" style="alignment-adjust: central">
+
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;<p:outputLabel value="#{bundle.CreateProductoLabel_nombre}" for="nombre" />
+                                &nbsp;<p:inputText id="nombre" styleClass="alfabetico" value="#{productoController.selected.nombre}" title="#{bundle.CreateProductoTitle_nombre}" required="true" requiredMessage="#{bundle.CreateProductoRequiredMessage_nombre}"/>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;<p:outputLabel value="#{bundle.CreateProductoLabel_cantidad}" for="cantidad" />
+                                &nbsp;<p:inputText id="cantidad" readonly="true" value="#{productoController.selected.cantidad}" title="#{bundle.CreateProductoTitle_cantidad}" required="true" requiredMessage="#{bundle.CreateProductoRequiredMessage_cantidad}"/>
+<!--                            &nbsp;<p:outputLabel value="#{bundle.CreateProductoLabel_precioCompra}" for="precioCompra" />
+                                &nbsp;<p:inputText id="precioCompra" value="#{productoController.selected.precioCompra}" title="#{bundle.CreateProductoTitle_precioCompra}" required="true" requiredMessage="#{bundle.CreateProductoRequiredMessage_precioCompra}"/>-->
+                                &nbsp;<p:outputLabel value="#{bundle.CreateProductoLabel_precioVenta}" for="precioVenta" />
+                                &nbsp;<p:inputText id="precioVenta" readonly="true" value="#{productoController.selected.precioVenta}" title="#{bundle.CreateProductoTitle_precioVenta}" required="true" requiredMessage="#{bundle.CreateProductoRequiredMessage_precioVenta}"/>
+
+                                &nbsp;<p:outputLabel value="#{bundle.CreateProductoLabel_categoriaCodigo}" for="categoriaCodigo" />
+                                &nbsp;
+                                <p:selectOneMenu id="categoriaCodigo" value="#{productoController.selected.categoriaCodigo}" required="true" requiredMessage="#{bundle.CreateProductoRequiredMessage_categoriaCodigo}">
+                                    <f:selectItems value="#{categoriaController.itemsAvailableSelectOne}"/>
+                                </p:selectOneMenu>
+                            </h:panelGrid>
+                        </p:panel>
+
+                        <p:separator/>
+                        <p:panel>
+                            <div align="center">
+                                <h:panelGrid columns="7">
+                                    <h:link outcome="/menu">
+                                        <img src="../../resources/imagenes/inicio.png" width="30" height="30" alt="inicio" title="Inicio"/>
+                                    </h:link>
+                                    <span class="ui-separator">
+                                        <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                    </span>
+                                    <h:commandLink action="#{productoController.create}" title="Guardar Producto">
+                                        <img src="../../resources/imagenes/guardar.png" width="30" height="30" alt="guardar"/>
+                                    </h:commandLink>
+                                    <span class="ui-separator">
+                                        <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                    </span>
+                                    <p:commandLink actionListener="#{productoController.cancelarEditProducto}" ajax="false" update="@(.this)" immediate="true" action="/vistas/producto/listarProductos?faces-redirect=true" >
+                                        <img src="../../resources/imagenes/cancelar.png" width="30" height="30" alt="eliminar" title="Cancelar"/>
+                                    </p:commandLink>    
+                                </h:panelGrid>
+                            </div>
+                        </p:panel>
+                    </p:panel>
+                </h:form>
+
+            </ui:define>
+
+            <ui:define name="bottom">
+                <div align="center">
+                    GPC Frutitimbio, Copyright © 2015
+                    <br></br>
+                    Todos los derechos reservados.
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

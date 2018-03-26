@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+        <ui:composition template="./listaComprasPrincipal.xhtml">
+            <ui:define name="top">
+                 <div style="float: left;">                     
+                    <p:graphicImage name="./imagenes/logo2.png" width="350" height="100"/>                        
+                </div>
+                <div style="float: left; padding: 20px; width: 60%;">                    
+                    <div style="font: 16pt/18pt sans-serif;margin: auto;text-align: center;">LISTADO DE COMPRAS</div>
+                </div> 
+                <div style="float: right; padding: 4px;">                   
+                    <h:form id="Form" styleClass="Form">       
+                        <p:commandButton actionListener="#{loginBean.logout}" value="Cerrar Sesión"  icon="ui-icon-power"/>
+                    </h:form>                   
+                </div>
+            </ui:define>
+
+            <ui:define name="left">
+                <p:panel>
+
+                    <p:growl id="messages" showDetail="false"/>
+                    <p:menu>                                
+                        <p:submenu label="Menú">
+                            <p:menuitem value="Lista de Usuarios" outcome="/vistas/usuario/listaUsuario" rendered="#{loginBean.renderBooton}"/>
+                            <p:menuitem value="Lista de Clientes" outcome="/vistas/cliente/listaclientes"/> 
+                            <p:menuitem value="Nueva Compra" outcome="/vistas/detalleCompra/nuevaCompraDetalle"/>
+                            <p:menuitem value="Lista de Productos" outcome="/vistas/producto/listarProductos"/>
+                            <p:menuitem value="Lista de Proveedores" outcome="/vistas/proveedor/listarproveedores"/>
+                            <p:menuitem value="Nueva Venta" outcome="/vistas/detalleVenta/nuevaDetalleVenta"/>
+                        </p:submenu>
+                    </p:menu>
+
+                </p:panel>
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form id="form1">
+                    <p:panel>
+                        <h:panelGroup rendered="#{compraController.items.rowCount > 0}">
+                            <h:outputText value="#{compraController.pagination.pageFirstItem + 1}..#{compraController.pagination.pageLastItem + 1}/#{compraController.pagination.itemsCount}"/>&nbsp;
+                           
+                            <p:separator/>
+                            
+                            <p:panel>                              
+                                <p:dataTable id="tableCompras" styleClass="tableCompras" value="#{compraController.items}" var="item" style="border:solid 1px"
+                                             filteredValue="#{compraController.compraFiltros}"
+                                             selection="#{compraController.compraSelect}"
+                                             selectionMode="single"
+                                             rowKey="#{item}" emptyMessage="No Existe registro del Cliente con el valor insertado.!!!"
+                                             paginator="true" paginatorPosition="bottom" rows="9" paginatorAlwaysVisible="false" 
+                                             paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                                    <p:ajax event="rowSelect" update="@(.btnDescargar)" process="@this" />
+
+
+                                    <p:column filterBy="#{item.codigoCompra}" filterMatchMode="contains">
+                                        <f:facet name="header">
+                                            <p:outputLabel value="#{bundle.ListCompraTitle_codigoCompra}"/>
+                                        </f:facet>
+                                        <p:outputLabel value="#{item.codigoCompra}"/>
+                                    </p:column>
+                                    <p:column filterBy="#{item.fechaCompra}" filterMatchMode="contains">
+                                        <f:facet name="header">
+                                            <p:outputLabel value="#{bundle.ListCompraTitle_fechaCompra}"/>
+                                        </f:facet>
+                                        <h:outputLabel value="#{item.fechaCompra}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                                        </h:outputLabel>
+                                    </p:column>
+                                   
+                                    <p:column filterBy="#{item.total}" filterMatchMode="contains">
+                                        <f:facet name="header">
+                                            <p:outputLabel value="Valor Total"/>
+                                        </f:facet>
+                                        <h:outputLabel value="#{item.total}">
+                                            <f:convertNumber currencySymbol="$ " type="currency" />
+                                        </h:outputLabel>
+                                    </p:column>
+                                    
+                                    <p:column filterBy="#{item.tipoPagoIdtipoPago}" filterMatchMode="contains">
+                                        <f:facet name="header">
+                                            <p:outputLabel value="Tipo de Pago"/>
+                                        </f:facet>
+                                        <p:outputLabel value="#{item.tipoPagoIdtipoPago.destipoPago}"/>
+                                    </p:column>
+                                    
+                                    <p:column filterBy="#{item.proveedorCodigo.numeroIdentificacion}" filterMatchMode="contains">
+                                        <f:facet name="header">
+                                            <p:outputLabel value="Identificación Proveedor"/>
+                                        </f:facet>
+                                        <p:outputLabel value="#{item.proveedorCodigo.numeroIdentificacion}"/>
+                                    </p:column>                              
+                                </p:dataTable>
+                            </p:panel>
+                            <p:separator/>
+                            <p:panel>
+                                <div align="center">                                  
+                                    <h:panelGrid columns="3">
+                                        <p:outputPanel styleClass="btnDescargar">
+                                            <h:commandLink  immediate="true" action="#{generarFactura.generarFactura(compraController.compraSelect)}">                        
+                                                <img src="../../resources/imagenes/printer.png" width="30" height="30" alt="exportar" title="Imprimir Factura"/>
+                                            </h:commandLink>  
+                                        </p:outputPanel>
+
+                                        <span class="ui-separator">
+                                            <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                        </span>
+
+                                        <p:commandLink actionListener="#{detalleCompraController.cancelarCompra}" ajax="false" update="@(.this)" immediate="true" action="/menu?faces-redirect=true" >
+                                            <img src="../../resources/imagenes/inicio.png" width="30" height="30" alt="eliminar" title="Inicio"/>
+                                        </p:commandLink>
+                                    </h:panelGrid>
+                                </div>
+                            </p:panel>
+                        </h:panelGroup>
+                    </p:panel>    
+                </h:form>
+            </ui:define>
+
+            <ui:define name="bottom">
+                <div align="center">
+                    GPC Frutitimbio, Copyright © 2015
+                    <br></br>
+                    Todos los derechos reservados.
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

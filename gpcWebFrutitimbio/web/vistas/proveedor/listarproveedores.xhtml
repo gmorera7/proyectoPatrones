@@ -1,0 +1,329 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./principalProveedor.xhtml">
+
+            <ui:define name="top">                
+                <div style="float: left;">                     
+                    <p:graphicImage name="./imagenes/logo2.png" width="350" height="100"/>                        
+                </div>
+                <div style="float: left; padding: 20px; width: 60%;">                    
+                    <div style="font: 16pt/18pt sans-serif;margin: auto;text-align: center;">PROVEEDORES</div>
+                </div> 
+                <div style="float: right; padding: 4px;">                   
+                    <h:form id="Form" styleClass="Form">       
+                        <p:commandButton actionListener="#{loginBean.logout}" value="Cerrar Sesión"  icon="ui-icon-power"/>
+                    </h:form>                   
+                </div>
+            </ui:define>
+
+            <ui:define name="left">
+                <p:panel>
+                    <h:form>
+                        <p:menu>                                
+                            <p:submenu label="Menú">
+                                <p:menuitem value="Lista de Usuarios" outcome="/vistas/usuario/listaUsuario" rendered="#{loginBean.renderBooton}"/>
+                                <p:menuitem value="Lista de Clientes" outcome="/vistas/cliente/listaclientes"/> 
+                                <p:menuitem value="Nueva Compra" outcome="/vistas/detalleCompra/nuevaCompraDetalle"/>
+                                <p:menuitem value="Lista de Productos" outcome="/vistas/producto/listarProductos"/>
+                                <p:menuitem value="Lista de Proveedores" outcome="/vistas/proveedor/listarproveedores"/>
+                                <p:menuitem value="Nueva Venta" outcome="/vistas/detalleVenta/nuevaDetalleVenta"/>
+                            </p:submenu>
+                        </p:menu>
+                    </h:form>
+                </p:panel>
+            </ui:define>
+
+            <ui:define name="content">
+                <h:panelGroup id="pnlGroupFormularioProveedores" styleClass="pnlGroupFormularioProveedores">
+                    <h:panelGroup id="messagePanel" layout="block">
+                        <p:growl />
+                    </h:panelGroup>
+
+                    <h:form id="formularioProveedor" styleClass="formularioProveedor" rendered="#{!proveedorController.renderedForm}">
+                        <p:panel>
+                            <h:panelGrid>
+                                <p:outputLabel value="Listado de Proveedores"/>
+                            </h:panelGrid>
+                            <p:separator/>
+                            <br/>
+                            <p:panel>
+
+                                <p:outputLabel escape="false" value="#{bundle.ListProveedorEmpty}" rendered="#{proveedorController.items.rowCount == 0}"/>
+                                <h:panelGroup rendered="#{proveedorController.items.rowCount >= 0}">
+                                    <p:outputLabel value="#{proveedorController.pagination.pageFirstItem + 1}..#{proveedorController.pagination.pageLastItem + 1}/#{proveedorController.pagination.itemsCount}"/>&nbsp;
+                                    <p:commandLink action="#{proveedorController.previous}" value="#{bundle.Previous} #{proveedorController.pagination.pageSize}" rendered="#{proveedorController.pagination.hasPreviousPage}"/>&nbsp;
+                                    <p:commandLink action="#{proveedorController.next}" value="#{bundle.Next} #{proveedorController.pagination.pageSize}" rendered="#{proveedorController.pagination.hasNextPage}"/>&nbsp;
+
+                                    <p:dataTable id="tblProoveedores" var="item" value="#{proveedorController.listProveedores}"
+                                                 filteredValue="#{proveedorController.listProveedorFilters}"
+                                                 selection="#{proveedorController.proveedorSelect}"
+                                                 selectionMode="single"
+                                                 rowKey="#{item}" emptyMessage="No Existe registro del Proveedor con el valor insertado.!!!"
+                                                 paginator="true" rows="5" paginatorAlwaysVisible="false" paginatorPosition="bottom"
+                                                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                                        <p:ajax event="rowSelect" update="@(.btnDescargar)" process="@this" />
+                                        
+                                        <p:column filterBy="#{item.numeroIdentificacion}" filterMatchMode="contains" filterMaxLength="8" styleClass="numerico">
+                                            <f:facet name="header">
+                                                <p:outputLabel value="#{bundle.ListProveedorTitle_numeroIdentificacion}"/>
+                                            </f:facet>
+                                            <p:outputLabel value="#{item.numeroIdentificacion}"/>
+                                        </p:column>
+                                        
+                                        <p:column filterBy="#{item.nombre1}" filterMatchMode="contains" styleClass="alfabetico" filterMaxLength="8">
+                                            <f:facet name="header">
+                                                <p:outputLabel value="#{bundle.ListProveedorTitle_nombre1}"/>
+                                            </f:facet>
+                                            <p:outputLabel value="#{item.nombre1}"/>
+                                        </p:column>
+                                        
+                                        <p:column filterBy="#{item.nombre2}" filterMatchMode="contains" styleClass="alfabetico" filterMaxLength="8">
+                                            <f:facet name="header">
+                                                <p:outputLabel value="#{bundle.ListProveedorTitle_nombre2}"/>
+                                            </f:facet>
+                                            <p:outputLabel value="#{item.nombre2}"/>
+                                        </p:column>
+                                        
+                                        <p:column filterBy="#{item.apellido1}" filterMatchMode="contains" styleClass="alfabetico" filterMaxLength="8">
+                                            <f:facet name="header">
+                                                <p:outputLabel value="#{bundle.ListProveedorTitle_apellido1}"/>
+                                            </f:facet>
+                                            <p:outputLabel value="#{item.apellido1}"/>
+                                        </p:column>
+                                        
+                                        <p:column filterBy="#{item.apellido2}" filterMatchMode="contains" styleClass="alfabetico" filterMaxLength="8">
+                                            <f:facet name="header">
+                                                <p:outputLabel value="#{bundle.ListProveedorTitle_apellido2}"/>
+                                            </f:facet>
+                                            <p:outputLabel value="#{item.apellido2}"/>
+                                        </p:column>
+                                    </p:dataTable>
+
+                                    <p:separator/> 
+                                    <!--************* BOTONES EDITAR Y LISTAR **************-->
+                                    <p:panel>
+                                        <div align="center">
+                                            <h:panelGrid columns="13">
+                                                <h:link outcome="/menu">
+                                                    <img src="../../resources/imagenes/inicio.png" width="30" height="30" alt="inicio" title="Inicio"/>
+                                                </h:link>                                 
+                                                <span class="ui-separator">
+                                                    <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                                </span>
+                                                <h:commandLink action="#{proveedorController.prepareCreate}">                        
+                                                    <img src="../../resources/imagenes/agregar.png" width="30" height="30" alt="agregar" title="Nuevo Proveedor"/>
+                                                </h:commandLink>
+
+                                                <span class="ui-separator">
+                                                    <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                                </span>
+                                                <p:commandLink update="@(.formularioEditarProveedor)"  ajax="false"
+                                                               onclick="console.log('pruebas 1')" actionListener="#{proveedorController.prueba}" >
+                                                    <img src="../../resources/imagenes/editar.png" width="30" height="30" alt="nuevo"  title="Editar Proveedor" align="center"/>
+                                                </p:commandLink>
+
+                                                <span class="ui-separator">
+                                                    <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                                </span>
+                                                <p:commandLink update="@(.formularioVerProveedor)" actionListener="#{proveedorController.validarVerProveedor}"  ajax="fale">
+                                                    <img src="../../resources/imagenes/listar.png" width="30" height="30" alt="nuevo"  title="Ver detalle de Proveedor" align="center"/>
+                                                </p:commandLink>
+
+                                                <span class="ui-separator">
+                                                    <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                                </span>
+
+                                                <p:commandLink actionListener="#{proveedorController.updateEstadoAct(proveedorController.proveedorSelect)}" update="@(.formularioProveedor)" ajax="false">
+                                                    <img src="../../resources/imagenes/usuarioinactivo.jpg" width="30" height="30" alt="nuevo"  title="Desactivar Proveedor" align="center"/>
+                                                </p:commandLink>
+
+                                                <span class="ui-separator">
+                                                    <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                                </span>
+                                                <p:outputPanel styleClass="btnDescargar" rendered="#{loginBean.renderBooton}">
+                                                    <h:commandLink  action="#{exportProv.generarReporte2(proveedorController.proveedorSelect)}">                        
+                                                        <img src="../../resources/imagenes/exportar.png" width="30" height="30" alt="exportar" title="Exportar Proveedor"/>
+                                                    </h:commandLink>  
+                                                </p:outputPanel> 
+
+                                                <span class="ui-separator">
+                                                    <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                                </span>
+
+                                                <p:commandLink action="/vistas/proveedor/proveedoresInactivos?faces-redirect=true" value="Proveedores Inactivos"/>
+
+                                            </h:panelGrid>
+                                        </div>
+                                    </p:panel>  
+                                </h:panelGroup>
+                            </p:panel>                         
+                            <p:separator/> 
+                        </p:panel>
+                    </h:form>                   
+
+
+                    <h:form id="formularioEditarProveedor"  styleClass="formularioEditarProveedor" rendered="#{proveedorController.renderedForm and !proveedorController.verProveedor}">
+                        <!--**************************** Editar proveedor******************************************-->
+                        <p:outputLabel value="Los campos con asterisco (*) son obligatorios." style="color: red;"/>
+                        <p:separator/>
+                        <p:panel>
+                            <h:panelGrid columns="8">
+                                &nbsp;<p:outputLabel value="#{bundle.EditProveedorLabel_tipoIdentificacion}" for="tipoIdentificacion" />
+                                &nbsp;
+                                <p:selectOneMenu id="tipoIdentificacion" value="#{proveedorController.proveedorSelect.tipoIdentificacion}"
+                                                 required="true" requiredMessage="#{bundle.CreateProveedorRequiredMessage_tipoIdentificacion}">
+                                    <f:selectItem itemValue="CC" itemLabel="CÉDULA DE CIUDADANÍA"/>
+                                    <f:selectItem itemValue="CE" itemLabel="CÉDULA DE ESTRANGERÍA"/>
+                                </p:selectOneMenu>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;
+
+                                <p:outputLabel rendered="#{proveedorController.proveedorSelect.tipoIdentificacion=='CC'}" value="#{bundle.CreateProveedorLabel_numeroIdentificacion}" for="numeroIdentificacion" />
+                                <p:outputLabel rendered="#{proveedorController.proveedorSelect.tipoIdentificacion!='CC'}" value="#{bundle.CreateProveedorLabel_numeroIdentificacion}" for="numeroIdentificacionExtra" />
+
+                                &nbsp;
+                                <p:inputText rendered="#{proveedorController.proveedorSelect.tipoIdentificacion=='CC'}" readonly="true" id="numeroIdentificacion" styleClass="numerico" maxlength="10" value="#{proveedorController.proveedorSelect.numeroIdentificacion}" title="#{bundle.CreateProveedorTitle_numeroIdentificacion}" required="true" requiredMessage="#{bundle.CreateProveedorRequiredMessage_numeroIdentificacion}">
+                                    <f:validateRegex pattern="\d{3}|\d{4}|\d{5}|\d{6}|\d{7}|\d{8}|\d{10}" />
+                                </p:inputText>
+
+                                <p:inputText rendered="#{proveedorController.proveedorSelect.tipoIdentificacion!='CC'}" readonly="true" id="numeroIdentificacionExtra"  maxlength="6" value="#{proveedorController.proveedorSelect.numeroIdentificacion}" title="#{bundle.CreateProveedorTitle_numeroIdentificacion}" required="true" requiredMessage="#{bundle.CreateProveedorRequiredMessage_numeroIdentificacion}"/>
+
+                                &nbsp;<p:outputLabel value="#{bundle.EditProveedorLabel_nombre1}" for="nombre1" />
+                                &nbsp;<p:inputText id="nombre1" styleClass="alfabetico" value="#{proveedorController.proveedorSelect.nombre1}" title="#{bundle.EditProveedorTitle_nombre1}" required="true" requiredMessage="#{bundle.EditProveedorRequiredMessage_nombre1}"/>
+                                &nbsp;<p:outputLabel value="#{bundle.EditProveedorLabel_nombre2}" for="nombre2" />
+                                &nbsp;<p:inputText id="nombre2" styleClass="alfabetico" value="#{proveedorController.proveedorSelect.nombre2}" title="#{bundle.EditProveedorTitle_nombre2}" required="false"/>
+                                &nbsp;<p:outputLabel value="#{bundle.EditProveedorLabel_apellido1}" for="apellido1" />
+                                &nbsp;<p:inputText id="apellido1" styleClass="alfabetico" value="#{proveedorController.proveedorSelect.apellido1}" title="#{bundle.EditProveedorTitle_apellido1}" required="true" requiredMessage="#{bundle.EditProveedorRequiredMessage_apellido1}"/>
+                                &nbsp;<p:outputLabel value="#{bundle.EditProveedorLabel_apellido2}" for="apellido2" />
+                                &nbsp;<p:inputText id="apellido2" styleClass="alfabetico" value="#{proveedorController.proveedorSelect.apellido2}" title="#{bundle.EditProveedorTitle_apellido2}" required="false"/>
+
+                                &nbsp;<p:outputLabel value="#{bundle.EditProveedorLabel_departamento}" for="departamento" />
+                                &nbsp;
+                                <p:selectOneMenu id="departamento" value="#{proveedorController.proveedorSelect.municipio.departamentoIddepartamento}"
+                                                 converter="ConvertEntity" styleClass="departamento"
+                                                 required="true" requiredMessage="#{bundle.CreateClienteRequiredMessage_departamento}">
+                                    <f:selectItems value="#{proveedorController.listDeptos}" itemLabel="#{item.descripcion}" itemValue="#{item}" var="item"/>
+                                    <p:ajax event="change" listener="#{proveedorController.eventoTraerMunicipiosAct}" process="@(.departamento)" update="@(.selMunicipio)" />
+                                </p:selectOneMenu>
+
+                                &nbsp;<p:outputLabel value="#{bundle.EditProveedorLabel_municipio}" for="selMunicipio" />
+                                &nbsp;
+                                <p:selectOneMenu id="selMunicipio" value="#{proveedorController.proveedorSelect.municipio}" required="true" requiredMessage="#{bundle.CreateProveedorRequiredMessage_municipio}"
+                                                 styleClass="selMunicipio" converter="ConvertEntity">
+                                    <f:selectItem  itemLabel="Seleccione Municipio" />
+                                    <f:selectItems value="#{proveedorController.listMunicipiosUpdate}" itemLabel="#{item.nombreMunicipio}" itemValue="#{item}" var="item"/>
+                                </p:selectOneMenu>
+
+                                &nbsp;<p:outputLabel value="#{bundle.EditProveedorLabel_direccion}" for="direccion" />
+                                &nbsp;<p:inputText id="direccion" value="#{proveedorController.proveedorSelect.direccion}" title="#{bundle.EditProveedorTitle_direccion}" required="true" requiredMessage="#{bundle.EditProveedorRequiredMessage_direccion}"/>
+                                &nbsp;<p:outputLabel value="#{bundle.EditProveedorLabel_numeroTelefono}" for="numeroTelefono" />
+                                &nbsp;
+                                <p:inputText id="numeroTelefono" styleClass="numerico" value="#{proveedorController.proveedorSelect.numeroTelefono}" title="#{bundle.EditProveedorTitle_numeroTelefono}" required="true" 
+                                             requiredMessage="#{bundle.EditProveedorRequiredMessage_numeroTelefono}" validatorMessage="El Número de Teléfono debe tener entre 7 y 10 caracteres de longitud" maxlength="10">
+                                
+                                 <f:validateLength minimum="7" maximum="10" />
+                                </p:inputText>
+                                &nbsp;<p:outputLabel value="#{bundle.EditProveedorLabel_estado}" for="estado" />
+                                &nbsp;
+                                <p:selectOneMenu id="estado" value="#{proveedorController.proveedorSelect.estado}"
+                                                 required="true" requiredMessage="#{bundle.CreateClienteRequiredMessage_estado}">
+                                    <f:selectItem itemLabel="Seleccione un Estado." itemValue="Seleccione un Estado." />
+                                    <f:selectItem itemValue="1" itemLabel="ACTIVO"/>
+                                    <f:selectItem itemValue="0" itemLabel="INACTIVO"/>
+                                </p:selectOneMenu>
+                            </h:panelGrid>
+                        </p:panel>
+                        <p:panel>
+                            <div align="center">
+                                <h:panelGrid columns="5">
+                                    <h:link outcome="/menu">
+                                        <img src="../../resources/imagenes/inicio.png" width="30" height="30" alt="inicio" title="Inicio"/>
+                                    </h:link>
+                                    <span class="ui-separator">
+                                        <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                    </span>
+                                        <p:commandLink actionListener="#{proveedorController.update}" ajax="false" update="@(.pnlGroupFormularioProveedores)" process="formularioEditarProveedor" title="Guardar Proveedor">
+                                        <img src="../../resources/imagenes/guardar.png" width="30" height="30" alt="eliminar"/>
+                                    </p:commandLink>
+                                    <span class="ui-separator">
+                                        <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                    </span>
+                                    <p:commandLink  ajax="false" update="@(.this)" immediate="true" action="/vistas/proveedor/listarproveedores?faces-redirect=true" title="Cancelar">
+                                        <img src="../../resources/imagenes/cancelar.png" width="30" height="30" alt="volver"/>
+                                    </p:commandLink>
+                                </h:panelGrid>
+                            </div>
+
+                        </p:panel>  
+                    </h:form>
+
+                    <h:form id="formularioVerProveedor"  styleClass="formularioVerProveedor" rendered="#{proveedorController.verProveedor}">
+                        <!--**************************** VER proveedor******************************************-->
+                        <p:panel>
+                            <h:panelGrid columns="8">
+                                &nbsp;<p:outputLabel value="#{bundle.EditProveedorLabel_tipoIdentificacion}" for="tipoIdentificacion" />
+                                &nbsp;<p:inputText id="tipoIdentificacion" readonly="true" value="#{proveedorController.proveedorSelect.tipoIdentificacion.equals('CC')?'CÉDULA DE CIUDADANÍA':'CÉDULA DE EXTRANJERÍA'}" title="#{bundle.EditProveedorTitle_tipoIdentificacion}" required="true" requiredMessage="#{bundle.EditProveedorRequiredMessage_tipoIdentificacion}"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;<p:outputLabel value="#{bundle.EditProveedorLabel_numeroIdentificacion}" for="numeroIdentificacion" />
+                                &nbsp;<p:inputText id="numeroIdentificacion" readonly="true" value="#{proveedorController.proveedorSelect.numeroIdentificacion}" title="#{bundle.EditProveedorTitle_numeroIdentificacion}" required="true" requiredMessage="#{bundle.EditProveedorRequiredMessage_numeroIdentificacion}"/>
+                                &nbsp;<p:outputLabel value="#{bundle.EditProveedorLabel_nombre1}" for="nombre1" />
+                                &nbsp;<p:inputText id="nombre1" readonly="true" value="#{proveedorController.proveedorSelect.nombre1}" title="#{bundle.EditProveedorTitle_nombre1}" required="true" requiredMessage="#{bundle.EditProveedorRequiredMessage_nombre1}"/>
+                                &nbsp;<p:outputLabel value="#{bundle.EditProveedorLabel_nombre2}" for="nombre2" />
+                                &nbsp;<p:inputText id="nombre2" readonly="true" value="#{proveedorController.proveedorSelect.nombre2}" title="#{bundle.EditProveedorTitle_nombre2}" required="true" requiredMessage="#{bundle.EditProveedorRequiredMessage_nombre2}"/>
+                                &nbsp;<p:outputLabel value="#{bundle.EditProveedorLabel_apellido1}" for="apellido1" />
+                                &nbsp;<p:inputText id="apellido1" readonly="true" value="#{proveedorController.proveedorSelect.apellido1}" title="#{bundle.EditProveedorTitle_apellido1}" required="true" requiredMessage="#{bundle.EditProveedorRequiredMessage_apellido1}"/>
+                                &nbsp;<p:outputLabel value="#{bundle.EditProveedorLabel_apellido2}" for="apellido2" />
+                                &nbsp;<p:inputText id="apellido2" readonly="true" value="#{proveedorController.proveedorSelect.apellido2}" title="#{bundle.EditProveedorTitle_apellido2}" required="true" requiredMessage="#{bundle.EditProveedorRequiredMessage_apellido2}"/>
+                                &nbsp;<p:outputLabel value="#{bundle.EditProveedorLabel_departamento}" for="departamento" />
+                                &nbsp;<p:inputText id="departamento" readonly="true" value="#{proveedorController.proveedorSelect.municipio.departamentoIddepartamento.descripcion}" title="#{bundle.EditProveedorTitle_departamento}" required="true" requiredMessage="#{bundle.EditProveedorRequiredMessage_departamento}"/>
+                                &nbsp;<p:outputLabel value="#{bundle.EditProveedorLabel_municipio}" for="municipio" />
+                                &nbsp;<p:inputText id="municipio" readonly="true" value="#{proveedorController.proveedorSelect.municipio.nombreMunicipio}" title="#{bundle.EditProveedorTitle_municipio}" required="true" requiredMessage="#{bundle.EditProveedorRequiredMessage_municipio}"/>
+                                &nbsp;<p:outputLabel value="#{bundle.EditProveedorLabel_direccion}" for="direccion" />
+                                &nbsp;<p:inputText id="direccion" readonly="true" value="#{proveedorController.proveedorSelect.direccion}" title="#{bundle.EditProveedorTitle_direccion}" required="true" requiredMessage="#{bundle.EditProveedorRequiredMessage_direccion}"/>
+                                &nbsp;<p:outputLabel value="#{bundle.EditProveedorLabel_numeroTelefono}" for="numeroTelefono" />
+                                &nbsp;<p:inputText id="numeroTelefono" readonly="true" value="#{proveedorController.proveedorSelect.numeroTelefono}" title="#{bundle.EditProveedorTitle_numeroTelefono}" required="true" requiredMessage="#{bundle.EditProveedorRequiredMessage_numeroTelefono}"/>
+                                &nbsp;<p:outputLabel value="#{bundle.EditProveedorLabel_estado}" for="estado" />
+                                &nbsp;<p:inputText id="estado" readonly="true" value="#{proveedorController.proveedorSelect.estado==1?'ACTIVO':'INACTIVO'}" title="#{bundle.EditProveedorTitle_estado}" required="true" requiredMessage="#{bundle.EditProveedorRequiredMessage_estado}"/>
+                            </h:panelGrid>
+                        </p:panel>
+                        <p:panel>
+                            <div align="center">   
+                                <h:panelGrid columns="3">
+                                    <h:link outcome="/menu">
+                                        <img src="../../resources/imagenes/inicio.png" width="30" height="30" alt="inicio" title="Inicio"/>
+                                    </h:link>
+                                    <span class="ui-separator">
+                                        <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                    </span>
+                                    <p:commandLink  ajax="false" update="@(.this)" immediate="true" action="/vistas/proveedor/listarproveedores?faces-redirect=true" title="Volver">
+                                        <img src="../../resources/imagenes/aceptar.png" width="30" height="30" alt="volver"/>
+                                    </p:commandLink>
+
+
+                                </h:panelGrid>
+                            </div>
+                        </p:panel>  
+                    </h:form>
+                </h:panelGroup>
+            </ui:define>
+
+            <ui:define name="bottom">
+                <div align="center">
+                    GPC Frutitimbio, Copyright © 2015
+                    <br></br>
+                    Todos los derechos reservados.
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

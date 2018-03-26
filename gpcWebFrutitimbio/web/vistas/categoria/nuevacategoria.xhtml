@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+        <ui:composition template="./templatePrinCategoria.xhtml">
+
+            <ui:define name="top">
+              <div style="float: left;">
+                        <p:graphicImage name="./imagenes/logo2.png" width="350" height="100"/>                        
+                    </div>
+                    <div style="float: left;padding: 36px;width: 60%;">
+                        <div style="font: 16pt/18pt sans-serif;margin: auto;text-align: center;"> INSERTAR NUEVA CATEGORIA</div>
+                    </div>        
+            </ui:define>
+            <ui:define name="left">
+                <p:panel>
+                    <h:form>
+                        <p:growl id="messages" showDetail="false"/>
+                        <p:menu>                                
+                            <p:submenu label="Menú">
+                                <p:menuitem value="Lista de Categorias" outcome="/vistas/categoria/listarcategoria"/>
+                                <p:menuitem value="Lista de Clientes" outcome="/vistas/cliente/listaclientes"/> 
+                                <p:menuitem value="Lista de Compras" outcome="/vistas/detalleCompra/nuevaCompra"/>
+                                <p:menuitem value="Lista de Productos" outcome="/vistas/producto/listarProductos"/>
+                                <p:menuitem value="Lista de Proveedores" outcome="/vistas/proveedor/listarproveedores"/>
+                                <p:menuitem value="Nueva Venta" outcome="/vistas/venta/nuevaVenta"/>
+                            </p:submenu>
+                        </p:menu>
+                    </h:form>
+                </p:panel>
+            </ui:define>
+            <ui:define name="content">
+                <p:panel>                   
+                    <h:form>
+
+                        <p:outputLabel value="Nueva Categoria" />
+                        <p:separator/>
+                        <p:panel>
+                            <h:panelGrid columns="2">
+                                <p:outputLabel value="#{bundle.CreateCategoriaLabel_codigo}" for="codigo" />
+                                <p:inputText id="codigo" value="#{categoriaController.selected.codigo}" title="#{bundle.CreateCategoriaTitle_codigo}" required="true" requiredMessage="#{bundle.CreateCategoriaRequiredMessage_codigo}"/>
+                                <p:outputLabel value="#{bundle.CreateCategoriaLabel_descripcion}" for="descripcion" />
+                                <p:inputText id="descripcion" value="#{categoriaController.selected.descripcion}" title="#{bundle.CreateCategoriaTitle_descripcion}" />
+                            </h:panelGrid>
+                        </p:panel>
+                        
+                        <p:separator/>
+                        <p:panel>
+                            <h:panelGrid columns="3">
+
+                                <h:commandLink action="#{categoriaController.create}" >
+                                    <img src="../../resources/imagenes/guardar.png" width="30" height="30" alt="guardar"/>
+                                </h:commandLink>
+
+                                <h:commandLink action="#{categoriaController.prepareList}" immediate="true">
+                                    <img src="../../resources/imagenes/listar.png" width="30" height="30" alt="listar"/>
+                                </h:commandLink>
+
+                                <h:link outcome="/menu">
+                                    <img src="../../resources/imagenes/inicio.png" width="30" height="30" alt="inicio"/>
+                                </h:link>
+                            </h:panelGrid>
+                        </p:panel>                        
+                    </h:form>
+                </p:panel>
+            </ui:define>
+
+            <ui:define name="bottom">
+                <div align="center">
+                        GPC Frutitimbio, Copyright © 2015
+                        <br></br>
+                        Todos los derechos reservados.
+                    </div>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

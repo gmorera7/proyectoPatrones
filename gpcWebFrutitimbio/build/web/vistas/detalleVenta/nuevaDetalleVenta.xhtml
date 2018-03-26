@@ -1,0 +1,355 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <body>
+        <ui:composition template="./principalVenta.xhtml">
+            <ui:define name="title">
+                <h:outputText value="Frutitimbio - Ventas"></h:outputText>
+            </ui:define>
+            <ui:define name="top">                
+                <div style="float: left;">                     
+                    <p:graphicImage name="./imagenes/logo2.png" width="350" height="100"/>                        
+                </div>
+                <div style="float: left; padding: 20px; width: 60%;">                    
+                    <div style="font: 16pt/18pt sans-serif;margin: auto;text-align: center;">NUEVA VENTA</div>
+                </div> 
+                <div style="float: right; padding: 4px;">                   
+                    <h:form id="Form" styleClass="Form">       
+                        <p:commandButton actionListener="{loginBean.logout}" value="Cerrar Sesión"  icon="ui-icon-power"/>
+                    </h:form>                   
+                </div>
+            </ui:define>
+
+            <ui:define name="left">
+                <p:panel>
+                    <!--<p:growl id="messages" showDetail="false"/>-->
+                    <p:menu>                                
+                        <p:submenu label="Menú">
+                            <p:menuitem value="Lista de Usuarios" outcome="/vistas/usuario/listaUsuario" rendered="{loginBean.renderBooton}"/>
+                            <p:menuitem value="Lista de Clientes" outcome="/vistas/cliente/listaclientes"/> 
+                            <p:menuitem value="Nueva Compra" outcome="/vistas/detalleCompra/nuevaCompraDetalle"/>
+                            <p:menuitem value="Lista de Productos" outcome="/vistas/producto/listarProductos"/>
+                            <p:menuitem value="Lista de Proveedores" outcome="/vistas/proveedor/listarproveedores"/>
+                            <p:menuitem value="Nueva Venta" outcome="/vistas/detalleVenta/nuevaDetalleVenta"/>
+                            <p:menuitem value="Listado de Ventas" outcome="/vistas/detalleVenta/listarVentas"/>
+                        </p:submenu>
+                    </p:menu>
+                </p:panel>
+            </ui:define>
+
+            <ui:define name="content">
+                <style type="text/css" >
+                    .ui-wizard-step-titles {
+                        height: 53px;
+                    }
+
+                    .ui-state-disabled {
+                        opacity: 0.67 !important;
+                    }
+                </style>
+
+                <h:form id="form1">                    
+                    <p:outputLabel value="Los campos con asterisco (*) son obligatorios." style="color: red;"/>
+                    <p:separator/>
+
+                    <p:wizard flowListener="#{detalleVentaController.onFlowProcess}" nextLabel="Siguiente" backLabel="Anterior">
+                        <p:tab id="idCompra" title="Nueva Venta">
+                            <p:panel >
+                                <h:panelGrid columns="8" cellspacing="6" cellpadding="6">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <p:outputLabel value="Fecha Venta:" for="fechaVenta" />
+
+                                    &nbsp;&nbsp;&nbsp;
+                                    <p:inputText id="fechaVenta" value="#{detalleVentaController.selected.ventaCodigo.fecha}" 
+                                                 title="#{bundle.CreateCompraTitle_fechaCompra}" readonly="true"
+                                                 required="true" requiredMessage="#{bundle.CreateCompraRequiredMessage_fechaCompra}">
+                                        <!--<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />-->
+                                    </p:inputText>
+                                </h:panelGrid>
+
+                            </p:panel>
+
+                            <br/>
+
+                            <p:panel id="idProducto" styleClass="idProducto"> 
+                                <h:panelGrid columns="8" cellpadding="6">  
+                                    <!--***************************************************************************************************************-->
+
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;
+                                    <h:outputLabel value="Nit Cliente: *" for="idAutoComplCte" />
+
+                                    &nbsp;&nbsp;&nbsp;
+                                    <p:autoComplete id="idAutoComplCte" value="#{detalleVentaController.clienteFilter}" required="true" styleClass="numerico" maxlength="15"
+                                                    completeMethod="#{detalleVentaController.completeCliente}" requiredMessage="Debe seleccionar un cliente"
+                                                    var="clte" itemLabel="#{clte.nit}" itemValue="#{clte}" forceSelection="true" converter="ConvertAutocomplete">
+                                        <p:ajax event="itemSelect" listener="#{detalleVentaController.eventoTraerClientes}" update="@(.pnombre,.papellido,.Ciudad,.direccion,.telefono)" />
+                                    </p:autoComplete>
+
+                                    <!--***************************************************************************************************************-->
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                    <h:outputLabel value="#{bundle.ListProveedorTitle_nombre1}" for="pnombre" />
+
+                                    &nbsp;&nbsp;&nbsp;
+                                    <p:inputText id="pnombre" styleClass="pnombre" value="#{detalleVentaController.selected.ventaCodigo.clienteNit.nombre}" readonly="true"
+                                                 title="#{bundle.CreateCompraTitle_cantidad}"/>
+
+                                    &nbsp;
+                                    <p:outputLabel value="#{bundle.ListProveedorTitle_apellido1}" for="papellido" />
+
+                                    &nbsp;
+                                    <p:inputText id="papellido" styleClass="papellido" value="#{detalleVentaController.selected.ventaCodigo.clienteNit.representanteLegal}" title="#{bundle.CreateCompraTitle_cantidad}" readonly="true"/>
+
+                                    &nbsp;
+                                    <p:outputLabel value="#{bundle.ListProveedorTitle_municipio}" for="Ciudad"/>
+
+                                    &nbsp;
+                                    <p:inputText id="Ciudad" styleClass="Ciudad" value="#{detalleVentaController.selected.ventaCodigo.clienteNit.municipio.nombreMunicipio}" title="#{bundle.CreateCompraTitle_cantidad}" readonly="true"/>
+
+                                    &nbsp;
+                                    <p:outputLabel value="#{bundle.ListProveedorTitle_direccion}" for="direccion"/>
+
+                                    &nbsp;
+                                    <p:inputText id="direccion" styleClass="direccion" value="#{detalleVentaController.selected.ventaCodigo.clienteNit.direccion}" title="#{bundle.CreateCompraTitle_cantidad}" readonly="true"/>
+
+                                    &nbsp;
+                                    <p:outputLabel value="#{bundle.ListProveedorTitle_numeroTelefono}" for="telefono"/>
+
+                                    &nbsp;
+                                    <p:inputText id="telefono" styleClass="telefono" value="#{detalleVentaController.selected.ventaCodigo.clienteNit.numeroTelefono}" title="#{bundle.CreateCompraTitle_cantidad}" readonly="true"/>
+                                </h:panelGrid>
+                            </p:panel>
+                        </p:tab>
+
+                        <!--*******************************************************************************************************************************************************************************************************-->
+                        <p:tab id="idProductoTab" title="Detalle producto">                            
+                            <p:panel id="producto" styleClass="producto">
+                                <h:outputScript name="./js/utilidades.js" />
+                                <p:growl id="msges" showDetail="false" />
+                                <h:panelGrid id="panelProveedor" columns="8" cellpadding="6">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                    <p:outputLabel value="Nombre Producto:" for="idAutoComplProd" />
+
+                                    &nbsp;&nbsp;&nbsp;
+                                    <p:autoComplete id="idAutoComplProd" value="#{detalleVentaController.productoFilter}" maxlength="40" converter="ConvertAutocomplete"
+                                                    completeMethod="#{detalleVentaController.completeProducto}" styleClass="alfabetico"
+                                                    var="prod" itemValue="#{prod}" itemLabel="#{prod.nombre}" forceSelection="true"
+                                                    required="true" requiredMessage="Debe adicionar un producto">
+                                        <p:ajax event="itemSelect" listener="#{detalleVentaController.eventoTraerProductos}" process="@this" update="@(.estado,.cantidadDisp,.precioUnitario)" oncomplete="validacion();" />
+                                    </p:autoComplete>
+
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <p:outputLabel value="Estado:" for="estado" />
+
+                                    &nbsp;
+                                    <p:inputText id="estado" value="#{detalleVentaController.selected.productoCodigo.estado==null?'':detalleVentaController.selected.productoCodigo.estado==1?'DISPONIBLE':'AGOTADO'}" title="#{bundle.CreateCompraTitle_cantidad}" 
+                                                 readonly="true" styleClass="estado"/>
+                                    &nbsp;
+                                    <p:outputLabel value="Cantidad Disponible:" for="cantidadDisp" />
+                                    &nbsp;
+                                    <p:inputText id="cantidadDisp" styleClass="cantidadDisp" value="#{detalleVentaController.selected.productoCodigo.cantidad}" title="#{bundle.CreateCompraTitle_cantidad}" 
+                                                 readonly="true"/>
+                                    &nbsp;
+                                    <p:outputLabel value="#{bundles.CreateDetalleCompraLabel_cantidad}" for="cantidad" />
+                                    &nbsp;
+                                    <p:inputText id="cantidad" styleClass="numerico" value="#{detalleVentaController.selected.cantidad}" title="#{bundles.CreateDetalleCompraTitle_cantidad}" 
+                                                 required="true" requiredMessage="#{bundles.CreateDetalleCompraRequiredMessage_cantidad}" validatorMessage="Ingrese cantidad.">
+                                        <p:ajax event="blur" listener="#{detalleVentaController.calcularPrecio()}" process="@this" update="@(.subtotal, .cantidad)"/>    
+                                        <f:validateDoubleRange minimum="1"/>
+                                    </p:inputText>    
+                                    &nbsp;
+                                    <p:outputLabel value="#{bundles.CreateDetalleCompraLabel_precioUnitario}" for="precioUnitario" />
+                                    &nbsp;
+                                    <pe:inputNumber id="precioUnitario" styleClass="precioUnitario" value="#{detalleVentaController.selected.productoCodigo.precioVenta}" symbol="$ "  
+                                                    title="#{bundles.CreateDetalleCompraTitle_precioUnitario}" 
+                                                    required="true" disabled="true"
+                                                    requiredMessage="#{bundles.CreateDetalleCompraRequiredMessage_precioUnitario}">  
+                                        <f:validateDoubleRange minimum="50"/>  
+                                        <p:ajax event="blur" listener="#{detalleVentaController.calcularPrecio()}" process="@this" update="@(.subtotal, .cantidad)"/>    
+                                    </pe:inputNumber>  
+                                    &nbsp;
+                                    <p:outputLabel value="#{bundles.CreateDetalleCompraLabel_subtotal}" for="subtotal" />
+                                    &nbsp;
+                                    <pe:inputNumber id="subtotal" value="#{detalleVentaController.selected.subtotal}" symbol="$ "  
+                                                    styleClass="subtotal"  title="#{bundles.CreateDetalleCompraTitle_subtotal}" 
+                                                    required="true" disabled="true"
+                                                    requiredMessage="#{bundles.CreateDetalleCompraRequiredMessage_subtotal}">  
+                                        <f:validateDoubleRange minimum="50"/>  
+                                        <p:ajax event="blur" listener="#{detalleVentaController.calcularPrecio()}" process="@this" update="@(.subtotal, .cantidad)"/>    
+                                    </pe:inputNumber>  
+                                </h:panelGrid>
+                            </p:panel> 
+
+                            <p:separator/>                            
+                            <p:panel>
+                                <div align="center">   
+                                    <h:panelGrid columns="1">
+                                        <p:commandLink actionListener="#{detalleVentaController.agregarCarrito()}" update="@(.TableProduc, .producto, .total)" >
+                                            <img src="../../resources/imagenes/añadir.png" width="60" height="60" alt="nuevo"  title="Añadir Producto" align="center"/>
+                                        </p:commandLink> 
+                                    </h:panelGrid>
+                                </div>
+                            </p:panel>                           
+
+                            <!--**************************************** Tabla agregar detalle *****************************-->
+                            <p:separator/>
+                            <p:outputPanel id="panelProduc" styleClass="panelProduc">  
+                                <p:dataTable id="TableProduc" value="#{detalleVentaController.agregaDetVenta}" var="detalle" 
+                                             styleClass="TableProduc" emptyMessage="Lista Vacia."> 
+                                    <p:column>  
+                                        <f:facet name="header">  
+                                            <h:outputText value="Descripción" />  
+                                        </f:facet>  
+                                        <h:outputText value="#{detalle.productoCodigo.nombre}" />  
+                                    </p:column>  
+
+                                    <p:column>  
+                                        <f:facet name="header">  
+                                            <h:outputText value="Cantidad (Kg)" />  
+                                        </f:facet>  
+                                        <h:outputText value="#{detalle.cantidad}" />  
+                                    </p:column>  
+
+                                    <p:column>  
+                                        <f:facet name="header">  
+                                            <h:outputText value="Precio unitario" />  
+                                        </f:facet>                                         
+                                        <h:outputText value="#{detalle.productoCodigo.precioVenta}" >
+                                            <f:convertNumber currencySymbol="$ " type="currency" />
+                                        </h:outputText>
+                                    </p:column>  
+
+                                    <p:column>  
+                                        <f:facet name="header">  
+                                            <h:outputText value="Subtotal" />  
+                                        </f:facet>  
+                                        <h:outputText value="#{detalle.subtotal}">
+                                            <f:convertNumber currencySymbol="$ " type="currency" />
+                                        </h:outputText> 
+                                    </p:column>
+
+                                    <p:column>  
+                                        <f:facet name="header">  
+                                            <h:outputText value="Cancelar Producto" />  
+                                        </f:facet>
+                                        <div align="center">
+                                            <p:commandLink actionListener="#{detalleVentaController.eliminarProducto(detalle)}" update="@(.TableProduc,.total)" process="@this" >
+                                                <img src="../../resources/imagenes/cancelarProducto.png" width="30" height="30" alt="nuevo"  title="Cancelar Producto" align="center"/>
+                                            </p:commandLink>
+                                        </div>
+                                    </p:column> 
+
+                                </p:dataTable> 
+
+                            </p:outputPanel>
+                            <br/>
+                            <p:separator/>
+
+                            <p:panel>
+                                <div align="center">
+                                    <p:outputLabel value="Total:" for="total" />
+                                    <pe:inputNumber id="total" styleClass="total" symbol="$ " 
+                                                    value="#{detalleVentaController.selected.ventaCodigo.total}" disabled="true">
+                                        <f:validateDoubleRange minimum="50"/> 
+                                    </pe:inputNumber>
+                                </div>
+                            </p:panel>
+                            <p:separator/>
+                           
+                            <p:panel id="formTipoPago" styleClass="formTipoPago">
+                                <div align="center">
+                                    <h:panelGrid columns="2"> 
+                                        <p:outputLabel value="#{bundle.CreateCompraLabel_tipoPago}" for="tipoPago"/>
+
+                                        <p:selectOneRadio id="tipoPago" value="#{detalleVentaController.selected.ventaCodigo.tipoPagoIdtipoPago}" layout="grid"
+                                                          converter="ConvertEntity" required="true" requiredMessage="El tipo de pago es obligatorio"> 
+                                            <f:selectItems value="#{detalleVentaController.listTipoPago}" var="tipoPago" itemLabel="#{tipoPago.destipoPago}" itemValue="#{tipoPago}"/>
+                                            <p:ajax listener="#{detalleVentaController.desocultarOpcionesTipoPago()}" /> 
+                                        </p:selectOneRadio>
+                                    </h:panelGrid>
+                                    <br/>
+                                    <!--                                    <h:form>-->
+                                    <h:panelGroup id="prueba" styleClass="prueba">
+                                        <h:panelGrid id="pagoCredito" columns="9" cellpadding="6">
+                                            <!--
+                                            <p:growl id="msgs" showDetail="false" />
+                                            Señor delante de ti esta mi vida, pongo en tus manos todo lo que soy.
+                                            para q se haga siempre conforme a tu hermosa y perfecta Voluntad.
+                                            -->
+                                            <p:outputLabel value="#{bundle.CreateCompraLabel_numCuotas}" rendered="#{detalleVentaController.desocultarTp}" />
+
+                                            <p:inputMask rendered="#{detalleVentaController.desocultarTp}" value="#{detalleVentaController.selected.ventaCodigo.numeroCuotas}"
+                                                         mask="9?9999" maxlength="2" placeHolder=" "/>
+
+
+                                            <p:outputLabel value="#{bundle.CreateCompraLabel_valCuotas}" rendered="#{detalleVentaController.desocultarTp}"/>
+                                            <pe:inputNumber id="valCuotas" styleClass="valCuotas" symbol="$ " rendered="#{detalleVentaController.desocultarTp}"
+                                                            value="#{detalleVentaController.selected.ventaCodigo.valorCuota}" disabled="false" required="false">
+                                                <f:validateDoubleRange minimum="50"/> 
+                                            </pe:inputNumber>
+
+                                        </h:panelGrid> 
+                                    </h:panelGroup>
+                                    <!--                                    </h:form>-->
+                                </div> 
+                            </p:panel>
+
+                            <br/>
+                            <p:separator/>
+                            <p:panel>
+                                <div align="center">
+                                    <h:panelGrid columns="6" id="panelBotones" styleClass="panelBotones">
+                                        <p:growl id="mesges" showDetail="false" />
+                                        <p:commandLink actionListener="#{detalleVentaController.guardar()}"  process="@(.formTipoPago) @this" update="@(.formTipoPago, .TableProduc, .total, .panelBotones, .valCuotas)">
+                                            <img src="../../resources/imagenes/guardar.png" width="30" height="30" alt="nuevo"  title="Guardar Venta" align="center"/>
+                                        </p:commandLink>
+
+                                        <span class="ui-separator">
+                                            <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                        </span>
+
+                                        <p:outputPanel styleClass="btnDescargar" rendered="#{detalleVentaController.desocultarImprimirFactura}">
+                                            <h:commandLink  immediate="true" action="#{generarFactura.generarFacturaVentaPorCodigo}">                        
+                                                <img src="../../resources/imagenes/printer.png" width="30" height="30" alt="exportar" title="Generar Factura"/>
+                                            </h:commandLink>  
+                                        </p:outputPanel>
+
+                                        <span class="ui-separator">
+                                            <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                        </span>
+
+                                        <p:commandLink actionListener="#{detalleVentaController.cancelarVenta}" ajax="false" update="@(.this)" immediate="true" action="/menu?faces-redirect=true" >
+                                            <img src="../../resources/imagenes/cancelar.png" width="30" height="30" alt="eliminar" title="Cancelar Venta"/>
+                                        </p:commandLink>
+                                    </h:panelGrid>
+                                </div>
+                            </p:panel>
+                            <br/>
+                            <p:separator/>
+                        </p:tab>
+
+                    </p:wizard>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

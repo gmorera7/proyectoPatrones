@@ -1,0 +1,221 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./PrincipalUsuario.xhtml">
+            <ui:define name="title">
+                <h:outputText value="Frutitimbio - Usuario"></h:outputText>
+            </ui:define>
+
+            <ui:define name="top">
+                <div style="float: left;">                     
+                    <p:graphicImage name="./imagenes/logo2.png" width="350" height="100"/>                        
+                </div>
+                <div style="float: left; padding: 20px; width: 60%;">                    
+                    <div style="font: 16pt/18pt sans-serif;margin: auto;text-align: center;">USUARIOS</div>
+                </div> 
+                <div style="float: right; padding: 4px;">                   
+                    <h:form id="Form" styleClass="Form">       
+                        <p:commandButton actionListener="#{loginBean.logout}" value="Cerrar Sesión"  icon="ui-icon-power"/>
+                    </h:form>                   
+                </div>
+            </ui:define>
+
+            <ui:define name="left">
+                <p:panel>
+                    <h:form>  
+                        <!--<p:growl id="messages" showDetail="true"/>-->
+                        <p:menu>                                
+                            <p:submenu label="Menú">
+                                <p:menuitem value="Lista de Usuarios" outcome="/vistas/usuario/listaUsuario" rendered="#{loginBean.renderBooton}"/>
+                                <p:menuitem value="Lista de Clientes" outcome="/vistas/cliente/listaclientes"/> 
+                                <p:menuitem value="Nueva Compra" outcome="/vistas/detalleCompra/nuevaCompraDetalle"/>
+                                <p:menuitem value="Lista de Productos" outcome="/vistas/producto/listarProductos"/>
+                                <p:menuitem value="Lista de Proveedores" outcome="/vistas/proveedor/listarproveedores"/>
+                                <p:menuitem value="Nueva Venta" outcome="/vistas/detalleVenta/nuevaDetalleVenta"/>
+                            </p:submenu>
+                        </p:menu>
+                    </h:form>
+                </p:panel>
+            </ui:define>
+
+            <ui:define name="content">
+                <h:panelGroup id="pnlGroupListUsers" styleClass="pnlGroupListUsers">
+                    <h:panelGroup id="messagePanel" layout="block">
+                        <p:growl />
+                    </h:panelGroup>
+
+                    <h:form id="formularioUser" styleClass="formularioUser" rendered="#{!usuarioController.renderedForm}">
+                        <p:panel>
+                            <h:panelGrid>
+                                <p:outputLabel value="Listado de Usuarios Activos"/>
+                            </h:panelGrid>
+                            <p:separator/>
+
+                            <h:outputText escape="false" value="#{bundle.ListUsuarioEmpty}" rendered="#{usuarioController.items.rowCount == 0}"/>
+                            <h:panelGroup rendered="#{usuarioController.items.rowCount > 0}">
+                                <h:outputText value="#{usuarioController.pagination.pageFirstItem + 1}..#{usuarioController.pagination.pageLastItem + 1}/#{usuarioController.pagination.itemsCount}"/>&nbsp;
+
+
+                                <p:dataTable id="tblListUsers" var="item" value="#{usuarioController.listUsuarios}" 
+                                             selection="#{usuarioController.usuarioSelect}"
+                                             selectionMode="single"
+                                             rowKey="#{item}"
+                                             paginator="true" rows="5" paginatorAlwaysVisible="false" 
+                                             paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <p:outputLabel value="#{bundle.ListUsuarioTitle_usuario}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.usuario}"/>
+                                    </p:column>
+
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <p:outputLabel value="Rol"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.rolId.nombre}"/>
+                                    </p:column>
+
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <p:outputLabel value="Descripción del Usuario"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.rolId.descripcion}"/>
+                                    </p:column>
+
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <p:outputLabel value="E mail"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.email}"/>
+                                    </p:column>
+                                </p:dataTable>
+
+                                <p:separator/>
+                                <!--************* PANEL BOTONES EDITAR, DESACTIVAR **************-->
+                                <p:panel>
+                                    <div align="center">
+                                        <h:panelGrid columns="9">
+                                            <h:link outcome="/menu" title="Inicio">
+                                                <img src="../../resources/imagenes/inicio.png" width="30" height="30" alt="inicio"/>
+                                            </h:link>
+                                            <span class="ui-separator">
+                                                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                            </span>
+                                            <h:commandLink action="#{usuarioController.prepareCreate}">                        
+                                                <img src="../../resources/imagenes/agregar.png" width="30" height="30" alt="agregar" title="Nuevo Usuario"/>
+                                            </h:commandLink>
+                                            <span class="ui-separator">
+                                                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                            </span>
+                                            <p:commandLink update="@(.pnlGroupFormularioClientes)"  ajax="false"
+                                                           onclick="console.log('pruebas 1')" actionListener="#{usuarioController.prepareEditar}" >
+                                                <img src="../../resources/imagenes/editar.png" width="30" height="30" alt="nuevo"  title="Editar Usuario" align="center"/>
+                                            </p:commandLink>
+
+                                            <span class="ui-separator">
+                                                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                            </span>
+
+                                            <p:commandLink update="@(.formularioUser)" actionListener="#{usuarioController.updateEstadoAct(usuarioController.usuarioSelect)}"  ajax="fale">
+                                                <img src="../../resources/imagenes/usuarioinactivo.jpg" width="30" height="30" alt="nuevo"  title="Desactivar Usuario" align="center"/>
+                                            </p:commandLink>
+                                            <span class="ui-separator">
+                                                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                            </span>
+                                            <p:commandLink action="/vistas/usuario/usuariosInactivos?faces-redirect=true" value="Usuarios Inactivos"/>
+                                        </h:panelGrid>
+                                    </div>
+                                </p:panel>  
+                            </h:panelGroup>
+                        </p:panel>
+                    </h:form>
+
+                    <h:form id="formEditUser"  styleClass="formEditUser" rendered="#{usuarioController.renderedForm}">
+                        <!--**************************** Editar Usuario******************************************-->
+                        <p:outputLabel value="Los campos con asterisco (*) son obligatorios." style="color: red;"/>
+                        <p:separator/>
+                        <p:panel>
+                            <h:panelGrid columns="8">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <p:outputLabel value="Usuario:" for="usuarioEdit" />
+                                &nbsp;&nbsp;&nbsp;
+                                <p:inputText id="usuarioEdit" value="#{usuarioController.usuarioSelect.usuario}" required="true" requiredMessage="El usuario es un campo obligatorio."/>&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                           
+
+                                <p:outputLabel value="Nueva Contraseña:" for="passEdit" />
+                                &nbsp;
+                                <p:password id="passEdit" match="passEdit2" value="#{usuarioController.usuarioSelect.clave}" feedback="true"
+                                            promptLabel="Por favor ingrese una contraseña." weakLabel="Seguridad Baja." required="true" requiredMessage="La contraseña es requerida"
+                                            goodLabel="Seguridad Media." strongLabel="Seguridad Alta."  validatorMessage="Las contraseñas no coinciden."/>
+                                &nbsp;
+                                <p:outputLabel value="Confirmar Nueva Contraseña:" for="passEdit2" />
+
+                                &nbsp;
+                                <p:password id="passEdit2" required="true" requiredMessage="Confirmar contraseña." value="#{usuarioController.usuarioSelect.clave}" />
+
+                                &nbsp;
+                                <p:outputLabel value="Rol:" for="rolEdit" />
+
+                                &nbsp;
+                                <p:selectOneMenu id="rolEdit" value="#{usuarioController.usuarioSelect.rolId}" required="true" requiredMessage="#{bundle.CreateProductoRequiredMessage_categoriaCodigo}"
+                                                 converter="ConvertEntity">
+                                    <f:selectItems value="#{usuarioController.listRol}" itemLabel="#{item.nombre}" itemValue="#{item}" var="item"/>
+                                </p:selectOneMenu>
+                                &nbsp;
+                                <p:outputLabel value="Email" for="emailEdit" />
+                                &nbsp;
+                                <p:inputText id="emailEdit" value="#{usuarioController.usuarioSelect.email}" required="true" requiredMessage="El Email es requerido."/>&nbsp;&nbsp;&nbsp;&nbsp;
+                            </h:panelGrid>
+                        </p:panel>
+
+                        <p:separator/>
+
+                        <p:panel>
+                            <div align="center">
+                                <h:panelGrid columns="5">
+                                    <h:link outcome="/menu">
+                                        <img src="../../resources/imagenes/inicio.png" width="30" height="30" alt="inicio" title="Inicio"/>
+                                    </h:link>
+                                    <span class="ui-separator">
+                                        <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                    </span>
+                                    <p:commandLink actionListener="#{usuarioController.update}" ajax="false" update="@(.pnlGroupFormularioClientes)" title="Guardar Usuario" process="formEditUser">
+                                        <img src="../../resources/imagenes/guardar.png" width="30" height="30" alt="eliminar"/>
+                                    </p:commandLink>
+                                    <span class="ui-separator">
+                                        <span class="ui-icon ui-icon-grip-dotted-vertical"/>
+                                    </span>
+                                    <p:commandLink actionListener="#{usuarioController.cancelarEditUsuario}" ajax="false" update="@(.this)" immediate="true" title="Cancelar" action="/vistas/usuario/listaUsuario?faces-redirect=true" >
+                                        <img src="../../resources/imagenes/cancelar.png" width="30" height="30" alt="eliminar"/>
+                                    </p:commandLink>
+                                </h:panelGrid>
+                            </div>
+                        </p:panel>  
+                    </h:form>
+                </h:panelGroup>
+            </ui:define>
+
+            <ui:define name="bottom">
+                <div align="center">
+                    GPC Frutitimbio, Copyright © 2015
+                    <br></br>
+                    Todos los derechos reservados.
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

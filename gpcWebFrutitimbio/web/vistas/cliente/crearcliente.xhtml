@@ -1,0 +1,169 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>       
+        <ui:composition template="./principalCliente.xhtml">
+            <ui:define name="title">
+                <h:outputText value="#{bundle.CreateClienteTitle}"></h:outputText>
+            </ui:define>
+
+            <ui:define name="top">
+                <div style="float: left;">                     
+                    <p:graphicImage name="./imagenes/logo2.png" width="350" height="100"/>                        
+                </div>
+                <div style="float: left; padding: 20px; width: 60%;">                    
+                    <div style="font: 16pt/18pt sans-serif;margin: auto;text-align: center;">NUEVO CLIENTE</div>
+                </div> 
+                <div style="float: right; padding: 4px;">                   
+                    <h:form id="Form" styleClass="Form">       
+                        <p:commandButton actionListener="#{loginBean.logout}" value="Cerrar Sesión"  icon="ui-icon-power"/>
+                    </h:form>                   
+                </div>
+            </ui:define>
+
+            <ui:define name="left">
+                <p:panel>
+                    <h:form>
+                        <p:growl id="messages" showDetail="false"/>
+                        <p:menu>                                
+                            <p:submenu label="Menú">
+                                <p:menuitem value="Lista de Usuarios" outcome="/vistas/usuario/listaUsuario" rendered="#{loginBean.renderBooton}"/>
+                                <p:menuitem value="Lista de Clientes" outcome="/vistas/cliente/listaclientes"/> 
+                                <p:menuitem value="Nueva Compra" outcome="/vistas/detalleCompra/nuevaCompraDetalle"/>
+                                <p:menuitem value="Lista de Productos" outcome="/vistas/producto/listarProductos"/>
+                                <p:menuitem value="Lista de Proveedores" outcome="/vistas/proveedor/listarproveedores"/>
+                                <p:menuitem value="Nueva Venta" outcome="/vistas/detalleVenta/nuevaDetalleVenta"/>
+                            </p:submenu>
+                        </p:menu>
+                    </h:form>
+                </p:panel>
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form>
+                    <p:panel>
+                        <h:panelGrid>
+                            <p:outputLabel value="Agregar Nuevo Cliente"/>
+                            <p:outputLabel value="Los campos con asterisco (*) son obligatorios." style="color: red;"/>
+                        </h:panelGrid>
+                        <p:separator/>
+                        <br/>
+                        <p:panel>
+                            <h:panelGrid columns="8" style="alignment-adjust: central" id="listas">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <p:outputLabel value="#{bundle.CreateClienteLabel_nit}" for="nit" />
+
+                                &nbsp;&nbsp;&nbsp;
+                                <p:inputText id="nit" value="#{clienteController.selected.nit}" maxlength="10" title="#{bundle.CreateClienteTitle_nit}" required="true"
+                                             requiredMessage="#{bundle.CreateClienteRequiredMessage_nit}" styleClass="numerico"/>
+
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <p:outputLabel value="#{bundle.CreateClienteLabel_nombre}" for="nombre" />
+
+                                &nbsp;
+                                <p:inputText id="nombre" value="#{clienteController.selected.nombre}" maxlength="40" title="#{bundle.CreateClienteTitle_nombre}" required="true" requiredMessage="#{bundle.CreateClienteRequiredMessage_nombre}"/>
+
+                                &nbsp;
+                                <p:outputLabel value="#{bundle.CreateClienteLabel_representanteLegal}" for="representanteLegal" />
+
+                                &nbsp; 
+                                <p:inputText id="representanteLegal" value="#{clienteController.selected.representanteLegal}" maxlength="30" title="#{bundle.CreateClienteTitle_representanteLegal}" 
+                                             required="true" requiredMessage="#{bundle.CreateClienteRequiredMessage_representanteLegal}" styleClass="alfabetico"/>
+
+                                &nbsp; 
+                                <p:outputLabel value="#{bundle.CreateClienteLabel_departamento}" for="departamento" />
+
+                                &nbsp;
+                                <p:selectOneMenu id="departamento" value="#{clienteController.selected.municipio.departamentoIddepartamento}"
+                                                 converter="ConvertEntity" styleClass="departamento"
+                                                 required="true" requiredMessage="#{bundle.CreateClienteRequiredMessage_departamento}">
+                                    <f:selectItems value="#{clienteController.listDeptos}" itemLabel="#{item.descripcion}" itemValue="#{item}" var="item"/>
+                                    <p:ajax event="change" listener="#{clienteController.eventoTraerMunicipios}" process="@(.departamento)" update="@(.selMunicipio)" />
+                                </p:selectOneMenu>
+
+                                &nbsp; 
+                                <p:outputLabel value="Municipio:" for="selMunicipio" />
+                                &nbsp; 
+                                <p:selectOneMenu id="selMunicipio" value="#{clienteController.selected.municipio}" required="true" requiredMessage="El municipio es requerido"
+                                                 styleClass="selMunicipio" converter="ConvertEntity">
+                                    <f:selectItem  itemLabel="Seleccione Municipio" />
+                                    <f:selectItems value="#{clienteController.listMunicipios}" itemLabel="#{item.nombreMunicipio}" itemValue="#{item}" var="item"/>
+                                </p:selectOneMenu>     
+
+                                &nbsp;
+                                <p:outputLabel value="#{bundle.CreateClienteLabel_direccion}" for="direccion" />
+                                &nbsp;<p:inputText id="direccion" value="#{clienteController.selected.direccion}" title="#{bundle.CreateClienteTitle_direccion}" required="true" requiredMessage="#{bundle.CreateClienteRequiredMessage_direccion}"/>
+                                &nbsp;<p:outputLabel value="#{bundle.CreateClienteLabel_numeroTelefono}" for="numeroTelefono" />
+                                &nbsp;
+                                <p:inputText id="numeroTelefono" styleClass="numerico" maxlength="10" value="#{clienteController.selected.numeroTelefono}" title="#{bundle.CreateProveedorTitle_numeroIdentificacion}" required="true" requiredMessage="El número de teléfono es requerido"/>
+                                &nbsp;
+                                <p:outputLabel value="#{bundle.CreateClienteLabel_email}" for="email" />
+                                &nbsp;
+                                <p:inputText id="email" value="#{clienteController.selected.email}" title="#{bundle.CreateClienteTitle_email}" 
+                                             required="true" validatorMessage="Ingresar un email valido" requiredMessage="#{bundle.CreateClienteRequiredMessage_email}">
+                                    <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+                                </p:inputText>
+                                <!--<p:message for="email" />-->
+
+                                &nbsp;
+                                <p:outputLabel value="#{bundle.CreateClienteLabel_estado}" for="estado" />
+                                &nbsp;
+                                <p:selectOneMenu id="estado" value="#{clienteController.selected.estado}"
+                                                 required="true" requiredMessage="#{bundle.CreateClienteRequiredMessage_estado}">
+                                    <f:selectItem itemValue="1" itemLabel="ACTIVO"/>
+                                    <f:selectItem itemValue="0" itemLabel="INACTIVO"/>
+                                </p:selectOneMenu>
+                            </h:panelGrid>
+                        </p:panel>
+                        <br />
+                        <p:separator/> 
+                        <br />
+                        <p:panel>
+                            <div align="center">
+                                <h:panelGrid columns="7">
+                                    <h:link outcome="/menu" title="Inicio">
+                                        <img src="../../resources/imagenes/inicio.png" width="30" height="30" alt="inicio"/>
+                                    </h:link>   
+                                    <span class="ui-separator">
+                                        <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                    </span>
+                                    <h:commandLink action="#{clienteController.create}" title="Guardar Cliente">                                                          
+                                        <img src="../../resources/imagenes/guardar.png" width="30" height="30" alt="guardar"/>
+                                    </h:commandLink>
+
+                                    <span class="ui-separator">
+                                        <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                    </span>                                    
+
+                                    <h:commandLink action="#{clienteController.prepareList}" immediate="true" title="Cancelar">                       
+                                        <img src="../../resources/imagenes/cancelar.png" width="30" height="30" alt="listar"/>
+                                    </h:commandLink> 
+                                </h:panelGrid>
+                            </div>
+                        </p:panel>
+
+                    </p:panel>
+                </h:form>
+            </ui:define>
+
+            <ui:define name="bottom">
+                <div align="center">
+                    GPC Frutitimbio, Copyright © 2015
+                    <br></br>
+                    Todos los derechos reservados.
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

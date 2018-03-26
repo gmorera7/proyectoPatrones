@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <f:view contentType="text/html">  
+        <h:body>
+            <ui:composition template="./templatePrinCategoria.xhtml">                
+                <ui:define name="top">                    
+                  <div style="float: left;">
+                        <p:graphicImage name="./imagenes/logo2.png" width="350" height="100"/>                        
+                    </div>
+                    <div style="float: left;padding: 36px;width: 60%;">
+                        <div style="font: 16pt/18pt sans-serif;margin: auto;text-align: center;"> CATEGORIAS</div>
+                    </div>                   
+                </ui:define>
+
+                <ui:define name="left">
+                    <p:panel>                        
+                        <p:menu>                                
+                            <p:submenu label="Menú">
+                                <p:menuitem value="Lista de Categorias" outcome="/vistas/categoria/listarcategoria"/>
+                                <p:menuitem value="Lista de Clientes" outcome="/vistas/cliente/listaclientes"/> 
+                                <p:menuitem value="Lista de Compras" outcome="/vistas/detalleCompra/nuevaCompra"/>
+                                <p:menuitem value="Lista de Productos" outcome="/vistas/producto/listarProductos"/>
+                                <p:menuitem value="Lista de Proveedores" outcome="/vistas/proveedor/listarproveedores"/>
+                                <p:menuitem value="Nueva Venta" outcome="/vistas/venta/nuevaVenta"/>
+                            </p:submenu>
+                        </p:menu>
+                    </p:panel>
+                </ui:define>
+
+                <ui:define name="content">
+                    <h:panelGroup  id="pnlGrouFormularioCategoria" styleClass="pnlGroupFormularioCategoria">
+                        <h:panelGroup id="messagePanel" layout="block">
+                            <p:growl />
+                        </h:panelGroup>
+
+                        <h:form id="formularioCategoria" styleClass="formularioCategoria" rendered="#{!categoriaController.renderedForm}" >
+                            <p:panel>
+                                <h:panelGrid>
+                                    <p:outputLabel value="Listado de Categorias"/>
+                                </h:panelGrid>
+                                <p:separator/>
+
+                                <p:outputLabel escape="false" value="#{bundle.ListCategoriaEmpty}" rendered="#{categoriaController.items.rowCount == 0}"/>
+
+                                <h:panelGroup rendered="#{categoriaController.items.rowCount > 0}">
+                                    <p:outputLabel value="#{categoriaController.pagination.pageFirstItem + 1}..#{categoriaController.pagination.pageLastItem + 1}/#{categoriaController.pagination.itemsCount}"/>&nbsp;
+                                    <p:commandLink action="#{categoriaController.previous}" value="#{bundle.Previous} #{categoriaController.pagination.pageSize}" rendered="#{categoriaController.pagination.hasPreviousPage}"/>&nbsp;
+                                    <p:commandLink action="#{categoriaController.next}" value="#{bundle.Next} #{categoriaController.pagination.pageSize}" rendered="#{categoriaController.pagination.hasNextPage}"/>&nbsp;
+
+                                    <p:dataTable id="tbl" var="item"  value="#{categoriaController.listCategoria}"
+                                                 filteredValue="#{categoriaController.listCategoriaFilters}"
+                                                 selection="#{categoriaController.categoriaSelect}"
+                                                 rowKey="#{item}"
+                                                 selectionMode="single"
+                                                 emptyMessage="Lista vacia" paginator="true" rows="10"
+                                                 paginatorAlwaysVisible="false"
+                                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+
+                                        <p:column filterBy="#{item.codigo}" filterMatchMode="contains">
+                                            <f:facet name="header">
+                                                <h:outputText value="#{bundle.ListCategoriaTitle_codigo}"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.codigo}"/>
+                                        </p:column>
+
+                                        <p:column  filterBy="#{item.descripcion}" filterMatchMode="contains">
+                                            <f:facet name="header">
+                                                <h:outputText value="#{bundle.ListCategoriaTitle_descripcion}"/>
+                                            </f:facet>
+                                            <h:outputText value="#{item.descripcion}"/>
+                                        </p:column>
+                                    </p:dataTable>
+
+                                    <!--*************************boton editar******************************-->
+                                    <p:separator/>
+                                    
+                                    <p:panel>
+                                        <h:panelGrid columns="4">
+
+                                            <p:commandLink   update="@(.pnlGroupFormularioCategoria)"  ajax="false"
+                                                             onclick="console.log('pruebas 1')" actionListener="#{categoriaController.prueba}" >
+                                                <img src="../../resources/imagenes/editar.png" width="30" height="30" alt="nuevo"  title="Editar Categoria" align="center"/>
+                                            </p:commandLink> 
+
+                                            <span class="ui-separator">
+                                                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                            </span>
+
+                                            <h:link outcome="/menu" title="Inicio">
+                                                <img src="../../resources/imagenes/inicio.png" width="30" height="30" alt="inicio"/>
+                                            </h:link>   
+
+                                        </h:panelGrid>
+                                    </p:panel>
+                                    <p:separator/>
+                                    <br/> 
+                                </h:panelGroup>
+                            </p:panel>
+                        </h:form>
+                        <!--**************************  PDIALOG PARA EDITAR *************************-->
+
+                        <h:form id="formularioEditar"  styleClass="formularioEditar" rendered="#{categoriaController.renderedForm}">
+                            <!--<p:dialog header="EDITAR CATEGORIA" widgetVar="widEdit" id="widEditDilog" styleClass="widEditDilog" modal="true" showEffect="explode" hideEffect="bounce" height="250" width="350">-->
+                            <p:panel>
+                                <h:panelGrid columns="2">                                      
+                                    <p:outputLabel value="#{bundle.EditCategoriaLabel_codigo}" for="codigo" />
+                                    <p:inputText id="codigo" readonly="true" value="#{categoriaController.categoriaSelect.codigo}" title="#{bundle.EditCategoriaTitle_codigo}" 
+                                                 requiredMessage="#{bundle.EditCategoriaRequiredMessage_codigo}"/>
+                                    <p:outputLabel value="#{bundle.EditCategoriaLabel_descripcion}" for="descripcion" />
+                                    <p:inputText id="descripcion" value="#{categoriaController.categoriaSelect.descripcion}" title="#{bundle.EditCategoriaTitle_descripcion}" />
+                                </h:panelGrid>
+                            </p:panel>
+                            <p:panel>
+                                <p:commandLink actionListener="#{categoriaController.update}" ajax="false" update="@(.pnlGroupFormularioCategoria)" process=":formularioEditar" >                        
+                                    <img src="../../resources/imagenes/guardar.png" width="30" height="30" />
+                                </p:commandLink>
+                            </p:panel>
+                        </h:form>
+                    </h:panelGroup>
+                    <!--</p:dialog>-->
+                </ui:define>
+                <ui:define name="bottom">
+                    <div align="center">
+                        GPC Frutitimbio, Copyright © 2015
+                        <br></br>
+                        Todos los derechos reservados.
+                    </div>
+                </ui:define>
+            </ui:composition>
+        </h:body>
+    </f:view>
+</html>

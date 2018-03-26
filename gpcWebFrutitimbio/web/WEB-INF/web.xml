@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <!-- *****nombres de los temas disponibles -->
+    <!-- afterdark
+afternoon
+afterwork
+aristo (default)
+black-tie
+blitzer
+bluesky (richfaces)
+casablanca (trinidad)
+cruze 
+cupertino
+dark-hive
+delta
+dot-luv
+eggplant   
+excite-bike
+flick 
+glass-x (richfaces)
+home 
+hot-sneaks
+humanity 
+le-frog
+midnight (wijmo)
+mint-choc
+overcast 
+pepper-grinder 
+redmond 
+rocket (wijmo)
+sam 
+smoothness 
+south-street 
+start 
+sunny 
+swanky-purse
+trontastic
+twitter bootstrap
+ui-darkness
+ui-lightness
+vader  
+    -->
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>south-street</param-value>
+    </context-param>
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>/faces/*</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    <welcome-file-list>
+        <welcome-file>faces/index.xhtml</welcome-file>
+    </welcome-file-list>
+<!--    <filter>
+        <filter-name>UrlRewriteFilter</filter-name>
+        <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
+    </filter>-->
+<!--    <filter-mapping>
+        <filter-name>UrlRewriteFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>-->
+    
+    <!-- Login filter -->
+	<filter>
+		<filter-name>LoginFilter</filter-name>
+		<filter-class>edu.gpc.controller.util.LoginFilter</filter-class>
+	</filter>
+	<!-- Set the login filter to secure all the pages in the /secured/* path 
+		of the application -->
+	<filter-mapping>
+		<filter-name>LoginFilter</filter-name>
+		<url-pattern>/vistas/*</url-pattern>
+		<url-pattern>/secured/*</url-pattern>
+	</filter-mapping>
+    
+</web-app>

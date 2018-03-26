@@ -1,0 +1,235 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./detalleCompraPrincipal.xhtml">
+
+            <ui:define name="top">
+                <h:panelGrid id="cabeceraCate" columns="2" style="alignment-adjust: 10px">                        
+                    <p:graphicImage name="./imagenes/logo2.png" width="350" height="100"/>
+                    <p:outputLabel value="INSERTAR NUEVA CATEGORIA"/>
+                </h:panelGrid> 
+            </ui:define>
+
+            <ui:define name="left">
+                <p:panel>
+                    <p:growl id="messages" showDetail="false"/>
+                    <p:menu>                                
+                        <p:submenu label="Menú">
+                            <p:menuitem value="Lista de Categorias" outcome="/vistas/categoria/listarcategoria"/>
+                            <p:menuitem value="Lista de Clientes" outcome="/vistas/cliente/listaclientes"/> 
+                            <p:menuitem value="Nueva Compra" outcome="/vistas/detalleCompra/nuevaCompra"/>
+                            <p:menuitem value="Lista de Productos" outcome="/vistas/producto/listarProductos"/>
+                            <p:menuitem value="Lista de Proveedores" outcome="/vistas/proveedor/listarproveedores"/>
+                            <p:menuitem value="Nueva Venta" outcome="/vistas/venta/nuevaVenta"/>
+                        </p:submenu>
+                    </p:menu>
+                </p:panel>
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form id="form1">
+                    <p:panel>
+                        <!--**************************************** Field Compras *****************************-->
+                        <p:growl id="msgs" showDetail="true" />
+                        <p:fieldset legend="NUEVA COMPRA" style="margin-bottom:15px">
+                            <p:panel >
+                                <h:panelGrid columns="5" cellspacing="6" cellpadding="6">
+                                    <p:outputLabel value="#{bundle.CreateCompraLabel_fechaCompra}" for="fechaCompra" />
+                                    <p:calendar id="fechaCompra" value="#{detalleCompraController.selected.compraCodigoCompra.fechaCompra}" title="#{bundle.CreateCompraTitle_fechaCompra}" required="true" requiredMessage="#{bundle.CreateCompraRequiredMessage_fechaCompra}" showOn="button" />
+                                    <p:outputLabel value="#{bundle.CreateCompraLabel_tipoPago}" for="tipoPago"/>
+
+                                    <!--   *******************************************************  Radio Tipo Pago  ********************************************************-->
+                                    <p:selectOneRadio id="tipoPago" value="#{compraController.selected.tipoPagoIdtipoPago}" layout="grid">
+                                        <f:selectItems value="#{compraController.listTipoPago}" var="c" itemLabel="#{compraController.tipoPago.destipoPago}" itemValue="#{compraController.tipoPago.destipoPago}"/>
+                                        <p:ajax listener="#{compraController.desocultarOpcionesTipoPago()}" />
+                                    </p:selectOneRadio>
+                                     </h:panelGrid>
+
+                                    <!--   *******************************************************  Panel Uodate  ********************************************************-->
+                                    <h:panelGroup id="prueba" styleClass="prueba">
+                                        <h:panelGrid id="pagoCredito" columns="4" cellpadding="6">
+                                            <p:outputLabel value="#{bundle.CreateCompraLabel_numCuotas}" rendered="#{compraController.desocultarTp}" />
+                                            <p:inputText rendered="#{compraController.desocultarTp}"/>
+
+                                            <p:outputLabel value="#{bundle.CreateCompraLabel_valCuotas}" rendered="#{compraController.desocultarTp}" />
+                                            <p:inputText rendered="#{compraController.desocultarTp}"/>
+                                        </h:panelGrid>
+                                    </h:panelGroup>
+                               
+                            </p:panel>
+                            <br/>
+                            <!--**************************************** Field Proveedor *****************************-->
+                            <p:growl id="msgs2" showDetail="true" />
+                            <p:fieldset legend="Poveedor" style="margin-bottom:15px" toggleable="true">
+                                <p:panel id="idProducto" styleClass="idProducto"> 
+                                    <h:panelGrid columns="4" cellpadding="6">  
+
+                                        <!--   ***************************************************************************************************************-->
+                                        <h:outputLabel value="#{bundle.CreateCompraLabel_proveedorCodigo}" for="proveedorCodigo" />
+                                        <p:selectOneMenu id="proveedorCodigo" value="#{compraController.selected.proveedorCodigo}"
+                                                         converter="ConvertEntity"
+                                                         required="true" requiredMessage="#{bundle.CreateCompraRequiredMessage_proveedorCodigo}">
+                                            <f:selectItem itemLabel="Seleccione Proveedor."  />
+                                            <f:selectItems value="#{compraController.listProvSelect}" itemLabel="#{item.codigo}" itemValue="#{item}" var="item"/>
+                                            <p:ajax listener="#{compraController.eventoTraerProveedores}" update="@(.idProducto)" />
+                                        </p:selectOneMenu>
+
+                                        <!--                                        <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">-->
+
+                                        <!--   ***************************************************************************************************************-->
+                                        <h:outputLabel value="#{bundle.ListProveedorTitle_nombre1}" for="pnombre" />
+                                        <p:inputText id="pnombre" value="#{compraController.selected.proveedorCodigo.nombre1}" readonly="true"
+                                                     title="#{bundle.CreateCompraTitle_cantidad}"/>
+
+                                        <p:outputLabel value="#{bundle.ListProveedorTitle_apellido1}" for="papellido" />
+                                        <p:inputText id="papellido" value="#{compraController.selected.proveedorCodigo.apellido1}" title="#{bundle.CreateCompraTitle_cantidad}" readonly="true"/>
+
+                                        <p:outputLabel value="#{bundle.ListProveedorTitle_municipio}" for="Ciudad"/>
+                                        <p:inputText id="Ciudad" value="#{compraController.selected.proveedorCodigo.municipio}" title="#{bundle.CreateCompraTitle_cantidad}" readonly="true"/>
+
+                                        <p:outputLabel value="#{bundle.ListProveedorTitle_direccion}" for="direccion"/>
+                                        <p:inputText id="direccion" value="#{compraController.selected.proveedorCodigo.direccion}" title="#{bundle.CreateCompraTitle_cantidad}" readonly="true"/>
+
+                                        <p:outputLabel value="#{bundle.ListProveedorTitle_numeroTelefono}" for="telefono"/>
+                                        <p:inputText id="telefono" value="#{compraController.selected.proveedorCodigo.numeroTelefono}" title="#{bundle.CreateCompraTitle_cantidad}" readonly="true"/>
+
+                                    </h:panelGrid>
+                                </p:panel>
+                            </p:fieldset>
+
+                            <!--**************************************** Field producto *****************************-->
+                            <p:growl id="msgs3" showDetail="true" />
+                            <p:fieldset legend="Producto" style="margin-bottom:15px" toggleable="true">
+                                <p:panel id="idProveedor" styleClass="idProveedor">
+                                    <h:panelGrid id="panelProveedor" columns="4" cellpadding="5">
+
+                                        <p:outputLabel value="#{bundle.CreateCompraLabel_productoCodigo}" for="productoCodigo" />
+
+                                        <p:selectOneMenu id="productoCodigo" value="#{detalleCompraController.selected.productoCodigo}"
+                                                         converter="ConvertEntity"
+                                                         required="true" requiredMessage="#{bundle.CreateCompraRequiredMessage_productoCodigo}">
+                                            <f:selectItem itemLabel="Seleccione Producto."  />
+                                            <f:selectItems value="#{detalleCompraController.listProducto}" itemLabel="#{item.codigo}" itemValue="#{item}" var="item"/>
+                                            <p:ajax listener="#{detalleCompraController.eventoTraerProductos}" update="@(.idProveedor)" />
+                                        </p:selectOneMenu>
+
+                                        <p:outputLabel value="#{bundle.ListProductoTitle_nombre}" for="nombrep"/>
+                                        <p:inputText id="nombrep" value="#{detalleCompraController.selected.productoCodigo.nombre}" title="#{bundle.CreateCompraTitle_cantidad}" 
+                                                     readonly="true"/>
+
+                                        <p:outputLabel value="Estado:" for="estado" />
+                                        <p:inputText id="estado" value="#{detalleCompraController.selected.productoCodigo.estado}" title="#{bundle.CreateCompraTitle_cantidad}" 
+                                                     readonly="true"/>
+
+                                        <p:outputLabel value="Cantidad Disponible:" for="cantidadDisp" />
+                                        <p:inputText id="cantidadDisp" value="#{detalleCompraController.selected.productoCodigo.cantidad}" title="#{bundle.CreateCompraTitle_cantidad}" 
+                                                     readonly="true"/>
+
+                                        <p:outputLabel value="#{bundles.CreateDetalleCompraLabel_cantidad}" for="cantidad" />
+                                        <p:inputText id="cantidad" value="#{detalleCompraController.selected.cantidad}" title="#{bundles.CreateDetalleCompraTitle_cantidad}" 
+                                             required="true" requiredMessage="#{bundles.CreateDetalleCompraRequiredMessage_cantidad}"/>
+
+                                        <p:outputLabel value="#{bundles.CreateDetalleCompraLabel_precioUnitario}" for="precioUnitario" />
+                                        <p:inputText id="precioUnitario" value="#{detalleCompraController.selected.precioUnitario}" title="#{bundles.CreateDetalleCompraTitle_precioUnitario}" 
+                                                     required="true" requiredMessage="#{bundles.CreateDetalleCompraRequiredMessage_precioUnitario}">
+                                        <f:convertNumber pattern="¤#,##0" currencySymbol="$" />
+                                        </p:inputText>
+
+                                        <p:outputLabel value="#{bundles.CreateDetalleCompraLabel_total}" for="total" />
+                                        <p:inputText id="total" value="#{detalleCompraController.selected.total}" title="#{bundles.CreateDetalleCompraTitle_total}" required="true" requiredMessage="#{bundles.CreateDetalleCompraRequiredMessage_total}"/>
+
+                                        <p:outputLabel value="#{bundles.CreateDetalleCompraLabel_subtotal}" for="subtotal" />
+                                        <p:inputText id="subtotal" value="#{detalleCompraController.selected.subtotal}" title="#{bundles.CreateDetalleCompraTitle_subtotal}" required="true" requiredMessage="#{bundles.CreateDetalleCompraRequiredMessage_subtotal}"/>
+
+                                        <h:outputLabel value="#{bundles.CreateDetalleCompraLabel_compraCodigoCompra}" for="compraCodigoCompra" />
+                                        <h:selectOneMenu id="compraCodigoCompra" value="#{detalleCompraController.selected.compraCodigoCompra}" title="#{bundles.CreateDetalleCompraTitle_compraCodigoCompra}" required="false" requiredMessage="#{bundles.CreateDetalleCompraRequiredMessage_compraCodigoCompra}">
+                                            <f:selectItems value="#{compraController.itemsAvailableSelectOne}"/>
+                                        </h:selectOneMenu>
+                                    </h:panelGrid>
+                                </p:panel>                             
+                            </p:fieldset> 
+                            <!--**************************************** Boton Agreagar *****************************-->
+                            <p:separator/>
+                            <h:panelGrid columns="1">
+                                <p:panel>
+                                    <h:panelGrid columns="3">
+                                        <p:commandLink actionListener="#{detalleCompraController.agregarCarrito()}" update="@(.dataTableProduc)" >
+                                            <img src="../../resources/imagenes/añadir.png" width="30" height="30" alt="nuevo"  title="Añadir Producto" align="center"/>
+                                        </p:commandLink>
+
+                                        <span class="ui-separator">
+                                            <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                        </span> 
+
+                                        <p:commandLink actionListener="#{categoriaController.prueba}" >
+                                            <img src="../../resources/imagenes/cancelarProducto.png" width="30" height="30" alt="nuevo"  title="Cancelar Producto" align="center"/>
+                                        </p:commandLink>
+                                    </h:panelGrid>
+                                </p:panel>
+                            </h:panelGrid>
+
+                            <!--**************************************** Tabla agregar detalle *****************************-->
+                            <p:separator/>
+
+                            <p:outputPanel id="ListDetalleVenta">  
+                                <p:dataTable id="detalleTable" value="#{detalleCompraController.agregaDetCompra}" var="detalle" 
+                                             styleClass="dataTableProduc">  
+
+                                    <p:column>  
+                                        <f:facet name="header">  
+                                            <h:outputText value="Cantidad" />  
+                                        </f:facet>  
+                                        <h:outputText value="#{detalleCompraController.selected.cantidad}" />  
+                                    </p:column>  
+
+                                    <p:column>  
+                                        <f:facet name="header">  
+                                            <h:outputText value="Precio" />  
+                                        </f:facet>  
+                                        <h:outputText value="#{detalleCompraController.selected.precioUnitario}" />  
+                                    </p:column>  
+
+                                    <p:column>  
+                                        <f:facet name="header">  
+                                            <h:outputText value="Operation" />  
+                                        </f:facet>  
+                                        <p:commandButton value="Borrar">
+                                        </p:commandButton>
+                                        <br/>
+                                    </p:column>  
+                                </p:dataTable>  
+                            </p:outputPanel> 
+
+                            <p:commandLink oncomplete="widPrueba.show();" update="widPruebas">
+                                <img src="../../resources/imagenes/editar.png" width="30" height="30" alt="nuevo"  title="Editar Categoria" align="center"/>
+                            </p:commandLink>
+
+                            <p:dialog header="EDITAR CLIENTE" widgetVar="widPrueba" id="widPruebas" modal="true" showEffect="explode" hideEffect="bounce" height="300" width="700">
+                                <h:form>
+                                    <p:panel>
+                                        <h:panelGrid columns="6">
+
+                                        </h:panelGrid>
+                                    </p:panel>
+                                </h:form>
+                            </p:dialog>
+                        </p:fieldset>
+
+                    </p:panel>
+                </h:form>
+            </ui:define>
+
+            <ui:define name="bottom">
+                bottom
+            </ui:define>
+
+        </ui:composition>
+    </body>
+</html>

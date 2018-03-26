@@ -1,0 +1,146 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+        <ui:composition template="./PrincipalUsuario.xhtml">
+            <ui:define name="title">
+                <h:outputText value="#{bundle.CreateUsuarioTitle}"></h:outputText>
+            </ui:define>
+
+            <ui:define name="top">                
+                <div style="float: left;">                     
+                    <p:graphicImage name="./imagenes/logo2.png" width="350" height="100"/>                        
+                </div>
+                <div style="float: left; padding: 20px; width: 60%;">                    
+                    <div style="font: 16pt/18pt sans-serif;margin: auto;text-align: center;">NUEVO USUARIO</div>
+                </div> 
+                <div style="float: right; padding: 4px;">                   
+                    <h:form id="Form" styleClass="Form">       
+                        <p:commandButton actionListener="#{loginBean.logout}" value="Cerrar Sesión"  icon="ui-icon-power"/>
+                    </h:form>                   
+                </div>
+            </ui:define>
+
+            <ui:define name="left">
+                <p:panel>
+                    <h:form>  
+
+                        <p:menu>                                
+                            <p:submenu label="Menú">
+                                <p:menuitem value="Lista de Usuarios" outcome="/vistas/usuario/listaUsuario" rendered="#{loginBean.renderBooton}"/>
+                                <p:menuitem value="Lista de Clientes" outcome="/vistas/cliente/listaclientes"/> 
+                                <p:menuitem value="Nueva Compra" outcome="/vistas/detalleCompra/nuevaCompraDetalle"/>
+                                <p:menuitem value="Lista de Productos" outcome="/vistas/producto/listarProductos"/>
+                                <p:menuitem value="Lista de Proveedores" outcome="/vistas/proveedor/listarproveedores"/>
+                                <p:menuitem value="Nueva Venta" outcome="/vistas/detalleVenta/nuevaDetalleVenta"/>
+                            </p:submenu>
+                        </p:menu>
+                    </h:form>
+                </p:panel>
+            </ui:define>
+
+            <ui:define name="content">
+                <h:panelGroup id="pnlGroupCrearUsers" styleClass="pnlGroupCrearUsers">
+                    <h:panelGroup id="messagePanel" layout="block">
+                        <p:growl />
+                    </h:panelGroup>
+                    <h:form>
+
+                        <p:outputLabel value="Nuevo Usuario" /> <br/>
+                        <p:outputLabel value="Los campos con asterisco (*) son obligatorios." style="color: red;"/>
+                        <p:separator/>
+
+                        <p:panel id="registroUsuario">
+                            <!--<p:messages id="messages" showDetail="true" autoUpdate="true" />-->
+                            <h:panelGrid columns="8">
+                                <p:spacer width="50"/>
+
+                                <p:outputLabel value="#{bundle.CreateUsuarioLabel_rolId}" for="rolId" />
+
+                                &nbsp;&nbsp;&nbsp;
+                                <p:selectOneMenu id="rolId" value="#{usuarioController.selected.rolId}" required="true" requiredMessage="#{bundle.CreateProductoRequiredMessage_categoriaCodigo}"
+                                                 converter="ConvertEntity">
+                                    <f:selectItems value="#{usuarioController.listRol}" itemLabel="#{item.nombre}" itemValue="#{item}" var="item"/>
+                                </p:selectOneMenu>
+
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                           
+                                <p:outputLabel value="#{bundle.CreateUsuarioLabel_usuario}" for="usuario" />
+
+                                &nbsp;
+                                <p:inputText id="usuario" value="#{usuarioController.selected.usuario}" title="#{bundle.CreateUsuarioTitle_usuario}" required="true" maxlength="15"
+                                             requiredMessage="#{bundle.CreateUsuarioRequiredMessage_usuario}" validatorMessage="El Usuario debe tener entre 6 y 10 caracteres de longitud">
+                                    <f:validateLength minimum="6" maximum="10" />
+                                </p:inputText>
+
+                                &nbsp;
+                                <p:outputLabel value="#{bundle.CreateUsuarioLabel_clave}" for="clave" />
+
+                                &nbsp;
+                                <p:password id="clave" match="clave2" value="#{usuarioController.selected.clave}" feedback="true"
+                                            promptLabel="Por favor ingrese una contraseña." weakLabel="Seguridad Baja."
+                                            goodLabel="Seguridad Media." required="true" requiredMessage="La contraseña es requerida" strongLabel="Seguridad Alta."  validatorMessage="Las contraseñas no coinciden."/>
+                                &nbsp;
+                                <p:outputLabel value="Confirmar Contraseña:" for="clave2" />
+
+                                &nbsp;
+                                <p:password id="clave2" required="true" value="#{usuarioController.selected.clave}" requiredMessage="Confirmar contraseña" />
+
+                                &nbsp;<p:outputLabel value="#{bundle.CreateUsuarioLabel_email}" for="email" />
+                                &nbsp;
+                                <p:inputText id="email" value="#{usuarioController.selected.email}" title="#{bundle.CreateUsuarioTitle_email}" required="true" requiredMessage="#{bundle.CreateUsuarioRequiredMessage_email}"/>
+                                &nbsp;
+                                <p:outputLabel value="#{bundle.CreateUsuarioLabel_estado}" for="estadoUsuario" />
+
+                                &nbsp;
+                                <p:selectOneMenu id="estadoUsuario" value="#{usuarioController.selected.estado}" required="true" requiredMessage="El campo estado es obligatorio">
+                                    <f:selectItem itemValue="1" itemLabel="ACTIVO"/>
+                                    <f:selectItem itemValue="0" itemLabel="INACTIVO"/>
+                                </p:selectOneMenu>
+                            </h:panelGrid>
+
+                            <p:separator/>
+                            <p:panel> 
+                                <div align="center">
+                                    <h:panelGrid columns="7">
+                                        <h:link outcome="/menu">
+                                            <img src="../../resources/imagenes/inicio.png" width="30" height="30" alt="inicio" title="Inicio"/>
+                                        </h:link>
+                                        <span class="ui-separator">
+                                            <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                        </span>
+                                        <p:commandLink action="#{usuarioController.create}" title="Guardar Usuario" update="@(.pnlGroupCrearUsers)" ajax="false" >
+                                            <img src="../../resources/imagenes/guardar.png" width="30" height="30" alt="guardar"/>
+                                        </p:commandLink>
+                                        <span class="ui-separator">
+                                            <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                        </span>
+                                        <h:commandLink action="#{usuarioController.prepareList}" immediate="true" title="Cancelar">
+                                            <img src="../../resources/imagenes/cancelar.png" width="30" height="30" alt="listar"/>
+                                        </h:commandLink>                                       
+                                    </h:panelGrid>
+                                </div>
+                            </p:panel>
+                        </p:panel>
+                    </h:form>
+                </h:panelGroup>
+            </ui:define>
+
+            <ui:define name="bottom">
+                <div align="center">
+                    GPC Frutitimbio, Copyright © 2015
+                    <br></br>
+                    Todos los derechos reservados.
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

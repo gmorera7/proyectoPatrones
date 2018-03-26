@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:view contentType="text/html">
+
+        <body>
+
+            <ui:composition template="./principalProveedor.xhtml">
+
+                <ui:define name="title">
+                    Proveedores Inactivos
+                </ui:define>
+
+                <ui:define name="top">
+                    <div style="float: left;">                     
+                        <p:graphicImage name="./imagenes/logo2.png" width="350" height="100"/>                        
+                    </div>
+                    <div style="float: left; padding: 20px; width: 60%;">                    
+                        <div style="font: 16pt/18pt sans-serif;margin: auto;text-align: center;">PROVEEDORES INACTIVOS</div>
+                    </div> 
+                    <div style="float: right; padding: 4px;">                   
+                        <h:form id="Form" styleClass="Form">       
+                            <p:commandButton actionListener="#{loginBean.logout}" value="Cerrar Sesión"  icon="ui-icon-power"/>
+                        </h:form>                   
+                    </div>
+                </ui:define>
+
+                <ui:define name="left">
+                    <p:panel>
+                        <h:form>
+                            <p:growl id="messages" showDetail="false"/>
+                            <p:menu>                                
+                                <p:submenu label="Menú">
+                                    <p:menuitem value="Lista de Usuarios" outcome="/vistas/usuario/listaUsuario" rendered="#{loginBean.renderBooton}"/>
+                                    <p:menuitem value="Lista de Clientes" outcome="/vistas/cliente/listaclientes"/> 
+                                    <p:menuitem value="Nueva Compra" outcome="/vistas/detalleCompra/nuevaCompraDetalle"/>
+                                    <p:menuitem value="Lista de Productos" outcome="/vistas/producto/listarProductos"/>
+                                    <p:menuitem value="Lista de Proveedores" outcome="/vistas/proveedor/listarproveedores"/>
+                                    <p:menuitem value="Nueva Venta" outcome="/vistas/detalleVenta/nuevaDetalleVenta"/>
+                                </p:submenu>
+                            </p:menu>
+                        </h:form>
+                    </p:panel>
+                </ui:define>
+
+                <ui:define name="content">
+                    <h:panelGroup id="messagePanel" layout="block">
+                        <p:growl />
+                    </h:panelGroup>
+
+                    <h:form id="formularioProveedorInactivos" styleClass="formularioProveedorInactivos" rendered="#{!proveedorController.renderedForm}">
+                        <p:panel>
+                            <h:panelGrid>
+                                <p:outputLabel value="Listado de Proveedores"/>
+                            </h:panelGrid>
+                            <p:separator/>
+                            <br/>
+                            <p:panel>
+
+                                <p:outputLabel escape="false" value="#{bundle.ListProveedorEmpty}" rendered="#{proveedorController.items.rowCount == 0}"/>
+                                <h:panelGroup rendered="#{proveedorController.items.rowCount >= 0}">
+                                    <p:outputLabel value="#{proveedorController.pagination.pageFirstItem + 1}..#{proveedorController.pagination.pageLastItem + 1}/#{proveedorController.pagination.itemsCount}"/>&nbsp;
+                                    <p:commandLink action="#{proveedorController.previous}" value="#{bundle.Previous} #{proveedorController.pagination.pageSize}" rendered="#{proveedorController.pagination.hasPreviousPage}"/>&nbsp;
+                                    <p:commandLink action="#{proveedorController.next}" value="#{bundle.Next} #{proveedorController.pagination.pageSize}" rendered="#{proveedorController.pagination.hasNextPage}"/>&nbsp;
+
+                                    <p:dataTable id="tblProoveedores" var="item" value="#{proveedorController.listProvInactivos}"
+                                                 filteredValue="#{proveedorController.listProveedorFilters}"
+                                                 selection="#{proveedorController.proveedorSelect}"
+                                                 selectionMode="single"
+                                                 rowKey="#{item}" emptyMessage="No Existe registro del Proveedor con el valor insertado.!!!"
+                                                 paginator="true" rows="5" paginatorAlwaysVisible="false" 
+                                                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
+                                        <p:ajax event="rowSelect" update="@(.btnDescargar)" process="@this" />
+                                        <p:column filterBy="#{item.codigo}" filterMatchMode="contains">
+                                            <f:facet name="header">
+                                                <p:outputLabel value="#{bundle.ListProveedorTitle_codigo}"/>
+                                            </f:facet>
+                                            <p:outputLabel value="#{item.codigo}"/>
+                                        </p:column>
+
+                                        <p:column filterBy="#{item.numeroIdentificacion}" filterMatchMode="contains">
+                                            <f:facet name="header">
+                                                <p:outputLabel value="#{bundle.ListProveedorTitle_numeroIdentificacion}"/>
+                                            </f:facet>
+                                            <p:outputLabel value="#{item.numeroIdentificacion}"/>
+                                        </p:column>
+                                        <p:column filterBy="#{item.nombre1}" filterMatchMode="contains">
+                                            <f:facet name="header">
+                                                <p:outputLabel value="#{bundle.ListProveedorTitle_nombre1}"/>
+                                            </f:facet>
+                                            <p:outputLabel value="#{item.nombre1}"/>
+                                        </p:column>
+                                        <p:column filterBy="#{item.nombre2}" filterMatchMode="contains">
+                                            <f:facet name="header">
+                                                <p:outputLabel value="#{bundle.ListProveedorTitle_nombre2}"/>
+                                            </f:facet>
+                                            <p:outputLabel value="#{item.nombre2}"/>
+                                        </p:column>
+                                        <p:column filterBy="#{item.apellido1}" filterMatchMode="contains">
+                                            <f:facet name="header">
+                                                <p:outputLabel value="#{bundle.ListProveedorTitle_apellido1}"/>
+                                            </f:facet>
+                                            <p:outputLabel value="#{item.apellido1}"/>
+                                        </p:column>
+                                        <p:column filterBy="#{item.apellido2}" filterMatchMode="contains">
+                                            <f:facet name="header">
+                                                <p:outputLabel value="#{bundle.ListProveedorTitle_apellido2}"/>
+                                            </f:facet>
+                                            <p:outputLabel value="#{item.apellido2}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                    <p:separator/> 
+                                    <!--************* BOTONES EDITAR Y LISTAR **************-->
+                                    <p:panel>
+                                        <div align="center">
+                                            <h:panelGrid columns="5">
+                                                <h:link outcome="/menu">
+                                                    <img src="../../resources/imagenes/inicio.png" width="30" height="30" alt="inicio" title="Inicio"/>
+                                                </h:link>  
+
+                                                <span class="ui-separator">
+                                                    <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                                </span>
+
+                                                <p:commandLink update="@(.formularioProveedorInactivos)" actionListener="#{proveedorController.updateEstadoActInact(proveedorController.proveedorSelect)}"  ajax="fale">
+                                                    <img src="../../resources/imagenes/activarUsuario.png" width="30" height="30" alt="nuevo"  title="Activar Proveedor" align="center"/>
+                                                </p:commandLink>
+
+                                                <span class="ui-separator">
+                                                    <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                                                </span>
+
+                                                <p:commandLink action="/vistas/proveedor/listarproveedores?faces-redirect=true" value="Proveedores Activos"/>    
+                                            </h:panelGrid>
+                                        </div>
+                                    </p:panel>  
+                                </h:panelGroup>
+                            </p:panel>                         
+                            <p:separator/> 
+                        </p:panel>
+                    </h:form>  
+                </ui:define>
+
+                <ui:define name="bottom">
+                    <div align="center">
+                        GPC Frutitimbio, Copyright © 2015
+                        <br></br>
+                        Todos los derechos reservados.
+                    </div>
+                </ui:define>
+
+            </ui:composition>
+
+        </body>
+    </f:view> 
+</html>

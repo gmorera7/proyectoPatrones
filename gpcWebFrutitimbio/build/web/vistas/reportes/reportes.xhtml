@@ -1,0 +1,185 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./reportesPrincipal.xhtml">
+
+            <ui:define name="top">
+                <div style="float: left;">                     
+                    <p:graphicImage name="./imagenes/logo2.png" width="350" height="100"/>                        
+                </div>
+                <div style="float: left; padding: 20px; width: 60%;">                    
+                    <div style="font: 16pt/18pt sans-serif;margin: auto;text-align: center;">REPORTES</div>
+                </div> 
+                <div style="float: right; padding: 4px;">                   
+                    <h:form id="Form" styleClass="Form">       
+                        <p:commandButton actionListener="#{loginBean.logout}" value="Cerrar Sesión"  icon="ui-icon-power"/>
+                    </h:form>                   
+                </div>
+            </ui:define>
+
+            <ui:define name="left">               
+                <p:panel>
+                    <h:form>
+                        <p:growl id="messages" showDetail="false"/>
+                        <p:menu>   
+                            <p:submenu label="Menú">
+                                <p:menuitem value="Lista de Usuarios" outcome="/vistas/usuario/listaUsuario" rendered="#{loginBean.renderBooton}"/>
+                                <p:menuitem value="Lista de Clientes" outcome="/vistas/cliente/listaclientes"/> 
+                                <p:menuitem value="Nueva Compra" outcome="/vistas/detalleCompra/nuevaCompraDetalle"/>
+                                <p:menuitem value="Lista de Productos" outcome="/vistas/producto/listarProductos"/>
+                                <p:menuitem value="Lista de Proveedores" outcome="/vistas/proveedor/listarproveedores"/>
+                                <p:menuitem value="Nueva Venta" outcome="/vistas/detalleVenta/nuevaDetalleVenta"/>
+                                <p:menuitem value="Reportes" outcome="/vistas/reportes/reportes"/>
+                            </p:submenu>
+                        </p:menu>
+                    </h:form>
+                </p:panel>
+            </ui:define>
+
+            <ui:define name="content">
+                <div align="center">
+                    <h:form id="principal">
+
+                        <p:panel id="repVentasPorFecha" styleClass="repVentasPorFecha">
+                            <p:panel>
+                                <h:panelGrid columns="6">
+                                    <p:commandButton id="repVentas" styleClass="repVentas" value="Reporte de ventas"
+                                                     action="#{generadorReportes.desocultarPanelVentasPorFecha()}"/>
+
+                                    <p:commandButton id="repCompras" styleClass="repCompras" value="Reporte de Compras"
+                                                     action="#{generadorReportes.desocultarPanelComprasPorFecha()}"/>
+
+                                    <p:commandButton id="repMayorVenta" styleClass="repMayorVenta" value="Reporte de Mayor Venta"
+                                                     action="#{generadorReportes.desocultarPanelMayorVentaPorFecha()}"/>
+
+                                    <p:commandButton id="repMayorCompra" styleClass="repMayorCompra" value="Reporte de Mayor Compra"
+                                                     action="#{generadorReportes.desocultarPanelMayorCompraPorFecha()}"/>
+                                </h:panelGrid>
+                            </p:panel>
+
+                            <!--panelGrid para rango de fechas ventas-->
+                            <h:panelGroup id="rangoFechasVentas" styleClass="rangoFechasVentas">
+                                <p:panel id="rangoFechasVentasPanel" styleClass="rangoFechasVentasPanel" rendered="#{generadorReportes.desocultarPanelRepFechas}">
+                                    <h2>
+                                        <p:outputLabel value="Reporte de Ventas" style="color: #459e00" rendered="#{generadorReportes.desocultarPanelRepFechas}"/>
+                                    </h2>
+                                    <p:separator/>
+                                    <h:panelGrid columns="3">
+                                        <p:outputLabel value="Fecha Desde: " for="calFechaDesde"/>
+                                        <p:calendar id="calFechaDesdeComp" required="false" value="#{generadorReportes.fechaDesde}"
+                                                    requiredMessage="La Fecha Desde es un campo obligatorio."/>
+
+                                        <p:spacer width="40px"/>
+                                        <p:outputLabel value="Fecha Hasta: " for="calFechaHasta"/>
+                                        <p:calendar id="calFechaHastaComp" required="false" value="#{generadorReportes.fechaHasta}"
+                                                    requiredMessage="La Fecha Hasta es un campo obligatorio."/>                                        
+                                    </h:panelGrid>
+                                    <br/>
+                                    <p:separator/>
+                                    <p:commandButton actionListener="#{generadorReportes.generarReporte2(generadorReportes.fechaDesde,generadorReportes.fechaHasta)}"
+                                                     id="genRepCompras" styleClass="genRepCompras" value="Generar Reporte"
+                                                     process="@form" update="@all" ajax="false"/>
+                                </p:panel>
+                            </h:panelGroup>
+
+                            <!--panelGrid para GENERAR FACTURA DE COMPRAS-->
+                            <h:panelGroup id="rangoFechasComprasPanel" styleClass="rangoFechasComprasPanel">
+                                <p:panel rendered="#{generadorReportes.desocultarPanelRepFechasComp}">
+                                    <h2>
+                                        <p:outputLabel value="Reporte de Compras" style="color: #459e00" rendered="#{generadorReportes.desocultarPanelRepFechasComp}"/>
+                                    </h2>
+                                    <p:separator/>
+
+                                    <h:panelGrid columns="3">
+                                        <p:outputLabel value="Fecha Desde: " for="calFechaDesde"/>
+                                        <p:calendar id="calFechaDesde" required="false" value="#{generadorReportes.fechaDesde}"
+                                                    requiredMessage="La Fecha Desde es un campo obligatorio."/>
+
+                                        <p:spacer width="40px"/>
+                                        <p:outputLabel value="Fecha Hasta: " for="calFechaHasta"/>
+                                        <p:calendar id="calFechaHasta" required="false" value="#{generadorReportes.fechaHasta}"
+                                                    requiredMessage="La Fecha Hasta es un campo obligatorio."/>                                        
+                                    </h:panelGrid>
+                                    <br/>
+                                    <p:separator/>
+                                    <p:commandButton actionListener="#{generadorReportes.generarReporteCompras2(generadorReportes.fechaDesde,generadorReportes.fechaHasta)}"
+                                                     id="genRepVentas" styleClass="genRepVentas" value="Generar Reporte"
+                                                     process="@form" update="@all" ajax="false"/>
+                                </p:panel>
+                            </h:panelGroup> 
+
+                            <!--panelGrid para GENERAR MAYORES compra-->
+                            <h:panelGroup id="rangoFechasComprasMayor" styleClass="rangoFechasComprasMayor">
+                                <p:panel rendered="#{generadorReportes.desocultarPanelRepMayorCompra}">
+
+                                    <h2>
+                                        <p:outputLabel value="Reporte de Compras Mayores" style="color: #459e00" rendered="#{generadorReportes.desocultarPanelRepMayorCompra}"/>
+                                    </h2>
+                                    <p:separator/>
+                                    <h:panelGrid columns="3">
+                                        <p:outputLabel value="Fecha Desde: " for="calFechaDesdeMayorCompra"/>
+                                        <p:calendar id="calFechaDesdeMayorCompra" required="true" value="#{generadorReportes.fechaDesde}"
+                                                    requiredMessage="La Fecha Desde es un campo obligatorio."/>
+
+                                        <p:spacer width="40px"/>
+                                        <p:outputLabel value="Fecha Hasta: " for="calFechaHastaMayorCompra"/>
+                                        <p:calendar id="calFechaHastaMayorCompra" required="true" value="#{generadorReportes.fechaHasta}"
+                                                    requiredMessage="La Fecha Hasta es un campo obligatorio."/>                                        
+                                    </h:panelGrid>
+                                    <br/>
+                                    <p:separator/>
+                                    <p:commandButton actionListener="#{generadorReportes.generarReporteMayorCompra2(generadorReportes.fechaDesde,generadorReportes.fechaHasta)}"
+                                                     id="genRepMayorCompra" styleClass="genRepMayorCompra" value="Generar Reporte"
+                                                     process="@form" update="@all" ajax="false"/>
+                                </p:panel>  
+                            </h:panelGroup>
+                            <!--panelGrid para GENERAR MAYORES venta-->
+
+                            <h:panelGroup id="rangoFechasMayorVenta" styleClass="rangoFechasMayorVenta">
+                                <p:panel  rendered="#{generadorReportes.desocultarPanelRepMayorVenta}">
+                                    <h2>
+                                        <p:outputLabel value="Reporte de Ventas Mayores " style="color: #459e00" rendered="#{generadorReportes.desocultarPanelRepMayorVenta}"/>
+                                    </h2>
+                                    <p:separator/>
+                                    <h:panelGrid columns="3">
+                                        <p:outputLabel value="Fecha Desde: " for="calFechaDesdeMayorVenta"/>
+                                        <p:calendar id="calFechaDesdeMayorVenta" required="true" value="#{generadorReportes.fechaDesde}"/>
+
+                                        <p:spacer width="40px"/>
+                                        <p:outputLabel value="Fecha Hasta: " for="calFechaHastaMayorVenta"/>
+                                        <p:calendar id="calFechaHastaMayorVenta" required="true" value="#{generadorReportes.fechaHasta}"/>                                        
+                                    </h:panelGrid>
+                                    <br/>
+                                    <p:separator/>
+
+                                    <p:commandButton actionListener="#{generadorReportes.generarReporteMayorVenta2(generadorReportes.fechaDesde,generadorReportes.fechaHasta)}"
+                                                     id="genRepMayorVentas" styleClass="genRepMayorVentas" value="Generar Reporte"
+                                                     process="@form" update="@all" ajax="false"/>
+                                </p:panel>  
+                            </h:panelGroup>
+
+                        </p:panel>
+                    </h:form>
+                </div>
+            </ui:define>
+
+
+            <ui:define name="bottom">
+                <div align="center">
+                    GPC Frutitimbio, Copyright © 2015
+                    <br></br>
+                    Todos los derechos reservados.
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
