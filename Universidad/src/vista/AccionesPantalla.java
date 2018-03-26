@@ -7,13 +7,12 @@ package vista;
 
 /**
  *
- * @author gerson
+ * @author javeriana.edu.co
  */
-public interface IConsola {
-    public int perdirRuta();
-    public int menuPrincipal();
-    public int pedirNumeroReserva();
-    public int pedirDatosComida();
-    public String pedirNumeroSilla();
+public interface AccionesPantalla {
+    
+    public void iniciarComponentes();
+    
+    public void limpiarCampos();
     
 }

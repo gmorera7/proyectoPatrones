@@ -13,9 +13,9 @@ import java.util.Observer;
 
 /**
  *
- * @author Administrador
+ * @author javeriana.edu.co
  */
-public class PantallaMenuPrincipal extends javax.swing.JFrame implements Observer {
+public class PantallaMenuPrincipal extends javax.swing.JFrame implements Observer , AccionesPantalla {
 
     private static PantallaMenuPrincipal instance = null;
 
@@ -35,6 +35,16 @@ public class PantallaMenuPrincipal extends javax.swing.JFrame implements Observe
     public void cargarCombosOrigenDestino() {
         ControlMenuPrinicipal.getInstance().cargarCatalogosCiudadesOrigen();
         ControlMenuPrinicipal.getInstance().cargarCatalogosCiudadesDestino();
+    }
+    
+    @Override
+    public void limpiarCampos(){
+        
+    }
+    
+     @Override
+    public void iniciarComponentes() {
+        
     }
 
     /**
@@ -175,6 +185,8 @@ public class PantallaMenuPrincipal extends javax.swing.JFrame implements Observe
 
     private void btnCheckInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckInActionPerformed
         // TODO add your handling code here:
+        PantallaMenuPrincipal.getInstance().setVisible(false);
+        PantallaCheckIn.getInstance().setVisible(true);
     }//GEN-LAST:event_btnCheckInActionPerformed
 
     /**
@@ -239,4 +251,6 @@ public class PantallaMenuPrincipal extends javax.swing.JFrame implements Observe
             listaDestino.setModel(new javax.swing.DefaultComboBoxModel((String[]) mensaje.getObjeto()));
         }
     }
+
+   
 }
