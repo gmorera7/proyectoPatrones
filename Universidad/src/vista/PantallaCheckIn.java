@@ -5,11 +5,14 @@
  */
 package vista;
 
+import java.util.Observable;
+import java.util.Observer;
+
 /**
  *
- * @author gersonmorera
+ * @author javeriana.edu.co
  */
-public class PantallaCheckIn extends javax.swing.JFrame implements AccionesPantalla{
+public class PantallaCheckIn extends javax.swing.JFrame implements AccionesPantalla, Observer{
 
     private static PantallaCheckIn instance = null;
 
@@ -205,4 +208,9 @@ public class PantallaCheckIn extends javax.swing.JFrame implements AccionesPanta
     private com.toedter.calendar.JDateChooser txtFechaReserva;
     private javax.swing.JTextField txtNumeroReserva;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void update(Observable o, Object arg) {
+        
+    }
 }

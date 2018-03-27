@@ -147,7 +147,7 @@ public class PantallaServiciosEspeciales extends javax.swing.JFrame implements A
         reserva.setFecha(new Date());
         reserva.setNumeroSilla(txtNumeroSillas.getSelectedItem().toString());
         reserva.setPersona(pasajero);
-        reserva.setRuta(ruta);
+        //reserva.setRuta(ruta);
         
         PantallaConfirmacionReserva.getInstance().setVisible(false);
 

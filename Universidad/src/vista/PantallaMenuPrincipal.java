@@ -7,6 +7,7 @@ package vista;
 
 import Control.ControlMenuPrinicipal;
 import Mensaje.Mensaje;
+import aerolinea.Aerolinea;
 import busqueda.Busqueda;
 import java.util.Observable;
 import java.util.Observer;
@@ -15,7 +16,7 @@ import java.util.Observer;
  *
  * @author javeriana.edu.co
  */
-public class PantallaMenuPrincipal extends javax.swing.JFrame implements Observer , AccionesPantalla {
+public class PantallaMenuPrincipal extends javax.swing.JFrame implements Observer, AccionesPantalla {
 
     private static PantallaMenuPrincipal instance = null;
 
@@ -36,15 +37,15 @@ public class PantallaMenuPrincipal extends javax.swing.JFrame implements Observe
         ControlMenuPrinicipal.getInstance().cargarCatalogosCiudadesOrigen();
         ControlMenuPrinicipal.getInstance().cargarCatalogosCiudadesDestino();
     }
-    
+
     @Override
-    public void limpiarCampos(){
-        
+    public void limpiarCampos() {
+
     }
-    
-     @Override
+
+    @Override
     public void iniciarComponentes() {
-        
+
     }
 
     /**
@@ -252,5 +253,4 @@ public class PantallaMenuPrincipal extends javax.swing.JFrame implements Observe
         }
     }
 
-   
 }

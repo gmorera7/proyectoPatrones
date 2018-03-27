@@ -7,7 +7,7 @@ package vista;
 
 /**
  *
- * @author gersonmorera
+ * @author javeriana.edu.co
  */
 public class PantallaConfirmacionReserva extends javax.swing.JFrame implements AccionesPantalla {
 
