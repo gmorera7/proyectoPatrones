@@ -1,5 +1,6 @@
 package aerolinea;
 
+import Mensaje.HacerNotificacion;
 import Mensaje.Mensaje;
 import busqueda.Busqueda;
 import java.util.Observable;
@@ -19,7 +20,7 @@ import reserva.Ruta;
  *
  * @author javeriana.edu.co
  */
-public class Aerolinea extends Observable implements AccionReserva, AccionRutas, HacerCheck {
+public class Aerolinea extends Observable implements AccionReserva, AccionRutas, HacerCheck, HacerNotificacion {
 
     private ArrayList reservas = new ArrayList<>();
     private ArrayList rutas = new ArrayList<>();
@@ -57,12 +58,14 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
     public void hacerReserva(Reserva reserva) {
         reserva.setFecha(new Date());
         reserva.setEstado("activa");
+        reserva.setCheck(new ArrayList<>());
+        reserva.setId(reservas.size() + 1);
         reservas.add(reservas.size(), reserva);
-        System.err.println("Reserva realizada con el número " + reserva.getId());
+        enviarNotificacion("hacerReserva", reserva);
     }
 
     @Override
-    public Reserva buscarReserva(Integer idReserva) {
+    public void buscarReserva(Integer idReserva) {
         Reserva reservaFinal = null;
         for (Iterator iterator = reservas.iterator(); iterator.hasNext();) {
             Reserva reservaLocal = (Reserva) iterator.next();
@@ -70,16 +73,15 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
                 reservaFinal = reservaLocal;
             }
         }
-        return reservaFinal;
+        enviarNotificacion("buscarReserva", reservaFinal);
     }
 
     @Override
     public void hacerCheckIn(Integer idReserva) {
-
         for (int i = 0; i < reservas.size(); i++) {
             Reserva reserva = (Reserva) reservas.get(i);
             if (reserva.getId().intValue() == idReserva) {
-                reserva.getCheck().add(FabricaCheck.getInstance().crearCheckIn());
+                reserva.getCheck().add(FabricaCheck.getInstance().crearCheckIn(reserva.getCheck().size()));
                 reservas.set(i, reserva);
             }
         }
@@ -90,7 +92,7 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
         for (int i = 0; i < reservas.size(); i++) {
             Reserva reserva = (Reserva) reservas.get(i);
             if (reserva.getId().intValue() == idReserva) {
-                reserva.getCheck().add(FabricaCheck.getInstance().crearCheckFood());
+                reserva.getCheck().add(FabricaCheck.getInstance().crearCheckFood(reserva.getCheck().size()));
                 reservas.set(i, reserva);
             }
         }
@@ -160,12 +162,7 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
         ciudadesOrigen[2] = "CARACAS";
         ciudadesOrigen[3] = "TUNJA";
 
-        Mensaje mensaje = new Mensaje();
-        mensaje.setAccion("cargarCiudadesOrigen");
-        mensaje.setObjeto(ciudadesOrigen);
-        setChanged();
-        notifyObservers(mensaje);
-
+        enviarNotificacion("cargarCiudadesOrigen", ciudadesOrigen);
     }
 
     @Override
@@ -176,13 +173,7 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
         ciudadesDestino[2] = "MEDELLIN";
         ciudadesDestino[3] = "BUCARAMANGA";
 
-        Mensaje mensaje = new Mensaje();
-        mensaje.setAccion("cargarCiudadesDestino");
-        mensaje.setObjeto(ciudadesDestino);
-
-        setChanged();
-        notifyObservers(mensaje);
-
+        enviarNotificacion("cargarCiudadesDestino", ciudadesDestino);
     }
 
     @Override
@@ -199,10 +190,27 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
                 System.err.println("encontro ruta igual");
             }
         }
-        Mensaje mensaje = new Mensaje();
-        mensaje.setAccion("busquedaRuta");
-        mensaje.setObjeto(rutasEncontradas);
+        enviarNotificacion("busquedaRuta", rutasEncontradas);
+    }
 
+    @Override
+    public void consultarRutaPorId(Integer idRuta) {
+
+        Ruta rutaFinal = null;
+        for (Iterator iterator = rutas.iterator(); iterator.hasNext();) {
+            Ruta reservaLocal = (Ruta) iterator.next();
+            if (reservaLocal.getId().intValue() == idRuta) {
+                rutaFinal = reservaLocal;
+            }
+        }
+        enviarNotificacion("busquedaRutaPorId", rutaFinal);
+    }
+
+    @Override
+    public void enviarNotificacion(String accion, Object objeto) {
+        Mensaje mensaje = new Mensaje();
+        mensaje.setAccion(accion);
+        mensaje.setObjeto(objeto);
         setChanged();
         notifyObservers(mensaje);
     }

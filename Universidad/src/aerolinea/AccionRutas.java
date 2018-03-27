@@ -9,6 +9,8 @@ import busqueda.Busqueda;
 public interface AccionRutas {
 
     public void buscarRuta(Busqueda busqueda);
+    
+    public void consultarRutaPorId(Integer idRuta);
 
     public void cargarRutas();
 

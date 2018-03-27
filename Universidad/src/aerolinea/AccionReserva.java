@@ -10,6 +10,6 @@ public interface AccionReserva {
 
     public void hacerReserva(Reserva reserva);
 
-    public Reserva buscarReserva(Integer idReserva);
+    public void buscarReserva(Integer idReserva);
 
 }

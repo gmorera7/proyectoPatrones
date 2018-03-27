@@ -8,8 +8,7 @@ public class FabricaCheck extends FabricaCheckAbstracta {
 
     private static FabricaCheck instance = null;
 
-    protected FabricaCheck() {
-        // Exists only to defeat instantiation.
+    protected FabricaCheck() {       
     }
 
     public static FabricaCheck getInstance() {
@@ -20,28 +19,28 @@ public class FabricaCheck extends FabricaCheckAbstracta {
     }
 
     @Override
-    public CheckIn crearCheckIn() {
+    public CheckIn crearCheckIn(Integer id) {
         CheckIn checkIn = new CheckIn();
         checkIn.setConfirmacion("ok");
-        checkIn.setId(1);
+        checkIn.setId(id);
         return checkIn;
 
     }
 
     @Override
-    public CheckOut crearCheckOut() {
+    public CheckOut crearCheckOut(Integer id) {
         CheckOut checkOut = new CheckOut();
         checkOut.setConfirmacion("ok");
-        checkOut.setId(1);
+        checkOut.setId(id);
         return checkOut;
 
     }
 
     @Override
-    public CheckFood crearCheckFood() {
+    public CheckFood crearCheckFood(Integer id) {
         CheckFood checkFood = new CheckFood();
         checkFood.setConfirmacion("ok");
-        checkFood.setId(1);
+        checkFood.setId(id);
         return checkFood;
 
     }

@@ -6,9 +6,9 @@ package check;
  */
 public abstract class FabricaCheckAbstracta {
 
-    public abstract CheckIn crearCheckIn();
+    public abstract CheckIn crearCheckIn(Integer id);
 
-    public abstract CheckOut crearCheckOut();
+    public abstract CheckOut crearCheckOut(Integer id);
 
-    public abstract CheckFood crearCheckFood();
+    public abstract CheckFood crearCheckFood(Integer id);
 }

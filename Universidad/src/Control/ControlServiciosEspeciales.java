@@ -1,20 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Control;
 
 import aerolinea.Aerolinea;
-import vista.PantallaMenuPrincipal;
+import reserva.Reserva;
 import vista.PantallaServiciosEspeciales;
 
 /**
  *
  * @author javeriana.edu.co
  */
-public class ControlServiciosEspeciales implements IServiciosEspeciales{
-    
+public class ControlServiciosEspeciales implements IServiciosEspeciales {
+
     private static ControlServiciosEspeciales instance = null;
 
     protected ControlServiciosEspeciales() {
@@ -31,7 +26,11 @@ public class ControlServiciosEspeciales implements IServiciosEspeciales{
 
     @Override
     public void consultarRutaPorId(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Aerolinea.getInstance().consultarRutaPorId(id);
     }
-    
+
+    @Override
+    public void crearReserva(Reserva reserva) {
+        Aerolinea.getInstance().hacerReserva(reserva);
+    }
 }
