@@ -194,12 +194,7 @@ public class PantallaCheckIn extends javax.swing.JFrame implements AccionesPanta
         String numeroReserva = txtNumeroReserva.getText();
         ControlCheckIn.getInstance().consultarReserva(Integer.parseInt(numeroReserva));
         if (reserva != null) {
-            String nombreCompleto = reserva.getPersona().getPrimerNombre() + ""
-                    + reserva.getPersona().getSegundoNombre() + ""
-                    + reserva.getPersona().getPrimerApellido() + ""
-                    + reserva.getPersona().getSegundoApellido();
-
-            txtNombrePasajero.setText(nombreCompleto);
+            txtNombrePasajero.setText(reserva.getPersona().getNombreCompleto());
             txtFecha.setDate(reserva.getFecha());
             txtOrigen.setText(reserva.getRuta().getOrigen());
             txtDestino.setText(reserva.getRuta().getDestino());

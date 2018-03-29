@@ -97,4 +97,13 @@ public abstract class Persona {
         this.tipoDocumento = tipoDocumento;
     }
 
+    public String getNombreCompleto() {
+        String nombreCompleto = this.getPrimerNombre();
+        if (this.getSegundoNombre() != null && this.getSegundoNombre().equalsIgnoreCase("")) {
+            nombreCompleto += " "+this.getSegundoNombre();
+        }
+        nombreCompleto += " "+this.getPrimerApellido() + " " + this.getSegundoApellido();
+        return nombreCompleto;
+    }
+
 }

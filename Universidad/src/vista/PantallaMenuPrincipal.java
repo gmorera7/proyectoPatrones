@@ -63,6 +63,7 @@ public class PantallaMenuPrincipal extends javax.swing.JFrame implements Observe
         listaDestino = new javax.swing.JComboBox();
         jLabel5 = new javax.swing.JLabel();
         fechaViaje = new com.toedter.calendar.JDateChooser();
+        jButton1 = new javax.swing.JButton();
 
         jMenu1.setText("jMenu1");
 
@@ -101,6 +102,13 @@ public class PantallaMenuPrincipal extends javax.swing.JFrame implements Observe
 
         jLabel5.setText("Fecha Viaje");
 
+        jButton1.setText("Portal Azafata");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -115,11 +123,16 @@ public class PantallaMenuPrincipal extends javax.swing.JFrame implements Observe
                         .addComponent(jLabel1)
                         .addGap(156, 156, 156))))
             .addGroup(layout.createSequentialGroup()
-                .addGap(65, 65, 65)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(65, 65, 65)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButton1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -154,7 +167,8 @@ public class PantallaMenuPrincipal extends javax.swing.JFrame implements Observe
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCheckIn)
-                    .addComponent(btnConsultar))
+                    .addComponent(btnConsultar)
+                    .addComponent(jButton1))
                 .addContainerGap())
         );
 
@@ -179,10 +193,14 @@ public class PantallaMenuPrincipal extends javax.swing.JFrame implements Observe
     }//GEN-LAST:event_listaOrigenActionPerformed
 
     private void btnCheckInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCheckInActionPerformed
-        // TODO add your handling code here:
         PantallaMenuPrincipal.getInstance().setVisible(false);
         PantallaCheckIn.getInstance().setVisible(true);
     }//GEN-LAST:event_btnCheckInActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        PantallaMenuPrincipal.getInstance().setVisible(false);
+        PantallaAvion.getInstance().setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -223,6 +241,7 @@ public class PantallaMenuPrincipal extends javax.swing.JFrame implements Observe
     private javax.swing.JButton btnCheckIn;
     private javax.swing.JButton btnConsultar;
     private com.toedter.calendar.JDateChooser fechaViaje;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -207,7 +207,6 @@ public class PantallaSeleccionVuelo extends javax.swing.JFrame implements Observ
         DefaultListModel<String> model = new DefaultListModel<>();
         ArrayList<Ruta> rutasRespuesta = new ArrayList<>();
 
-        System.err.println("++++" + mensaje.getObjeto());
         if (mensaje.getAccion().equalsIgnoreCase("busquedaRuta")) {
 
             rutasRespuesta = (ArrayList<Ruta>) mensaje.getObjeto();
@@ -219,7 +218,5 @@ public class PantallaSeleccionVuelo extends javax.swing.JFrame implements Observ
             }
             rutas.setModel(model);
         }
-
     }
-
 }

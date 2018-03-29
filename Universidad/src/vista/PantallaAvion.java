@@ -1,21 +1,32 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vista;
+
+import Mensaje.Mensaje;
+import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
+import javax.swing.table.DefaultTableModel;
+import reserva.Reserva;
 
 /**
  *
- * @author gerson
+ * @author javeriana.edu.co
  */
-public class PantallaAvion extends javax.swing.JFrame {
+public class PantallaAvion extends javax.swing.JFrame implements Observer, AccionesPantalla {
 
-    /**
-     * Creates new form PantallaAvion
-     */
-    public PantallaAvion() {
-        initComponents();
+    private DefaultTableModel modelo;
+    private static PantallaAvion instance = null;
+
+    protected PantallaAvion() {
+    }
+
+    public static PantallaAvion getInstance() {
+        if (instance == null) {
+            instance = new PantallaAvion();
+            instance.initComponents();
+            instance.iniciarComponentes();
+
+        }
+        return instance;
     }
 
     /**
@@ -27,21 +38,76 @@ public class PantallaAvion extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnConsultar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        txtNumeroVuelo = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tabla = new javax.swing.JTable();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        btnConsultar.setText("Consultar");
+        btnConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Número Vuelo");
+
+        tabla.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tabla);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtNumeroVuelo, javax.swing.GroupLayout.DEFAULT_SIZE, 498, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btnConsultar)
+                .addGap(28, 28, 28))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(btnConsultar)
+                    .addComponent(txtNumeroVuelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        String data[][] = {};
+        String col[] = {"Vuelo", "Número Reserva", "Pasajero", "numeroSilla", "Comida Especial"};
+        modelo = new DefaultTableModel(data, col);
+        Control.ControlPantallaAvion.getInstance().consultarReservasPorVuelo(txtNumeroVuelo.getText());
+        tabla.setModel(modelo);
+    }//GEN-LAST:event_btnConsultarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -79,5 +145,46 @@ public class PantallaAvion extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnConsultar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable tabla;
+    private javax.swing.JTextField txtNumeroVuelo;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void update(Observable o, Object arg) {
+
+        Mensaje mensaje = (Mensaje) arg;
+        ArrayList<Reserva> reservasRespuesta;
+        if (mensaje.getAccion().equalsIgnoreCase("busquedaReservasPorVuelo")) {
+            reservasRespuesta = (ArrayList<Reserva>) mensaje.getObjeto();
+
+            for (int i = 0; i < reservasRespuesta.size(); i++) {
+                String pasajero = reservasRespuesta.get(i).getPersona().getNombreCompleto();
+                String vuelo = reservasRespuesta.get(i).getRuta().getNoVuelo();
+                String reserva = reservasRespuesta.get(i).getId() + "";
+                String numeroSilla = reservasRespuesta.get(i).getNumeroSilla();
+
+                String row[] = {vuelo, reserva, pasajero, numeroSilla, ""};
+
+                modelo.insertRow(0, row);
+            }
+            tabla.setModel(modelo);
+
+        }
+
+    }
+
+    @Override
+    public void iniciarComponentes() {
+        String data[][] = {};
+        String col[] = {"Vuelo", "Número Reserva", "Pasajero", "numeroSilla", "Comida Especial"};
+        modelo = new DefaultTableModel(data, col);
+    }
+
+    @Override
+    public void limpiarCampos() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

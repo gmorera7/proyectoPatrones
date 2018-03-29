@@ -12,8 +12,6 @@ public interface AccionRutas {
     
     public void consultarRutaPorId(Integer idRuta);
 
-    public void cargarRutas();
-
     public void cargarCiudadesOrigen();
 
     public void cargarCiudadesDestino();
