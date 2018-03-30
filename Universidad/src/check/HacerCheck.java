@@ -10,4 +10,6 @@ public interface HacerCheck {
 
     public void hacerCheckOut(Integer idReserva);
 
+    public void hacerCheckFood(Integer idReserva);
+
 }

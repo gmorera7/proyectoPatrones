@@ -3,6 +3,8 @@ package aerolinea;
 import Mensaje.HacerNotificacion;
 import Mensaje.Mensaje;
 import busqueda.Busqueda;
+import check.CheckFood;
+import check.CheckOut;
 import java.util.Observable;
 import check.FabricaCheck;
 import check.HacerCheck;
@@ -62,29 +64,6 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
     }
 
     @Override
-    public void hacerCheckIn(Integer idReserva) {
-        for (int i = 0; i < reservas.size(); i++) {
-            Reserva reserva = (Reserva) reservas.get(i);
-            if (reserva.getId().intValue() == idReserva) {
-                reserva.getCheck().add(FabricaCheck.getInstance().crearCheckIn(reserva.getCheck().size()));
-                reservas.set(i, reserva);
-                break;
-            }
-        }
-    }
-
-    @Override
-    public void hacerCheckOut(Integer idReserva) {
-        for (int i = 0; i < getReservas().size(); i++) {
-            Reserva reserva = (Reserva) getReservas().get(i);
-            if (reserva.getId().intValue() == idReserva) {
-                reserva.getCheck().add(FabricaCheck.getInstance().crearCheckFood(reserva.getCheck().size()));
-                getReservas().set(i, reserva);
-            }
-        }
-    }
-
-    @Override
     public void cargarCiudadesOrigen() {
         CargaDatos.getInstance().cargarCiudadesOrigen();
         enviarNotificacion("cargarCiudadesOrigen", getCiudadesOrigen());
@@ -124,6 +103,68 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
             }
         }
         enviarNotificacion("busquedaRutaPorId", rutaFinal);
+    }
+
+    @Override
+    public void consultarReservasPorVueloCheckFood(String numeroVuelo) {
+        ArrayList<Reserva> reservasEncontradas = new ArrayList<>();
+        boolean agregar;
+        for (Iterator it = reservas.iterator(); it.hasNext();) {
+            agregar = true;
+            Reserva reserva = (Reserva) it.next();
+
+            if (reserva.getRuta().getNoVuelo().equalsIgnoreCase(numeroVuelo)) {
+                if (reserva.getCheck() == null || reserva.getCheck().isEmpty()) {
+                    reservasEncontradas.add(reserva);
+                } else {
+                    for (int i = 0; i < reserva.getCheck().size(); i++) {
+                        if (reserva.getCheck().get(i) instanceof CheckFood) {
+                            agregar = false;
+                        }
+                    }
+                    if (agregar) {
+                        reservasEncontradas.add(reserva);
+                    }
+                }
+            }
+        }
+        enviarNotificacion("busquedaReservasPorVuelo", reservasEncontradas);
+    }
+
+    @Override
+    public void hacerCheckIn(Integer idReserva) {
+        for (int i = 0; i < reservas.size(); i++) {
+            Reserva reserva = (Reserva) reservas.get(i);
+            if (reserva.getId().intValue() == idReserva) {
+                reserva.getCheck().add(FabricaCheck.getInstance().crearCheckIn(reserva.getCheck().size()));
+                reservas.set(i, reserva);
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void hacerCheckOut(Integer idReserva) {
+        for (int i = 0; i < getReservas().size(); i++) {
+            Reserva reserva = (Reserva) getReservas().get(i);
+            if (reserva.getId().intValue() == idReserva) {
+                reserva.getCheck().add(FabricaCheck.getInstance().crearCheckOut(reserva.getCheck().size()));
+                getReservas().set(i, reserva);
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void hacerCheckFood(Integer idReserva) {
+        for (int i = 0; i < getReservas().size(); i++) {
+            Reserva reserva = (Reserva) getReservas().get(i);
+            if (reserva.getId().intValue() == idReserva) {
+                reserva.getCheck().add(FabricaCheck.getInstance().crearCheckFood(reserva.getCheck().size()));
+                getReservas().set(i, reserva);
+                break;
+            }
+        }
     }
 
     @Override
@@ -192,15 +233,29 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
     }
 
     @Override
-    public void consultarReservasPorVuelo(String numeroVuelo) {
+    public void consultarReservasPorVueloCheckOut(String numeroVuelo) {
         ArrayList<Reserva> reservasEncontradas = new ArrayList<>();
+        boolean agregar;
         for (Iterator it = reservas.iterator(); it.hasNext();) {
+            agregar = true;
             Reserva reserva = (Reserva) it.next();
-            
-            if (reserva.getRuta().getNoVuelo().equalsIgnoreCase(numeroVuelo)){
-                reservasEncontradas.add(reserva);
+
+            if (reserva.getRuta().getNoVuelo().equalsIgnoreCase(numeroVuelo)) {
+                if (reserva.getCheck() == null || reserva.getCheck().isEmpty()) {
+                    reservasEncontradas.add(reserva);
+                } else {
+                    for (int i = 0; i < reserva.getCheck().size(); i++) {
+                        if (reserva.getCheck().get(i) instanceof CheckOut) {
+                            agregar = false;
+                        }
+                    }
+                    if (agregar) {
+                        reservasEncontradas.add(reserva);
+                    }
+                }
             }
         }
         enviarNotificacion("busquedaReservasPorVuelo", reservasEncontradas);
+
     }
 }

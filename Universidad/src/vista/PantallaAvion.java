@@ -1,9 +1,11 @@
 package vista;
 
+import Control.ControlPantallaAvion;
 import Mensaje.Mensaje;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
 import reserva.Reserva;
 
@@ -14,6 +16,7 @@ import reserva.Reserva;
 public class PantallaAvion extends javax.swing.JFrame implements Observer, AccionesPantalla {
 
     private DefaultTableModel modelo;
+    private ArrayList<Reserva> reservasRespuesta;
     private static PantallaAvion instance = null;
 
     protected PantallaAvion() {
@@ -23,9 +26,9 @@ public class PantallaAvion extends javax.swing.JFrame implements Observer, Accio
         if (instance == null) {
             instance = new PantallaAvion();
             instance.initComponents();
-            instance.iniciarComponentes();
 
         }
+
         return instance;
     }
 
@@ -43,6 +46,8 @@ public class PantallaAvion extends javax.swing.JFrame implements Observer, Accio
         txtNumeroVuelo = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
+        btnGuardar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,33 +62,59 @@ public class PantallaAvion extends javax.swing.JFrame implements Observer, Accio
 
         tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "VUELO", "RESERVA", "PASAJERO", "SILLA", "COMIDA", "CHECKFOOD"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(tabla);
+
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtNumeroVuelo, javax.swing.GroupLayout.DEFAULT_SIZE, 498, Short.MAX_VALUE)
+                .addComponent(txtNumeroVuelo, javax.swing.GroupLayout.DEFAULT_SIZE, 543, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(btnConsultar)
                 .addGap(28, 28, 28))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2)
-                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 677, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(46, 46, 46))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnCancelar)
+                        .addGap(26, 26, 26)
+                        .addComponent(btnGuardar)
+                        .addGap(300, 300, 300))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -93,59 +124,48 @@ public class PantallaAvion extends javax.swing.JFrame implements Observer, Accio
                     .addComponent(jLabel1)
                     .addComponent(btnConsultar)
                     .addComponent(txtNumeroVuelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGuardar)
+                    .addComponent(btnCancelar))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-        String data[][] = {};
-        String col[] = {"Vuelo", "Número Reserva", "Pasajero", "numeroSilla", "Comida Especial"};
-        modelo = new DefaultTableModel(data, col);
         Control.ControlPantallaAvion.getInstance().consultarReservasPorVuelo(txtNumeroVuelo.getText());
-        tabla.setModel(modelo);
     }//GEN-LAST:event_btnConsultarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        boolean checkFood;
+        String idReserva;
+        for (int fila = 0; fila < reservasRespuesta.size(); fila++) {
+            checkFood = false;
+            idReserva = (String) tabla.getValueAt(fila, 1);
+            if (tabla.getValueAt(fila, 5) != null) {
+                checkFood = (boolean) tabla.getValueAt(fila, 5);
+                ControlPantallaAvion.getInstance().realizarCheckFood(Integer.parseInt(idReserva));
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PantallaAvion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PantallaAvion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PantallaAvion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PantallaAvion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
+        limpiarCampos();
+        PantallaAvion.getInstance().setVisible(false);
+        PantallaAerolinea.getInstance().setVisible(true);
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PantallaAvion().setVisible(true);
-            }
-        });
-    }
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        limpiarCampos(); 
+        PantallaAvion.getInstance().setVisible(false);
+        PantallaAerolinea.getInstance().setVisible(true);
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnConsultar;
+    private javax.swing.JButton btnGuardar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tabla;
@@ -156,8 +176,9 @@ public class PantallaAvion extends javax.swing.JFrame implements Observer, Accio
     public void update(Observable o, Object arg) {
 
         Mensaje mensaje = (Mensaje) arg;
-        ArrayList<Reserva> reservasRespuesta;
+
         if (mensaje.getAccion().equalsIgnoreCase("busquedaReservasPorVuelo")) {
+            modelo = (DefaultTableModel) tabla.getModel();
             reservasRespuesta = (ArrayList<Reserva>) mensaje.getObjeto();
 
             for (int i = 0; i < reservasRespuesta.size(); i++) {
@@ -166,25 +187,36 @@ public class PantallaAvion extends javax.swing.JFrame implements Observer, Accio
                 String reserva = reservasRespuesta.get(i).getId() + "";
                 String numeroSilla = reservasRespuesta.get(i).getNumeroSilla();
 
-                String row[] = {vuelo, reserva, pasajero, numeroSilla, ""};
+                JButton btn = new JButton("CHECKOUT");
+                Object row[] = {vuelo, reserva, pasajero, numeroSilla, "", false};
 
                 modelo.insertRow(0, row);
             }
             tabla.setModel(modelo);
-
         }
-
     }
 
     @Override
     public void iniciarComponentes() {
-        String data[][] = {};
-        String col[] = {"Vuelo", "Número Reserva", "Pasajero", "numeroSilla", "Comida Especial"};
-        modelo = new DefaultTableModel(data, col);
+        
     }
 
     @Override
     public void limpiarCampos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        reservasRespuesta = new ArrayList<>();
+        tabla.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{},
+                new String[]{
+                    "VUELO", "RESERVA", "PASAJERO", "SILLA", "COMIDA", "CHECKFOOD"
+                }
+        ) {
+            Class[] types = new Class[]{
+                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types[columnIndex];
+            }
+        });
     }
 }

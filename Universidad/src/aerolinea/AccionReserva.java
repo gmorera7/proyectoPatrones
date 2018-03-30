@@ -12,7 +12,10 @@ public interface AccionReserva {
 
     public void buscarReserva(Integer idReserva);
     
-    public void consultarReservasPorVuelo(String numeroVuelo);
+    public void consultarReservasPorVueloCheckFood(String numeroVuelo);
+    
+    public void consultarReservasPorVueloCheckOut(String numeroVuelo);
+    
         
 
 }

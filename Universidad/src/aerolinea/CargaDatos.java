@@ -68,7 +68,7 @@ public class CargaDatos {
             rutas.add(ruta2);
 
             ruta3 = new Ruta();
-            ruta3.setId(2);
+            ruta3.setId(3);
             ruta3.setDestino("MEDELLIN");
             ruta3.setDuracionVuelo("1");
             ruta3.setNoVuelo("V3");
@@ -79,7 +79,7 @@ public class CargaDatos {
             rutas.add(ruta3);
 
             ruta4 = new Ruta();
-            ruta4.setId(2);
+            ruta4.setId(4);
             ruta4.setDestino("BUCARAMANGA");
             ruta4.setDuracionVuelo("1");
             ruta4.setNoVuelo("V4");
