@@ -24,6 +24,7 @@ public abstract class FabricaComidaEspecialAbstracta {
 
     public abstract ComidaEspecial comidaParaNinos();
 
-    public abstract ComidaEspecial crearComidaPorDescripcion(String descripcion);
+    public abstract ComidaEspecial crearComidaPorDescripcion(String descripcion);    
+    
 
 }

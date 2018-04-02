@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import javeriana.edu.co.modelo.check.FabricaCheckAbstracta;
 import javeriana.edu.co.modelo.comida.ComidaEspecial;
 import javeriana.edu.co.modelo.encuesta.Encuesta;
 import javeriana.edu.co.modelo.reserva.Reserva;
@@ -29,8 +30,10 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
     private ArrayList rutas = new ArrayList<>();
     private List<Persona> pasajeros = new ArrayList<>();
 
+    private static FabricaCheckAbstracta fabricaCheck;
     private static Aerolinea instance = null;
-
+    
+    
     protected Aerolinea() {
 
     }
@@ -38,6 +41,7 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
     public static Aerolinea getInstance() {
         if (instance == null) {
             instance = new Aerolinea();
+            fabricaCheck = FabricaCheck.getInstance();
             CargaDatos.getInstance().cargarRutas();
             CargaDatos.getInstance().cargarReservas();
         }
@@ -52,7 +56,6 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
         getReservas().add(getReservas().size(), reserva);
 
         crearActualizarPasajeros(reserva);
-
         enviarNotificacion("hacerReserva", reserva);
     }
 
@@ -176,7 +179,7 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
         for (int i = 0; i < reservas.size(); i++) {
             Reserva reserva = (Reserva) reservas.get(i);
             if (reserva.getId().intValue() == idReserva) {
-                reserva.getCheck().add(FabricaCheck.getInstance().crearCheckIn(reserva.getCheck().size(), confirmacion));
+                reserva.getCheck().add(fabricaCheck.crearCheckIn(reserva.getCheck().size(), confirmacion));
                 reservas.set(i, reserva);
                 break;
             }
@@ -188,7 +191,7 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
         for (int i = 0; i < getReservas().size(); i++) {
             Reserva reserva = (Reserva) getReservas().get(i);
             if (reserva.getId().intValue() == idReserva) {
-                reserva.getCheck().add(FabricaCheck.getInstance().crearCheckOut(reserva.getCheck().size()+1, confirmacion));
+                reserva.getCheck().add(fabricaCheck.crearCheckOut(reserva.getCheck().size()+1, confirmacion));
                 getReservas().set(i, reserva);
                 break;
             }
@@ -200,7 +203,7 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
         for (int i = 0; i < getReservas().size(); i++) {
             Reserva reserva = (Reserva) getReservas().get(i);
             if (reserva.getId().intValue() == idReserva) {
-                reserva.getCheck().add(FabricaCheck.getInstance().crearCheckFood(reserva.getCheck().size(), confirmacion));
+                reserva.getCheck().add(fabricaCheck.crearCheckFood(reserva.getCheck().size(), confirmacion));
                 getReservas().set(i, reserva);
                 break;
             }

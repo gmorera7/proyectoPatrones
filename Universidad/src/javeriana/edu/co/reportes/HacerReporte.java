@@ -1,16 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package javeriana.edu.co.reportes;
+
+import java.util.Date;
 
 /**
  *
- * @author gerson
+ * @author javeriana.edu.co
  */
 public interface HacerReporte {
-    
-    
-    
+
+    public void reporte2(Date fechaInicial, Date FechaFinal);
+
+    public void reporte1(Date fechaInicial, Date FechaFinal);
+
+    public void reporte3(Date fechaInicial, Date FechaFinal);
+
+    public void reporte4(Date fechaInicial, Date FechaFinal);
+
+    public void reporte5(Date fechaInicial, Date FechaFinal);
+
+    public void reporte6(Date fechaInicial, Date FechaFinal);
+
 }

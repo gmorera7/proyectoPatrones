@@ -1,13 +1,15 @@
 package javeriana.edu.co.control;
 
+import javeriana.edu.co.modelo.aerolinea.AccionRutas;
 import javeriana.edu.co.modelo.aerolinea.Aerolinea;
-import javeriana.edu.co.vista.PantallaMenuPrincipal;
 
 /**
  *
  * @author javeriana.edu.co
  */
 public class ControlMenuPrinicipal implements IControlMenuPrincipal {
+
+    private static AccionRutas aerolinea;
 
     private static ControlMenuPrinicipal instance = null;
 
@@ -18,19 +20,19 @@ public class ControlMenuPrinicipal implements IControlMenuPrincipal {
     public static ControlMenuPrinicipal getInstance() {
         if (instance == null) {
             instance = new ControlMenuPrinicipal();
-            Aerolinea.getInstance().addObserver(PantallaMenuPrincipal.getInstance());
+            aerolinea = Aerolinea.getInstance();            
         }
         return instance;
     }
 
     @Override
     public void cargarCatalogosCiudadesOrigen() {
-        Aerolinea.getInstance().cargarCiudadesOrigen();
+        aerolinea.cargarCiudadesOrigen();
     }
 
     @Override
     public void cargarCatalogosCiudadesDestino() {
-        Aerolinea.getInstance().cargarCiudadesDestino();
+        aerolinea.cargarCiudadesDestino();
     }
 
 }

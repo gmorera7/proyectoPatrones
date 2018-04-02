@@ -6,7 +6,7 @@ package javeriana.edu.co.modelo.usuario;
  */
 public abstract class FabricaPersonaAbstracta {
 
-    public abstract Pasajero crearPasajero();
+    public abstract Pasajero crearPasajero(String tipoDcumento, String numeroDocumento, String primerN, String segundoN, String primerA, String segundoA, String direccion, String correo, String telefono);
 
     public abstract Azafata crearAzafata();
 

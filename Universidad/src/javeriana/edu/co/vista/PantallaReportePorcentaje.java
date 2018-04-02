@@ -3,14 +3,17 @@ package javeriana.edu.co.vista;
 import java.util.Observer;
 import javeriana.edu.co.control.ControlReportes;
 import javeriana.edu.co.modelo.mensaje.Mensaje;
+import javeriana.edu.co.reportes.Reporte;
 
 /**
  *
  * @author javariana.edu.co
  */
-public class PantallaReportePorcentaje extends javax.swing.JFrame implements Observer {
+public class PantallaReportePorcentaje extends javax.swing.JFrame implements Observer, AccionesPantalla {
 
     private static PantallaReportePorcentaje instance = null;
+
+    private static Reporte reporte = Reporte.getInstance();
 
     protected PantallaReportePorcentaje() {
     }
@@ -19,7 +22,7 @@ public class PantallaReportePorcentaje extends javax.swing.JFrame implements Obs
         if (instance == null) {
             instance = new PantallaReportePorcentaje();
             instance.initComponents();
-
+            instance.iniciarComponentes();
         }
         return instance;
     }
@@ -252,6 +255,16 @@ public class PantallaReportePorcentaje extends javax.swing.JFrame implements Obs
             valor = (int) mensaje.getObjeto();
             txtValor3.setText(valor + "");
         }
+    }
+
+    @Override
+    public void iniciarComponentes() {
+        reporte.addObserver(PantallaReportePorcentaje.getInstance());
+    }
+
+    @Override
+    public void limpiarCampos() {
+
     }
 
 }

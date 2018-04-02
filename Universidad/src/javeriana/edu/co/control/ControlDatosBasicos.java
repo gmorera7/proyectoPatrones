@@ -1,7 +1,7 @@
 package javeriana.edu.co.control;
 
+import javeriana.edu.co.modelo.aerolinea.AccionReserva;
 import javeriana.edu.co.modelo.aerolinea.Aerolinea;
-import javeriana.edu.co.vista.PantallaDatosBasicos;
 
 /**
  *
@@ -10,6 +10,7 @@ import javeriana.edu.co.vista.PantallaDatosBasicos;
 public class ControlDatosBasicos implements IControlDatosBasicos {
 
     private static ControlDatosBasicos instance = null;
+    private AccionReserva aerolinea = Aerolinea.getInstance();
 
     protected ControlDatosBasicos() {
 
@@ -18,14 +19,13 @@ public class ControlDatosBasicos implements IControlDatosBasicos {
     public static ControlDatosBasicos getInstance() {
         if (instance == null) {
             instance = new ControlDatosBasicos();
-            Aerolinea.getInstance().addObserver(PantallaDatosBasicos.getInstance());
         }
         return instance;
     }
 
     @Override
     public void cargarTiposDocumento() {
-        Aerolinea.getInstance().cargarTiposDocumento();
+        aerolinea.cargarTiposDocumento();
     }
 
 }

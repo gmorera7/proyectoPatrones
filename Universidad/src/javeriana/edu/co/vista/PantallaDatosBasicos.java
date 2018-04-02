@@ -3,7 +3,9 @@ package javeriana.edu.co.vista;
 import java.util.Observable;
 import java.util.Observer;
 import javeriana.edu.co.control.ControlDatosBasicos;
+import javeriana.edu.co.modelo.aerolinea.Aerolinea;
 import javeriana.edu.co.modelo.mensaje.Mensaje;
+import javeriana.edu.co.modelo.usuario.FabricaPersona;
 import javeriana.edu.co.modelo.usuario.Pasajero;
 
 /**
@@ -15,6 +17,8 @@ public class PantallaDatosBasicos extends javax.swing.JFrame implements Acciones
     private static PantallaDatosBasicos instance = null;
 
     private Integer idRuta;
+    
+    private static Aerolinea aerolinea = Aerolinea.getInstance();
 
     protected PantallaDatosBasicos() {
     }
@@ -30,6 +34,7 @@ public class PantallaDatosBasicos extends javax.swing.JFrame implements Acciones
 
     @Override
     public void iniciarComponentes() {
+        aerolinea.addObserver(PantallaDatosBasicos.getInstance());
         ControlDatosBasicos.getInstance().cargarTiposDocumento();
     }
 
@@ -222,17 +227,7 @@ public class PantallaDatosBasicos extends javax.swing.JFrame implements Acciones
     }//GEN-LAST:event_txtTipoDocumentoActionPerformed
 
     private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
-        Pasajero pasajero = new Pasajero();
-        pasajero.setTipoDocumento(txtTipoDocumento.getSelectedItem().toString());
-        pasajero.setNumeroDocumento(txtNumeroDocumento.getText());
-        pasajero.setPrimerNombre(txtPrimerNombre.getText());
-        pasajero.setSegundoNombre(txtSegundoNombre.getText());
-        pasajero.setPrimerApellido(txtPrimerApellido.getText());
-        pasajero.setSegundoApellido(txtSegundoApellido.getText());
-        pasajero.setDireccion(txtDireccion.getText());
-        pasajero.setCorreoElectronico(txtCorreo.getText());
-        pasajero.setTelefono(txtTelefono.getText());
-
+        Pasajero pasajero = FabricaPersona.getInstance().crearPasajero(txtTipoDocumento.getSelectedItem().toString(), txtNumeroDocumento.getText(), txtPrimerNombre.getText(), txtSegundoNombre.getText(), txtPrimerApellido.getText(), txtSegundoApellido.getText(), txtDireccion.getText(), txtCorreo.getText(), txtTelefono.getText());
         PantallaDatosBasicos.getInstance().limpiarCampos();
         PantallaDatosBasicos.getInstance().setVisible(false);
         PantallaServiciosEspeciales.getInstance().setPasajero(pasajero);

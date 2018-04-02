@@ -19,7 +19,7 @@ import javeriana.edu.co.modelo.usuario.Persona;
  *
  * @author javeriana.edu.co
  */
-public class Reporte extends Observable implements HacerCheck, Observer {
+public class Reporte extends Observable implements HacerCheck, Observer ,HacerReporte {
 
     static Aerolinea aerolinea;
 

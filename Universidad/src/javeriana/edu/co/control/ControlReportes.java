@@ -2,8 +2,6 @@ package javeriana.edu.co.control;
 
 import javeriana.edu.co.reportes.Reporte;
 import java.util.Date;
-import javeriana.edu.co.vista.PantallaDepartamentoRelaciones;
-import javeriana.edu.co.vista.PantallaReportePorcentaje;
 
 /**
  *
@@ -20,8 +18,6 @@ public class ControlReportes implements IControlReportes {
     public static ControlReportes getInstance() {
         if (instance == null) {
             instance = new ControlReportes();
-            Reporte.getInstance().addObserver(PantallaReportePorcentaje.getInstance());
-            Reporte.getInstance().addObserver(PantallaDepartamentoRelaciones.getInstance());
         }
         return instance;
     }

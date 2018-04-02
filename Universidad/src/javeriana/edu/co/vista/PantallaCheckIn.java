@@ -5,7 +5,9 @@ import javeriana.edu.co.modelo.mensaje.Mensaje;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JOptionPane;
+import javeriana.edu.co.modelo.aerolinea.Aerolinea;
 import javeriana.edu.co.modelo.reserva.Reserva;
+import javeriana.edu.co.reportes.Reporte;
 
 /**
  *
@@ -16,6 +18,8 @@ public class PantallaCheckIn extends javax.swing.JFrame implements AccionesPanta
     private static PantallaCheckIn instance = null;
 
     private Reserva reserva;
+    
+    private Aerolinea aerolinea = Aerolinea.getInstance();
 
     protected PantallaCheckIn() {
     }
@@ -30,7 +34,9 @@ public class PantallaCheckIn extends javax.swing.JFrame implements AccionesPanta
     }
 
     @Override
-    public void iniciarComponentes() {
+    public void iniciarComponentes() {   
+        aerolinea.addObserver(Reporte.getInstance());
+        aerolinea.addObserver(PantallaCheckIn.getInstance());
         txtNombrePasajero.setVisible(false);
         txtDestino.setVisible(false);
         txtOrigen.setVisible(false);

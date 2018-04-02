@@ -7,6 +7,7 @@ import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
+import javeriana.edu.co.modelo.aerolinea.Aerolinea;
 import javeriana.edu.co.modelo.reserva.Reserva;
 
 /**
@@ -18,6 +19,7 @@ public class PantallaAvion extends javax.swing.JFrame implements Observer, Accio
     private DefaultTableModel modelo;
     private ArrayList<Reserva> reservasRespuesta;
     private static PantallaAvion instance = null;
+    private Aerolinea aerolinea = Aerolinea.getInstance();
 
     protected PantallaAvion() {
     }
@@ -26,6 +28,7 @@ public class PantallaAvion extends javax.swing.JFrame implements Observer, Accio
         if (instance == null) {
             instance = new PantallaAvion();
             instance.initComponents();
+            instance.iniciarComponentes();
 
         }
 
@@ -137,7 +140,7 @@ public class PantallaAvion extends javax.swing.JFrame implements Observer, Accio
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-        javeriana.edu.co.control.ControlPantallaAvion.getInstance().consultarReservasPorVuelo(txtNumeroVuelo.getText());
+        ControlPantallaAvion.getInstance().consultarReservasPorVuelo(txtNumeroVuelo.getText());
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
@@ -198,7 +201,7 @@ public class PantallaAvion extends javax.swing.JFrame implements Observer, Accio
 
     @Override
     public void iniciarComponentes() {
-        
+         aerolinea.addObserver(PantallaAvion.getInstance());
     }
 
     @Override

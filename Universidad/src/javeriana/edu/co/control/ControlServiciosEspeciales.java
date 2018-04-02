@@ -18,8 +18,7 @@ public class ControlServiciosEspeciales implements IServiciosEspeciales {
 
     public static ControlServiciosEspeciales getInstance() {
         if (instance == null) {
-            instance = new ControlServiciosEspeciales();
-            Aerolinea.getInstance().addObserver(PantallaServiciosEspeciales.getInstance());
+            instance = new ControlServiciosEspeciales();            
         }
         return instance;
     }

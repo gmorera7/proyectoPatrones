@@ -36,7 +36,7 @@ public class PantallaMenuReporte extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        btnPorcentajes.setText("Porcentajes");
+        btnPorcentajes.setText("Analista de reportes");
         btnPorcentajes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPorcentajesActionPerformed(evt);
@@ -79,15 +79,13 @@ public class PantallaMenuReporte extends javax.swing.JFrame {
                         .addComponent(btnRegresar)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnAbastecedor)
-                        .addGap(112, 112, 112))
+                        .addComponent(jLabel1)
+                        .addGap(157, 157, 157))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnPorcentajes)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(17, 17, 17)))
-                        .addGap(140, 140, 140))))
+                            .addComponent(btnAbastecedor))
+                        .addGap(112, 112, 112))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

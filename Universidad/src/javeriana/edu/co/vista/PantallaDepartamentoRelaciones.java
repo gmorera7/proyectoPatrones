@@ -7,18 +7,21 @@ import java.util.Observer;
 import javax.swing.table.DefaultTableModel;
 import javeriana.edu.co.control.ControlReportes;
 import javeriana.edu.co.modelo.mensaje.Mensaje;
+import javeriana.edu.co.reportes.Reporte;
 import javeriana.edu.co.reportes.ReporteComida;
 
 /**
  *
  * @author javeriana.edu.co
  */
-public class PantallaDepartamentoRelaciones extends javax.swing.JFrame implements Observer {
+public class PantallaDepartamentoRelaciones extends javax.swing.JFrame implements Observer ,AccionesPantalla {
 
     private DefaultTableModel modelo;
     private DefaultTableModel modelo2;
 
     private static PantallaDepartamentoRelaciones instance = null;
+    
+    private static Reporte reporte = Reporte.getInstance();
 
     protected PantallaDepartamentoRelaciones() {
 
@@ -28,6 +31,7 @@ public class PantallaDepartamentoRelaciones extends javax.swing.JFrame implement
         if (instance == null) {
             instance = new PantallaDepartamentoRelaciones();
             instance.initComponents();
+            instance.iniciarComponentes();
         }
         return instance;
     }
@@ -259,5 +263,15 @@ public class PantallaDepartamentoRelaciones extends javax.swing.JFrame implement
             }
             tabla2.setModel(modelo2);
         }
+    }
+
+    @Override
+    public void iniciarComponentes() {
+        reporte.addObserver(PantallaDepartamentoRelaciones.getInstance());
+    }
+
+    @Override
+    public void limpiarCampos() {
+        
     }
 }

@@ -6,8 +6,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.JButton;
 import javax.swing.table.DefaultTableModel;
+import javeriana.edu.co.reportes.Reporte;
 import javeriana.edu.co.reportes.ReporteComidaProteina;
 
 /**
@@ -19,6 +19,7 @@ public class PantallaAbastecedor extends javax.swing.JFrame implements Observer,
     private DefaultTableModel modelo;
     private List<ReporteComidaProteina> respuesta;
     private static PantallaAbastecedor instance = null;
+    private Reporte reporte = Reporte.getInstance();
 
     protected PantallaAbastecedor() {
     }
@@ -27,7 +28,7 @@ public class PantallaAbastecedor extends javax.swing.JFrame implements Observer,
         if (instance == null) {
             instance = new PantallaAbastecedor();
             instance.initComponents();
-
+            instance.iniciarComponentes();
         }
 
         return instance;
@@ -186,7 +187,7 @@ public class PantallaAbastecedor extends javax.swing.JFrame implements Observer,
 
     @Override
     public void iniciarComponentes() {
-
+    reporte.addObserver(PantallaAbastecedor.getInstance());
     }
 
     @Override

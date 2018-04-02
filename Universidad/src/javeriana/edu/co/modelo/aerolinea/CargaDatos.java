@@ -1,6 +1,5 @@
 package javeriana.edu.co.modelo.aerolinea;
 
-import javeriana.edu.co.modelo.usuario.FabricaPersona;
 import javeriana.edu.co.modelo.usuario.Pasajero;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,6 +10,7 @@ import java.util.logging.Logger;
 import javeriana.edu.co.modelo.comida.FabricaComidaEspecial;
 import javeriana.edu.co.modelo.reserva.Reserva;
 import javeriana.edu.co.modelo.reserva.Ruta;
+import javeriana.edu.co.modelo.usuario.Persona;
 
 /**
  *
@@ -116,7 +116,7 @@ public class CargaDatos {
     public void cargarReservas() {
         Integer id1, id2, id3;
 
-        Pasajero pasajero1 = FabricaPersona.getInstance().crearPasajero();
+        Pasajero pasajero1 = new Pasajero();
         pasajero1.setTipoDocumento("CEDULA");
         pasajero1.setNumeroDocumento("1107045881");
         pasajero1.setPrimerNombre("CARLOS");
@@ -127,7 +127,7 @@ public class CargaDatos {
         pasajero1.setDireccion("CALLE 54 65-85");
         pasajero1.setCorreoElectronico("gmorera1987@gmail.com");
 
-        Pasajero pasajero2 = FabricaPersona.getInstance().crearPasajero();
+        Pasajero pasajero2 = new Pasajero();
         pasajero2.setTipoDocumento("CEDULA");
         pasajero2.setNumeroDocumento("1107045882");
         pasajero2.setPrimerNombre("ANDREA");
@@ -138,7 +138,7 @@ public class CargaDatos {
         pasajero2.setDireccion("CALLE 12 25-14");
         pasajero2.setCorreoElectronico("gmorera1987@gmail.com");
 
-        Pasajero pasajero3 = FabricaPersona.getInstance().crearPasajero();
+        Pasajero pasajero3 = new Pasajero();
         pasajero3.setTipoDocumento("CEDULA");
         pasajero3.setNumeroDocumento("1107045883");
         pasajero3.setPrimerNombre("JULIAN");

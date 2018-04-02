@@ -7,14 +7,14 @@ import javeriana.edu.co.modelo.reserva.Reserva;
  * @author javeriana.edu.co
  */
 public class PantallaConfirmacionReserva extends javax.swing.JFrame implements AccionesPantalla {
-    
+
     private Reserva reserva;
-    
+
     private static PantallaConfirmacionReserva instance = null;
-    
+
     protected PantallaConfirmacionReserva() {
     }
-    
+
     public static PantallaConfirmacionReserva getInstance() {
         if (instance == null) {
             instance = new PantallaConfirmacionReserva();
@@ -23,21 +23,21 @@ public class PantallaConfirmacionReserva extends javax.swing.JFrame implements A
         instance.iniciarComponentes();
         return instance;
     }
-    
+
     @Override
     public void limpiarCampos() {
     }
-    
+
     @Override
     public void iniciarComponentes() {
-        
+
         if (reserva != null) {
             txtNumeroReserva.setEnabled(false);
             txtNumeroReserva.setText(reserva.getId() + "");
         }
-        
+
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -139,5 +139,5 @@ public class PantallaConfirmacionReserva extends javax.swing.JFrame implements A
     public void setReserva(Reserva reserva) {
         this.reserva = reserva;
     }
-    
+
 }

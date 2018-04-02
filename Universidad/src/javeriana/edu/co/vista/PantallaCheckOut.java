@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.table.DefaultTableModel;
+import javeriana.edu.co.modelo.aerolinea.Aerolinea;
 import javeriana.edu.co.modelo.reserva.Reserva;
 
 /**
@@ -17,6 +18,7 @@ public class PantallaCheckOut extends javax.swing.JFrame implements Observer, Ac
     private DefaultTableModel modelo;
     private ArrayList<Reserva> reservasRespuesta;
     private static PantallaCheckOut instance = null;
+    private static Aerolinea aerolinea = Aerolinea.getInstance();
 
     protected PantallaCheckOut() {
     }
@@ -25,6 +27,7 @@ public class PantallaCheckOut extends javax.swing.JFrame implements Observer, Ac
         if (instance == null) {
             instance = new PantallaCheckOut();
             instance.initComponents();
+            instance.iniciarComponentes();
 
         }
 
@@ -185,7 +188,7 @@ public class PantallaCheckOut extends javax.swing.JFrame implements Observer, Ac
                 String vuelo = reservasRespuesta.get(i).getRuta().getNoVuelo();
                 String reserva = reservasRespuesta.get(i).getId() + "";
                 String numeroSilla = reservasRespuesta.get(i).getNumeroSilla();
-                 String comida = reservasRespuesta.get(i).getComida().getDescripcion();
+                String comida = reservasRespuesta.get(i).getComida().getDescripcion();
                 Object row[] = {vuelo, reserva, pasajero, numeroSilla, comida, false};
 
                 modelo.insertRow(0, row);
@@ -196,6 +199,7 @@ public class PantallaCheckOut extends javax.swing.JFrame implements Observer, Ac
 
     @Override
     public void iniciarComponentes() {
+        aerolinea.addObserver(PantallaCheckOut.getInstance());
     }
 
     @Override
