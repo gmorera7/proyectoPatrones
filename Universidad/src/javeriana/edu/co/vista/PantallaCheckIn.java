@@ -40,6 +40,11 @@ public class PantallaCheckIn extends javax.swing.JFrame implements AccionesPanta
 
     @Override
     public void limpiarCampos() {
+        txtNumeroReserva.setText("");
+        txtDestino.setText("");
+        txtOrigen.setText("");
+        txtNumeroReserva.setText("");
+        txtNombrePasajero.setText("");
     }
 
     @SuppressWarnings("unchecked")
@@ -178,15 +183,17 @@ public class PantallaCheckIn extends javax.swing.JFrame implements AccionesPanta
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnHacerCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHacerCheckActionPerformed
-        ControlCheckIn.getInstance().hacerCheckIn(reserva.getId());
+        ControlCheckIn.getInstance().hacerCheckIn(reserva.getId(), true);
         PantallaCheckIn.getInstance().setVisible(false);
         PantallaMenuPrincipal.getInstance().setVisible(true);
+        limpiarCampos();
 
     }//GEN-LAST:event_btnHacerCheckActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         PantallaCheckIn.getInstance().setVisible(false);
         PantallaMenuPrincipal.getInstance().setVisible(true);
+        limpiarCampos();
 
     }//GEN-LAST:event_btnCancelarActionPerformed
 
@@ -204,7 +211,7 @@ public class PantallaCheckIn extends javax.swing.JFrame implements AccionesPanta
             txtOrigen.setVisible(true);
             txtFecha.setVisible(true);
             btnHacerCheck.setEnabled(true);
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "No se encontro valores");
         }
 

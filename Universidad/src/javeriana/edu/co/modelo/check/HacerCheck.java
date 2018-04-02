@@ -6,10 +6,10 @@ package javeriana.edu.co.modelo.check;
  */
 public interface HacerCheck {
 
-    public void hacerCheckIn(Integer idReserva);
+    public void hacerCheckIn(Integer idReserva, boolean confirmacion);
 
-    public void hacerCheckOut(Integer idReserva);
+    public void hacerCheckOut(Integer idReserva, boolean confirmacion);
 
-    public void hacerCheckFood(Integer idReserva);
+    public void hacerCheckFood(Integer idReserva, boolean confirmacion);
 
 }

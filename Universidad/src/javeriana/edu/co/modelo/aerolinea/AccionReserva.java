@@ -1,5 +1,6 @@
 package javeriana.edu.co.modelo.aerolinea;
 
+import javeriana.edu.co.modelo.encuesta.Encuesta;
 import javeriana.edu.co.modelo.reserva.Reserva;
 
 /**
@@ -23,5 +24,7 @@ public interface AccionReserva {
     public void cargarNumeroSillas();
 
     public void cargarTiposDocumento();
+    
+    public void hacerEncuesta(Encuesta encuesta);
 
 }

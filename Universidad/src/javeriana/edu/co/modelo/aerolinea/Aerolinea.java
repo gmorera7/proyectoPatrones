@@ -11,8 +11,12 @@ import javeriana.edu.co.modelo.check.HacerCheck;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
+import javeriana.edu.co.modelo.comida.ComidaEspecial;
+import javeriana.edu.co.modelo.encuesta.Encuesta;
 import javeriana.edu.co.modelo.reserva.Reserva;
 import javeriana.edu.co.modelo.reserva.Ruta;
+import javeriana.edu.co.modelo.usuario.Persona;
 import javeriana.edu.co.utilidades.Utilities;
 
 /**
@@ -23,6 +27,7 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
 
     private ArrayList reservas = new ArrayList<>();
     private ArrayList rutas = new ArrayList<>();
+    private List<Persona> pasajeros = new ArrayList<>();
 
     private static Aerolinea instance = null;
 
@@ -42,12 +47,39 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
     @Override
     public void hacerReserva(Reserva reserva) {
         reserva.setFecha(new Date());
-        reserva.setEstado("ACTIVA");
         reserva.setCheck(new ArrayList<>());
         reserva.setId(getReservas().size() + 1);
         getReservas().add(getReservas().size(), reserva);
 
+        crearActualizarPasajeros(reserva);
+
         enviarNotificacion("hacerReserva", reserva);
+    }
+
+    public void crearActualizarPasajeros(Reserva reserva) {
+        
+        List<Persona> pasajeros1 =getPasajeros();
+        
+        boolean encontrado = false;
+        int posicion = 0;
+        if (getPasajeros().isEmpty()) {
+            getPasajeros().add(reserva.getPersona());
+        } else {
+            for (int i = 0; i < getPasajeros().size(); i++) {
+                if (getPasajeros().get(i).getNumeroDocumento().equalsIgnoreCase(reserva.getPersona().getNumeroDocumento())
+                        && getPasajeros().get(i).getTipoDocumento().equalsIgnoreCase(reserva.getPersona().getTipoDocumento())) {
+                    encontrado = true;
+                    posicion = i;
+                    break;
+                }
+            }
+            if (encontrado) {
+                getPasajeros().set(posicion, reserva.getPersona());
+            } else {
+                getPasajeros().add(reserva.getPersona());
+            }
+        }
+
     }
 
     @Override
@@ -119,7 +151,9 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
 
             if (reserva.getRuta().getNoVuelo().equalsIgnoreCase(numeroVuelo)) {
                 if (reserva.getCheck() == null || reserva.getCheck().isEmpty()) {
-                    reservasEncontradas.add(reserva);
+                    if (reserva.getComida() instanceof ComidaEspecial) {
+                        reservasEncontradas.add(reserva);
+                    }
                 } else {
                     for (int i = 0; i < reserva.getCheck().size(); i++) {
                         if (reserva.getCheck().get(i) instanceof CheckFood) {
@@ -127,7 +161,9 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
                         }
                     }
                     if (agregar) {
-                        reservasEncontradas.add(reserva);
+                        if (reserva.getComida() instanceof ComidaEspecial) {
+                            reservasEncontradas.add(reserva);
+                        }
                     }
                 }
             }
@@ -136,11 +172,11 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
     }
 
     @Override
-    public void hacerCheckIn(Integer idReserva) {
+    public void hacerCheckIn(Integer idReserva, boolean confirmacion) {
         for (int i = 0; i < reservas.size(); i++) {
             Reserva reserva = (Reserva) reservas.get(i);
             if (reserva.getId().intValue() == idReserva) {
-                reserva.getCheck().add(FabricaCheck.getInstance().crearCheckIn(reserva.getCheck().size()));
+                reserva.getCheck().add(FabricaCheck.getInstance().crearCheckIn(reserva.getCheck().size(), confirmacion));
                 reservas.set(i, reserva);
                 break;
             }
@@ -148,11 +184,11 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
     }
 
     @Override
-    public void hacerCheckOut(Integer idReserva) {
+    public void hacerCheckOut(Integer idReserva, boolean confirmacion) {
         for (int i = 0; i < getReservas().size(); i++) {
             Reserva reserva = (Reserva) getReservas().get(i);
             if (reserva.getId().intValue() == idReserva) {
-                reserva.getCheck().add(FabricaCheck.getInstance().crearCheckOut(reserva.getCheck().size()));
+                reserva.getCheck().add(FabricaCheck.getInstance().crearCheckOut(reserva.getCheck().size()+1, confirmacion));
                 getReservas().set(i, reserva);
                 break;
             }
@@ -160,11 +196,11 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
     }
 
     @Override
-    public void hacerCheckFood(Integer idReserva) {
+    public void hacerCheckFood(Integer idReserva, boolean confirmacion) {
         for (int i = 0; i < getReservas().size(); i++) {
             Reserva reserva = (Reserva) getReservas().get(i);
             if (reserva.getId().intValue() == idReserva) {
-                reserva.getCheck().add(FabricaCheck.getInstance().crearCheckFood(reserva.getCheck().size()));
+                reserva.getCheck().add(FabricaCheck.getInstance().crearCheckFood(reserva.getCheck().size(), confirmacion));
                 getReservas().set(i, reserva);
                 break;
             }
@@ -254,5 +290,32 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
     @Override
     public void cargarNumeroSillas() {
         enviarNotificacion("cargarMenuNumeroSillas", CargaDatos.getInstance().cargarMenuSillas());
+    }
+
+    /**
+     * @return the pasajeros
+     */
+    public List<Persona> getPasajeros() {
+        return pasajeros;
+    }
+
+    /**
+     * @param pasajeros the pasajeros to set
+     */
+    public void setPasajeros(List<Persona> pasajeros) {
+        this.pasajeros = pasajeros;
+    }
+
+    @Override
+    public void hacerEncuesta(Encuesta encuesta) {
+        Integer idReserva = encuesta.getIdReserva();
+        for (int i = 0; i < getReservas().size(); i++) {
+            Reserva reserva = (Reserva) getReservas().get(i);
+            if (reserva.getId().intValue() == idReserva) {
+                reserva.setEncuesta(encuesta);
+                getReservas().set(i, reserva);
+                break;
+            }
+        }
     }
 }

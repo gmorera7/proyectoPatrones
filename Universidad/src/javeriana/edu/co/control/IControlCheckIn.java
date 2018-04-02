@@ -8,6 +8,6 @@ public interface IControlCheckIn {
 
     public void consultarReserva(Integer id);
 
-    public void hacerCheckIn(Integer idReserva);
+    public void hacerCheckIn(Integer idReserva, boolean confirmacion);
 
 }

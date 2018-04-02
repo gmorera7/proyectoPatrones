@@ -59,6 +59,7 @@ public class PantallaMenuPrincipal extends javax.swing.JFrame implements Observe
         jLabel5 = new javax.swing.JLabel();
         fechaViaje = new com.toedter.calendar.JDateChooser();
         jButton1 = new javax.swing.JButton();
+        btnEncuesta = new javax.swing.JButton();
 
         jMenu1.setText("jMenu1");
 
@@ -104,6 +105,13 @@ public class PantallaMenuPrincipal extends javax.swing.JFrame implements Observe
             }
         });
 
+        btnEncuesta.setText("Encuesta");
+        btnEncuesta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEncuestaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -112,7 +120,7 @@ public class PantallaMenuPrincipal extends javax.swing.JFrame implements Observe
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 103, Short.MAX_VALUE)
+                        .addGap(0, 168, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel2)
@@ -128,18 +136,15 @@ public class PantallaMenuPrincipal extends javax.swing.JFrame implements Observe
                             .addComponent(jButton1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(listaOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(66, 66, 66))
+                            .addComponent(listaDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fechaViaje, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(btnConsultar)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(btnCheckIn))
-                                    .addComponent(listaDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(fechaViaje, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap())))))
+                                .addComponent(btnConsultar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnCheckIn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnEncuesta))
+                            .addComponent(listaOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,7 +169,8 @@ public class PantallaMenuPrincipal extends javax.swing.JFrame implements Observe
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCheckIn)
                     .addComponent(btnConsultar)
-                    .addComponent(jButton1))
+                    .addComponent(jButton1)
+                    .addComponent(btnEncuesta))
                 .addGap(18, 18, 18))
         );
 
@@ -197,6 +203,12 @@ public class PantallaMenuPrincipal extends javax.swing.JFrame implements Observe
         PantallaMenuPrincipal.getInstance().setVisible(false);
         PantallaAerolinea.getInstance().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnEncuestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncuestaActionPerformed
+        // TODO add your handling code here:
+        Encuesta.getInstance().setVisible(true);
+        PantallaMenuPrincipal.getInstance().setVisible(false);
+    }//GEN-LAST:event_btnEncuestaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -236,6 +248,7 @@ public class PantallaMenuPrincipal extends javax.swing.JFrame implements Observe
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCheckIn;
     private javax.swing.JButton btnConsultar;
+    private javax.swing.JButton btnEncuesta;
     private com.toedter.calendar.JDateChooser fechaViaje;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;

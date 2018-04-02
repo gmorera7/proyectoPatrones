@@ -1,5 +1,7 @@
 package javeriana.edu.co.modelo.check;
 
+import java.util.Date;
+
 /**
  *
  * @author javeriana.edu.co
@@ -7,7 +9,8 @@ package javeriana.edu.co.modelo.check;
 public abstract class Check {
     
     private Integer id;
-    private String confirmacion;    
+    private boolean confirmacion; 
+    private Date fecha;
 
     /**
      * @return the id
@@ -26,14 +29,28 @@ public abstract class Check {
     /**
      * @return the confirmacion
      */
-    public String getConfirmacion() {
+    public boolean getConfirmacion() {
         return confirmacion;
     }
 
     /**
      * @param confirmacion the confirmacion to set
      */
-    public void setConfirmacion(String confirmacion) {
+    public void setConfirmacion(boolean confirmacion) {
         this.confirmacion = confirmacion;
+    }
+
+    /**
+     * @return the fecha
+     */
+    public Date getFecha() {
+        return fecha;
+    }
+
+    /**
+     * @param fecha the fecha to set
+     */
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 }

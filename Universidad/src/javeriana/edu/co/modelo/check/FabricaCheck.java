@@ -1,5 +1,7 @@
 package javeriana.edu.co.modelo.check;
 
+import java.util.Date;
+
 /**
  *
  * @author javeriana.edu.co
@@ -19,28 +21,31 @@ public class FabricaCheck extends FabricaCheckAbstracta {
     }
 
     @Override
-    public CheckIn crearCheckIn(Integer id) {
+    public CheckIn crearCheckIn(Integer id , boolean confirmacion) {
         CheckIn checkIn = new CheckIn();
-        checkIn.setConfirmacion("ok");
+        checkIn.setConfirmacion(confirmacion);
         checkIn.setId(id);
+        checkIn.setFecha(new Date());
         return checkIn;
 
     }
 
     @Override
-    public CheckOut crearCheckOut(Integer id) {
+    public CheckOut crearCheckOut(Integer id,boolean confirmacion) {
         CheckOut checkOut = new CheckOut();
-        checkOut.setConfirmacion("ok");
+        checkOut.setConfirmacion(confirmacion);
         checkOut.setId(id);
+        checkOut.setFecha(new Date());
         return checkOut;
 
     }
 
     @Override
-    public CheckFood crearCheckFood(Integer id) {
+    public CheckFood crearCheckFood(Integer id,boolean confirmacion) {
         CheckFood checkFood = new CheckFood();
-        checkFood.setConfirmacion("ok");
+        checkFood.setConfirmacion(confirmacion);
         checkFood.setId(id);
+        checkFood.setFecha(new Date());
         return checkFood;
 
     }

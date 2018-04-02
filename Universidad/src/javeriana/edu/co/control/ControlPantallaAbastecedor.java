@@ -1,6 +1,7 @@
 package javeriana.edu.co.control;
 
-import javeriana.edu.co.modelo.aerolinea.Aerolinea;
+import java.util.Date;
+import javeriana.edu.co.reportes.Reporte;
 import javeriana.edu.co.vista.PantallaAbastecedor;
 
 /**
@@ -18,14 +19,14 @@ public class ControlPantallaAbastecedor implements IControlPantallaAbastecedor {
     public static ControlPantallaAbastecedor getInstance() {
         if (instance == null) {
             instance = new ControlPantallaAbastecedor();
-            Aerolinea.getInstance().addObserver(PantallaAbastecedor.getInstance());
+            Reporte.getInstance().addObserver(PantallaAbastecedor.getInstance());
         }
         return instance;
     }
 
     @Override
-    public void consultarReservasPorVuelo(String numeroVuelo) {
-        Aerolinea.getInstance().consultarReservasPorVueloCheckFood(numeroVuelo);
+    public void reporte6(Date fechaInicial,Date FechaFinal) {
+        Reporte.getInstance().reporte6(fechaInicial, FechaFinal);
     }
 
 }

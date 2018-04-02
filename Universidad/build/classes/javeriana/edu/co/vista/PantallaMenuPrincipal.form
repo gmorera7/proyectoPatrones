@@ -47,7 +47,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace min="0" pref="103" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="168" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
@@ -68,22 +68,16 @@
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="listaOrigen" min="-2" pref="154" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="listaDestino" alignment="0" min="-2" pref="154" max="-2" attributes="0"/>
+                          <Component id="fechaViaje" alignment="0" min="-2" pref="158" max="-2" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="btnConsultar" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="btnCheckIn" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="listaDestino" alignment="0" min="-2" pref="154" max="-2" attributes="0"/>
-                                  <Component id="fechaViaje" alignment="0" min="-2" pref="158" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="btnConsultar" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="btnCheckIn" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
+                              <Component id="btnEncuesta" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="listaOrigen" min="-2" pref="154" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -117,6 +111,7 @@
                   <Component id="btnCheckIn" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnConsultar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnEncuesta" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
           </Group>
@@ -197,6 +192,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnEncuesta">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Encuesta"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEncuestaActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

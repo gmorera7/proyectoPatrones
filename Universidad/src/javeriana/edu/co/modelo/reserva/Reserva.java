@@ -11,19 +11,19 @@ import java.util.Date;
  *
  * @author javeriana.edu.co
  */
-public class Reserva{
+public class Reserva {
 
     private Integer id;
     private String numeroSilla;
     private Date fecha;
-    private String estado;
+
     private Encuesta encuesta;
     private Comida comida;
     private Ruta ruta;
     private ArrayList<Check> check;
     private Pasajero persona;
-    
-    public Reserva(){
+
+    public Reserva() {
         check = new ArrayList<>();
     }
 
@@ -67,20 +67,6 @@ public class Reserva{
      */
     public void setFecha(Date fecha) {
         this.fecha = fecha;
-    }
-
-    /**
-     * @return the estado
-     */
-    public String getEstado() {
-        return estado;
-    }
-
-    /**
-     * @param estado the estado to set
-     */
-    public void setEstado(String estado) {
-        this.estado = estado;
     }
 
     /**
@@ -152,7 +138,5 @@ public class Reserva{
     public void setPersona(Pasajero persona) {
         this.persona = persona;
     }
-
-   
 
 }

@@ -3,12 +3,12 @@ package javeriana.edu.co.vista;
 import javeriana.edu.co.modelo.mensaje.Mensaje;
 import javeriana.edu.co.modelo.usuario.Pasajero;
 import javeriana.edu.co.modelo.comida.Comida;
-import javeriana.edu.co.modelo.comida.ComidaEspecial;
 import javeriana.edu.co.modelo.comida.ComidaRegular;
 import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
 import javeriana.edu.co.control.ControlServiciosEspeciales;
+import javeriana.edu.co.modelo.comida.FabricaComidaEspecial;
 import javeriana.edu.co.modelo.reserva.Reserva;
 import javeriana.edu.co.modelo.reserva.Ruta;
 
@@ -17,17 +17,17 @@ import javeriana.edu.co.modelo.reserva.Ruta;
  * @author javeriana.edu.co
  */
 public class PantallaServiciosEspeciales extends javax.swing.JFrame implements AccionesPantalla, Observer {
-
+    
     private Integer idRuta;
     private Ruta ruta;
     private Reserva reserva;
     private Pasajero pasajero;
-
+    
     private static PantallaServiciosEspeciales instance = null;
-
+    
     protected PantallaServiciosEspeciales() {
     }
-
+    
     public static PantallaServiciosEspeciales getInstance() {
         if (instance == null) {
             instance = new PantallaServiciosEspeciales();
@@ -36,13 +36,13 @@ public class PantallaServiciosEspeciales extends javax.swing.JFrame implements A
         }
         return instance;
     }
-
+    
     @Override
     public void limpiarCampos() {
         txtComidaEspecial.setVisible(false);
         jLabel4.setVisible(false);
     }
-
+    
     @Override
     public void iniciarComponentes() {
         ControlServiciosEspeciales.getInstance().cargarMenuComidaEspecial();
@@ -51,7 +51,7 @@ public class PantallaServiciosEspeciales extends javax.swing.JFrame implements A
         txtComidaEspecial.setVisible(false);
         jLabel4.setVisible(false);
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -148,26 +148,24 @@ public class PantallaServiciosEspeciales extends javax.swing.JFrame implements A
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
-
+        
         ControlServiciosEspeciales.getInstance().consultarRutaPorId(idRuta);
-
+        
         String comidaSeleccionada = txtTipoComida.getSelectedItem().toString();
-        Comida comida = (comidaSeleccionada.equalsIgnoreCase("REGULAR")) ? new ComidaRegular() : new ComidaEspecial();
-        comida.setDescripcion(txtComidaEspecial.getSelectedItem().toString());
+        Comida comida = (comidaSeleccionada.equalsIgnoreCase("REGULAR")) ? new ComidaRegular() : FabricaComidaEspecial.getInstance().crearComidaPorDescripcion(txtComidaEspecial.getSelectedItem().toString());
         reserva = new Reserva();
         reserva.setComida(comida);
-        reserva.setEstado("ACTIVA");
         reserva.setFecha(new Date());
         reserva.setNumeroSilla(txtNumeroSillas.getSelectedItem().toString());
         reserva.setPersona(pasajero);
         reserva.setRuta(ruta);
-
+        
         javeriana.edu.co.control.ControlServiciosEspeciales.getInstance().crearReserva(reserva);
         PantallaServiciosEspeciales.getInstance().limpiarCampos();
         PantallaServiciosEspeciales.getInstance().setVisible(false);
         PantallaConfirmacionReserva.getInstance().setReserva(reserva);
         PantallaConfirmacionReserva.getInstance().setVisible(true);
-
+        
 
     }//GEN-LAST:event_btnContinuarActionPerformed
 
@@ -183,7 +181,7 @@ public class PantallaServiciosEspeciales extends javax.swing.JFrame implements A
         } else {
             txtComidaEspecial.setVisible(false);
             jLabel4.setVisible(false);
-
+            
         }
     }//GEN-LAST:event_txtTipoComidaActionPerformed
 
@@ -226,27 +224,27 @@ public class PantallaServiciosEspeciales extends javax.swing.JFrame implements A
     public void setIdRuta(Integer idRuta) {
         this.idRuta = idRuta;
     }
-
+    
     @Override
     public void update(Observable o, Object arg) {
         Mensaje mensaje = (Mensaje) arg;
-
+        
         if (mensaje.getAccion().equalsIgnoreCase("busquedaRutaPorId")) {
             ruta = (Ruta) mensaje.getObjeto();
         }
-
+        
         if (mensaje.getAccion().equalsIgnoreCase("hacerReserva")) {
             reserva = (Reserva) mensaje.getObjeto();
         }
-
+        
         if (mensaje.getAccion().equalsIgnoreCase("cargarMenuNumeroSillas")) {
             txtNumeroSillas.setModel(new javax.swing.DefaultComboBoxModel((String[]) mensaje.getObjeto()));
         }
-
+        
         if (mensaje.getAccion().equalsIgnoreCase("cargarMenuTipoComida")) {
             txtTipoComida.setModel(new javax.swing.DefaultComboBoxModel((String[]) mensaje.getObjeto()));
         }
-
+        
         if (mensaje.getAccion().equalsIgnoreCase("cargarMenuComidaEspecial")) {
             txtComidaEspecial.setModel(new javax.swing.DefaultComboBoxModel((String[]) mensaje.getObjeto()));
         }

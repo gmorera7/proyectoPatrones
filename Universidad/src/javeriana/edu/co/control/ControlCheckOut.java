@@ -1,5 +1,6 @@
 package javeriana.edu.co.control;
 
+import javeriana.edu.co.reportes.Reporte;
 import javeriana.edu.co.modelo.aerolinea.Aerolinea;
 import javeriana.edu.co.vista.PantallaCheckOut;
 
@@ -19,6 +20,7 @@ public class ControlCheckOut implements IControlCheckOut {
         if (instance == null) {
             instance = new ControlCheckOut();
             Aerolinea.getInstance().addObserver(PantallaCheckOut.getInstance());
+            Aerolinea.getInstance().addObserver(Reporte.getInstance());
         }
         return instance;
     }
@@ -29,8 +31,8 @@ public class ControlCheckOut implements IControlCheckOut {
     }
 
     @Override
-    public void realizarCheckOut(Integer idReserva) {
-        Aerolinea.getInstance().hacerCheckOut(idReserva);
+    public void realizarCheckOut(Integer idReserva, boolean confirmacion) {
+        Reporte.getInstance().hacerCheckOut(idReserva, confirmacion);
     }
 
 }

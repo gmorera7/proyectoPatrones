@@ -148,7 +148,7 @@ public class PantallaAvion extends javax.swing.JFrame implements Observer, Accio
             idReserva = (String) tabla.getValueAt(fila, 1);
             if (tabla.getValueAt(fila, 5) != null) {
                 checkFood = (boolean) tabla.getValueAt(fila, 5);
-                ControlPantallaAvion.getInstance().realizarCheckFood(Integer.parseInt(idReserva));
+                ControlPantallaAvion.getInstance().realizarCheckFood(Integer.parseInt(idReserva),checkFood);
             }
         }
         limpiarCampos();
@@ -186,9 +186,9 @@ public class PantallaAvion extends javax.swing.JFrame implements Observer, Accio
                 String vuelo = reservasRespuesta.get(i).getRuta().getNoVuelo();
                 String reserva = reservasRespuesta.get(i).getId() + "";
                 String numeroSilla = reservasRespuesta.get(i).getNumeroSilla();
-
+                String comida = reservasRespuesta.get(i).getComida().getDescripcion();
                 JButton btn = new JButton("CHECKOUT");
-                Object row[] = {vuelo, reserva, pasajero, numeroSilla, "", false};
+                Object row[] = {vuelo, reserva, pasajero, numeroSilla, comida, false};
 
                 modelo.insertRow(0, row);
             }
@@ -203,6 +203,7 @@ public class PantallaAvion extends javax.swing.JFrame implements Observer, Accio
 
     @Override
     public void limpiarCampos() {
+        txtNumeroVuelo.setText("");
         reservasRespuesta = new ArrayList<>();
         tabla.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{},

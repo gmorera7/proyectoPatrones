@@ -1,6 +1,6 @@
 package javeriana.edu.co.modelo.usuario;
 
-import Reportes.HacerReporte;
+import javeriana.edu.co.reportes.HacerReporte;
 
 /**
  *

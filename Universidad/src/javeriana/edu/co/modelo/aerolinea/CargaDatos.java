@@ -2,13 +2,13 @@ package javeriana.edu.co.modelo.aerolinea;
 
 import javeriana.edu.co.modelo.usuario.FabricaPersona;
 import javeriana.edu.co.modelo.usuario.Pasajero;
-import javeriana.edu.co.modelo.comida.ComidaEspecial;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javeriana.edu.co.modelo.comida.FabricaComidaEspecial;
 import javeriana.edu.co.modelo.reserva.Reserva;
 import javeriana.edu.co.modelo.reserva.Ruta;
 
@@ -17,30 +17,30 @@ import javeriana.edu.co.modelo.reserva.Ruta;
  * @author javeriana.edu.co
  */
 public class CargaDatos {
-    
+
     private static CargaDatos instance = null;
     private Ruta ruta1, ruta2, ruta3, ruta4;
     private String[] tiposDocumento, ciudadesOrigen, ciudadesDestino, tipoComida, comidaEspecial, sillas;
     private ArrayList reservas = new ArrayList<>();
-    
+
     protected CargaDatos() {
-        
+
     }
-    
+
     public static CargaDatos getInstance() {
         if (instance == null) {
             instance = new CargaDatos();
         }
         return instance;
     }
-    
+
     public void cargarRutas() {
         ArrayList rutas = new ArrayList<>();
         try {
-            
+
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            String stringFechaLlegada = "2018-03-21 07:00:00";
-            String stringFechaSalida = "2018-03-21 08:00:00";
+            String stringFechaLlegada = "2018-04-15 07:00:00";
+            String stringFechaSalida = "2018-04-15 08:00:00";
             ruta1 = new Ruta();
             ruta1.setId(1);
             ruta1.setDestino("ARMENIA");
@@ -50,7 +50,7 @@ public class CargaDatos {
             ruta1.setPrecio(300000L);
             ruta1.setFechaSalida(sdf.parse(stringFechaSalida));
             ruta1.setFechaLlegada(sdf.parse(stringFechaLlegada));
-            
+
             rutas.add(ruta1);
             ruta2 = new Ruta();
             ruta2.setId(2);
@@ -62,7 +62,7 @@ public class CargaDatos {
             ruta2.setFechaSalida(sdf.parse(stringFechaSalida));
             ruta2.setFechaLlegada(sdf.parse(stringFechaLlegada));
             rutas.add(ruta2);
-            
+
             ruta3 = new Ruta();
             ruta3.setId(3);
             ruta3.setDestino("MEDELLIN");
@@ -73,7 +73,7 @@ public class CargaDatos {
             ruta3.setFechaSalida(sdf.parse(stringFechaSalida));
             ruta3.setFechaLlegada(sdf.parse(stringFechaLlegada));
             rutas.add(ruta3);
-            
+
             ruta4 = new Ruta();
             ruta4.setId(4);
             ruta4.setDestino("BUCARAMANGA");
@@ -84,38 +84,38 @@ public class CargaDatos {
             ruta4.setFechaSalida(sdf.parse(stringFechaSalida));
             ruta4.setFechaLlegada(sdf.parse(stringFechaLlegada));
             rutas.add(ruta4);
-            
+
         } catch (ParseException ex) {
             Logger.getLogger(Aerolinea.class.getName()).log(Level.SEVERE, null, ex);
         }
         Aerolinea.getInstance().setRutas(rutas);
-        
+
     }
-    
+
     public String[] cargarCiudadesOrigen() {
         ciudadesOrigen = new String[4];
         ciudadesOrigen[0] = "ARMENIA";
         ciudadesOrigen[1] = "BÓGOTA";
         ciudadesOrigen[2] = "CARACAS";
         ciudadesOrigen[3] = "TUNJA";
-        
+
         return ciudadesOrigen;
-        
+
     }
-    
+
     public String[] cargarCiudadesDestino() {
         ciudadesDestino = new String[4];
         ciudadesDestino[0] = "CALI";
         ciudadesDestino[1] = "PASTO";
         ciudadesDestino[2] = "MEDELLIN";
         ciudadesDestino[3] = "BUCARAMANGA";
-        
+
         return ciudadesDestino;
     }
-    
+
     public void cargarReservas() {
         Integer id1, id2, id3;
-        
+
         Pasajero pasajero1 = FabricaPersona.getInstance().crearPasajero();
         pasajero1.setTipoDocumento("CEDULA");
         pasajero1.setNumeroDocumento("1107045881");
@@ -126,7 +126,7 @@ public class CargaDatos {
         pasajero1.setTelefono("3268452");
         pasajero1.setDireccion("CALLE 54 65-85");
         pasajero1.setCorreoElectronico("gmorera1987@gmail.com");
-        
+
         Pasajero pasajero2 = FabricaPersona.getInstance().crearPasajero();
         pasajero2.setTipoDocumento("CEDULA");
         pasajero2.setNumeroDocumento("1107045882");
@@ -137,62 +137,62 @@ public class CargaDatos {
         pasajero2.setTelefono("3269875");
         pasajero2.setDireccion("CALLE 12 25-14");
         pasajero2.setCorreoElectronico("gmorera1987@gmail.com");
-        
+
         Pasajero pasajero3 = FabricaPersona.getInstance().crearPasajero();
         pasajero3.setTipoDocumento("CEDULA");
         pasajero3.setNumeroDocumento("1107045883");
-        pasajero3.setPrimerNombre("ANDREA");
-        pasajero3.setSegundoNombre("CAROLINA");
+        pasajero3.setPrimerNombre("JULIAN");
+        pasajero3.setSegundoNombre("ANTONIO");
         pasajero3.setPrimerApellido("MORALES");
-        pasajero3.setSegundoApellido("RENDON");
+        pasajero3.setSegundoApellido("ZULUAGA");
         pasajero3.setTelefono("3269875");
         pasajero3.setDireccion("CALLE 12 25-14");
         pasajero3.setCorreoElectronico("gmorera1987@gmail.com");
-        
+
         Reserva uno = new Reserva();
         uno.setPersona(pasajero1);
-        uno.setComida(new ComidaEspecial());
+        uno.setComida(FabricaComidaEspecial.getInstance().comidaBajaColesterol());
         uno.setRuta(ruta2);
-        
+
         uno.setFecha(new Date());
-        uno.setEstado("ACTIVA");
         uno.setNumeroSilla("1");
         uno.setCheck(new ArrayList<>());
         id1 = reservas.size() + 1;
         uno.setId(id1);
         reservas.add(uno);
-        
+
         Reserva dos = new Reserva();
         dos.setPersona(pasajero2);
-        dos.setComida(new ComidaEspecial());
+
+        dos.setComida(FabricaComidaEspecial.getInstance().comidaMar());
         dos.setRuta(ruta2);
         dos.setFecha(new Date());
         dos.setNumeroSilla("2");
-        dos.setEstado("ACTIVA");
         dos.setCheck(new ArrayList<>());
         id2 = reservas.size() + 1;
         dos.setId(id2);
         reservas.add(dos);
-        
+
         Reserva tres = new Reserva();
         tres.setPersona(pasajero3);
-        tres.setComida(new ComidaEspecial());
+        tres.setComida(FabricaComidaEspecial.getInstance().comidaBajaEnGrasa());
         tres.setRuta(ruta2);
         tres.setFecha(new Date());
-        tres.setEstado("ACTIVA");
         tres.setNumeroSilla("3");
         tres.setCheck(new ArrayList<>());
         id3 = reservas.size() + 1;
         tres.setId(id3);
         reservas.add(tres);
-        Aerolinea.getInstance().setReservas(reservas);
-        
-        Aerolinea.getInstance().hacerCheckIn(id1);
-        Aerolinea.getInstance().hacerCheckIn(id2);
-        Aerolinea.getInstance().hacerCheckIn(id3);        
-        
+        Aerolinea.getInstance().hacerReserva(uno);
+        Aerolinea.getInstance().hacerReserva(dos);
+        Aerolinea.getInstance().hacerReserva(tres);
+
+        Aerolinea.getInstance().hacerCheckIn(id1, true);
+        Aerolinea.getInstance().hacerCheckIn(id2, true);
+        Aerolinea.getInstance().hacerCheckIn(id3, true);
+
     }
-    
+
     public String[] cargarTiposDocumento() {
         tiposDocumento = new String[3];
         tiposDocumento[0] = "CEDULA";
@@ -200,22 +200,28 @@ public class CargaDatos {
         tiposDocumento[2] = "PASAPORTE";
         return tiposDocumento;
     }
-    
+
     public String[] cargarMenuTipoComida() {
         tipoComida = new String[2];
         tipoComida[0] = "REGULAR";
         tipoComida[1] = "ESPECIAL";
         return tipoComida;
     }
-    
+
     public String[] cargarMenuComidaEspecial() {
-        comidaEspecial = new String[3];
-        comidaEspecial[0] = "CHINO";
-        comidaEspecial[1] = "POLLO";
-        comidaEspecial[2] = "CARNE";
+        comidaEspecial = new String[9];
+        comidaEspecial[0] = "COMIDA VEGETARIANA";
+        comidaEspecial[1] = "COMIDA DE MAR";
+        comidaEspecial[2] = "COMIDA PARA DIABETICOS";
+        comidaEspecial[3] = "COMIDA BAJA EN GRASA";
+        comidaEspecial[4] = "COMIDA BAJA EN COLESTEROL";
+        comidaEspecial[5] = "COMIDA BAJA EN PROTEINAS";
+        comidaEspecial[6] = "COMIDA BAJA EN CALORIAS";
+        comidaEspecial[7] = "COMIDA LIBRE DE LACTOSA";
+        comidaEspecial[8] = "COMIDA PARA NIÑOS";
         return comidaEspecial;
     }
-    
+
     public String[] cargarMenuSillas() {
         sillas = new String[30];
         for (int i = 0; i < 30; i++) {
@@ -223,5 +229,5 @@ public class CargaDatos {
         }
         return sillas;
     }
-    
+
 }

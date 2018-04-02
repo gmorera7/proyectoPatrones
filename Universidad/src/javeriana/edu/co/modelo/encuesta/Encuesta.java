@@ -8,23 +8,9 @@ import java.util.Date;
  */
 public class Encuesta {
 
-    private Integer id;
     private Date fecha;
     private String calificacion;
-
-    /**
-     * @return the id
-     */
-    public Integer getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    private Integer idReserva;
 
     /**
      * @return the fecha
@@ -52,6 +38,20 @@ public class Encuesta {
      */
     public void setCalificacion(String calificacion) {
         this.calificacion = calificacion;
+    }
+
+    /**
+     * @return the idReserva
+     */
+    public Integer getIdReserva() {
+        return idReserva;
+    }
+
+    /**
+     * @param idReserva the idReserva to set
+     */
+    public void setIdReserva(Integer idReserva) {
+        this.idReserva = idReserva;
     }
 
 }

@@ -147,7 +147,7 @@ public class PantallaCheckOut extends javax.swing.JFrame implements Observer, Ac
             idReserva = (String) tabla.getValueAt(fila, 1);
             if (tabla.getValueAt(fila, 5) != null) {
                 checkOut = (boolean) tabla.getValueAt(fila, 5);
-                ControlCheckOut.getInstance().realizarCheckOut(Integer.parseInt(idReserva));
+                ControlCheckOut.getInstance().realizarCheckOut(Integer.parseInt(idReserva), checkOut);
             }
         }
         limpiarCampos();
@@ -185,8 +185,8 @@ public class PantallaCheckOut extends javax.swing.JFrame implements Observer, Ac
                 String vuelo = reservasRespuesta.get(i).getRuta().getNoVuelo();
                 String reserva = reservasRespuesta.get(i).getId() + "";
                 String numeroSilla = reservasRespuesta.get(i).getNumeroSilla();
-
-                Object row[] = {vuelo, reserva, pasajero, numeroSilla, "", false};
+                 String comida = reservasRespuesta.get(i).getComida().getDescripcion();
+                Object row[] = {vuelo, reserva, pasajero, numeroSilla, comida, false};
 
                 modelo.insertRow(0, row);
             }

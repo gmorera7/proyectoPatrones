@@ -30,7 +30,6 @@ public class PantallaAerolinea extends javax.swing.JFrame {
     private void initComponents() {
 
         btnAzafata = new javax.swing.JButton();
-        btnAbastecedor = new javax.swing.JButton();
         btnReportes = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btnCheckOut = new javax.swing.JButton();
@@ -42,13 +41,6 @@ public class PantallaAerolinea extends javax.swing.JFrame {
         btnAzafata.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAzafataActionPerformed(evt);
-            }
-        });
-
-        btnAbastecedor.setText("Accion Abastecedor");
-        btnAbastecedor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAbastecedorActionPerformed(evt);
             }
         });
 
@@ -79,24 +71,26 @@ public class PantallaAerolinea extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnRegresar)
+                        .addGap(125, 125, 125))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(90, 90, 90))))
             .addGroup(layout.createSequentialGroup()
+                .addGap(56, 56, 56)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnReportes)
-                            .addComponent(btnCheckOut))
-                        .addGap(48, 48, 48)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnAzafata, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnAbastecedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(12, 12, 12)
+                        .addComponent(btnAzafata, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(115, 115, 115)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(121, 121, 121)
-                        .addComponent(btnRegresar)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(btnReportes)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCheckOut)))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -105,12 +99,10 @@ public class PantallaAerolinea extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAzafata)
-                    .addComponent(btnCheckOut))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAbastecedor)
+                    .addComponent(btnCheckOut)
                     .addComponent(btnReportes))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnAzafata)
                 .addGap(18, 18, 18)
                 .addComponent(btnRegresar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -119,13 +111,9 @@ public class PantallaAerolinea extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAbastecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbastecedorActionPerformed
-        PantallaAerolinea.getInstance().setVisible(false);
-        PantallaAbastecedor.getInstance().setVisible(true);
-    }//GEN-LAST:event_btnAbastecedorActionPerformed
-
     private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
-        // TODO add your handling code here:
+         PantallaAerolinea.getInstance().setVisible(false);
+         PantallaMenuReporte.getInstance().setVisible(true);
     }//GEN-LAST:event_btnReportesActionPerformed
 
     private void btnAzafataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAzafataActionPerformed
@@ -147,7 +135,6 @@ public class PantallaAerolinea extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAbastecedor;
     private javax.swing.JButton btnAzafata;
     private javax.swing.JButton btnCheckOut;
     private javax.swing.JButton btnRegresar;
