@@ -10,7 +10,6 @@ import java.util.logging.Logger;
 import javeriana.edu.co.modelo.comida.FabricaComidaEspecial;
 import javeriana.edu.co.modelo.reserva.Reserva;
 import javeriana.edu.co.modelo.reserva.Ruta;
-import javeriana.edu.co.modelo.usuario.Persona;
 
 /**
  *

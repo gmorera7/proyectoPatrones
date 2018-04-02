@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.table.DefaultTableModel;
+import javeriana.edu.co.control.IControlPantallaAbastecedor;
 import javeriana.edu.co.reportes.Reporte;
 import javeriana.edu.co.reportes.ReporteComidaProteina;
 
@@ -16,11 +17,13 @@ import javeriana.edu.co.reportes.ReporteComidaProteina;
  */
 public class PantallaAbastecedor extends javax.swing.JFrame implements Observer, AccionesPantalla {
 
+    private IControlPantallaAbastecedor controlPantallaAbastecedor = ControlPantallaAbastecedor.getInstance();
     private DefaultTableModel modelo;
     private List<ReporteComidaProteina> respuesta;
     private static PantallaAbastecedor instance = null;
     private Reporte reporte = Reporte.getInstance();
 
+    
     protected PantallaAbastecedor() {
     }
 
@@ -30,7 +33,6 @@ public class PantallaAbastecedor extends javax.swing.JFrame implements Observer,
             instance.initComponents();
             instance.iniciarComponentes();
         }
-
         return instance;
     }
 
@@ -95,6 +97,10 @@ public class PantallaAbastecedor extends javax.swing.JFrame implements Observer,
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(281, 281, 281)
+                        .addComponent(btnCancelar)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(33, 33, 33)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -104,21 +110,15 @@ public class PantallaAbastecedor extends javax.swing.JFrame implements Observer,
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtFechaFinal, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                                .addComponent(txtFechaFinal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnConsultar))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 536, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(281, 281, 281)
-                        .addComponent(btnCancelar)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 536, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(200, 200, 200)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,9 +131,9 @@ public class PantallaAbastecedor extends javax.swing.JFrame implements Observer,
                         .addComponent(txtFechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel3))
                     .addComponent(txtFechaFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnCancelar)
@@ -144,7 +144,7 @@ public class PantallaAbastecedor extends javax.swing.JFrame implements Observer,
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-        ControlPantallaAbastecedor.getInstance().reporte6(txtFechaInicio.getDate(), txtFechaFinal.getDate());
+        controlPantallaAbastecedor.reporte6(txtFechaInicio.getDate(), txtFechaFinal.getDate());
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -187,11 +187,11 @@ public class PantallaAbastecedor extends javax.swing.JFrame implements Observer,
 
     @Override
     public void iniciarComponentes() {
-    reporte.addObserver(PantallaAbastecedor.getInstance());
+        reporte.addObserver(PantallaAbastecedor.getInstance());
     }
 
     @Override
     public void limpiarCampos() {
-
+        
     }
 }

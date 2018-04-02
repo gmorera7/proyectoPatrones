@@ -7,7 +7,7 @@ import java.util.Date;
  * @author javeriana.edu.co
  */
 public class Busqueda {
-    
+
     private String origen;
     private String destino;
     private Date fecha;
@@ -53,6 +53,5 @@ public class Busqueda {
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
-    
-    
+
 }

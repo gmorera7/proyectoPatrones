@@ -5,10 +5,10 @@ package javeriana.edu.co.modelo.comida;
  * @author javeriana.edu.co
  */
 public class FabricaComidaEspecial extends FabricaComidaEspecialAbstracta {
-    
+
     private static FabricaComidaEspecial instance = null;
 
-    protected FabricaComidaEspecial() {       
+    protected FabricaComidaEspecial() {
     }
 
     public static FabricaComidaEspecial getInstance() {
@@ -110,5 +110,5 @@ public class FabricaComidaEspecial extends FabricaComidaEspecialAbstracta {
 
         return comidaEspecial;
     }
-   
+
 }

@@ -29,5 +29,4 @@ public class ControlPantallaAbastecedor implements IControlPantallaAbastecedor {
     public void reporte6(Date fechaInicial, Date FechaFinal) {
         reporte.reporte6(fechaInicial, FechaFinal);
     }
-
 }

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import javeriana.edu.co.modelo.aerolinea.AccionReserva;
 import javeriana.edu.co.modelo.aerolinea.Aerolinea;
 import javeriana.edu.co.modelo.check.Check;
 import javeriana.edu.co.modelo.check.CheckFood;
@@ -19,12 +20,11 @@ import javeriana.edu.co.modelo.usuario.Persona;
  *
  * @author javeriana.edu.co
  */
-public class Reporte extends Observable implements HacerCheck, Observer ,HacerReporte {
+public class Reporte extends Observable implements HacerCheck, Observer, HacerReporte {
 
-    static Aerolinea aerolinea;
-
-    Reserva reserva;
-
+    public static HacerCheck aerolinea = Aerolinea.getInstance();
+    public static AccionReserva reservar = Aerolinea.getInstance();
+    private Reserva reserva;
     private ArrayList revervasCheckInt = new ArrayList();
     private ArrayList revervasCheckOut = new ArrayList();
     private ArrayList revervasCheckFoodOK = new ArrayList();
@@ -35,13 +35,11 @@ public class Reporte extends Observable implements HacerCheck, Observer ,HacerRe
     private static Reporte instance = null;
 
     protected Reporte() {
-
     }
 
     public static Reporte getInstance() {
         if (instance == null) {
             instance = new Reporte();
-            aerolinea = Aerolinea.getInstance();
         }
         return instance;
     }
@@ -50,11 +48,12 @@ public class Reporte extends Observable implements HacerCheck, Observer ,HacerRe
     public void hacerCheckIn(Integer idReserva, boolean confirmacion) {
         aerolinea.hacerCheckIn(idReserva, confirmacion);
         if (confirmacion) {
-            aerolinea.buscarReserva(idReserva);
+            reservar.buscarReserva(idReserva);
             revervasCheckInt.add(reserva);
         }
     }
 
+    @Override
     public void hacerEncuesta(Integer idEncuesta, String calificacion) {
         Encuesta encuesta = new Encuesta();
         encuesta.setFecha(new Date());
@@ -68,7 +67,7 @@ public class Reporte extends Observable implements HacerCheck, Observer ,HacerRe
     public void hacerCheckOut(Integer idReserva, boolean confirmacion) {
         aerolinea.hacerCheckOut(idReserva, confirmacion);
         if (confirmacion) {
-            aerolinea.buscarReserva(idReserva);
+            reservar.buscarReserva(idReserva);
             revervasCheckOut.add(reserva);
         }
     }
@@ -76,14 +75,13 @@ public class Reporte extends Observable implements HacerCheck, Observer ,HacerRe
     @Override
     public void hacerCheckFood(Integer idReserva, boolean confirmacion) {
         aerolinea.hacerCheckFood(idReserva, confirmacion);
-        aerolinea.buscarReserva(idReserva);
+        reservar.buscarReserva(idReserva);
         revervasCheckF.add(reserva);
         if (confirmacion) {
             revervasCheckFoodOK.add(reserva);
         } else {
             revervasCheckFoodNoOK.add(reserva);
         }
-
     }
 
     @Override
@@ -96,6 +94,7 @@ public class Reporte extends Observable implements HacerCheck, Observer ,HacerRe
 
     }
 
+    @Override
     public void reporte2(Date fechaInicial, Date FechaFinal) {
         int contador = 0;
         int totalRango = 0;
@@ -117,6 +116,7 @@ public class Reporte extends Observable implements HacerCheck, Observer ,HacerRe
         enviarNotificacion("reporte2", porcentaje);
     }
 
+    @Override
     public void reporte1(Date fechaInicial, Date FechaFinal) {
         int contador = 0;
         int totalRango = revervasCheckFoodNoOK.size();
@@ -138,6 +138,7 @@ public class Reporte extends Observable implements HacerCheck, Observer ,HacerRe
 
     }
 
+    @Override
     public void reporte3(Date fechaInicial, Date FechaFinal) {
         int contador = 0;
         int totalRango = 0;
@@ -167,6 +168,7 @@ public class Reporte extends Observable implements HacerCheck, Observer ,HacerRe
         enviarNotificacion("reporte3", porcentaje);
     }
 
+    @Override
     public void reporte4(Date fechaInicial, Date FechaFinal) {
         Reserva reservaLocal;
         Persona persona;
@@ -192,13 +194,13 @@ public class Reporte extends Observable implements HacerCheck, Observer ,HacerRe
                     reporte.setFecha(reservaLocal.getFecha());
                     reporte.setNombre(reservaLocal.getPersona().getNombreCompleto());
                     reportes.add(reporte);
-
                 }
             }
         }
         enviarNotificacion("reporte4", reportes);
     }
 
+    @Override
     public void reporte5(Date fechaInicial, Date FechaFinal) {
         Reserva reservaLocal;
         List<ReporteComida> reportes = new ArrayList<>();
@@ -225,6 +227,7 @@ public class Reporte extends Observable implements HacerCheck, Observer ,HacerRe
         enviarNotificacion("reporte5", reportes);
     }
 
+    @Override
     public void reporte6(Date fechaInicial, Date FechaFinal) {
 
         List<ReporteComidaProteina> lista = new ArrayList<>();

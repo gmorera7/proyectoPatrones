@@ -29,19 +29,15 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
     private ArrayList reservas = new ArrayList<>();
     private ArrayList rutas = new ArrayList<>();
     private List<Persona> pasajeros = new ArrayList<>();
-
-    private static FabricaCheckAbstracta fabricaCheck;
+    private static FabricaCheckAbstracta fabricaCheck = FabricaCheck.getInstance();
     private static Aerolinea instance = null;
-    
-    
-    protected Aerolinea() {
 
+    protected Aerolinea() {
     }
 
     public static Aerolinea getInstance() {
         if (instance == null) {
             instance = new Aerolinea();
-            fabricaCheck = FabricaCheck.getInstance();
             CargaDatos.getInstance().cargarRutas();
             CargaDatos.getInstance().cargarReservas();
         }
@@ -60,11 +56,11 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
     }
 
     public void crearActualizarPasajeros(Reserva reserva) {
-        
-        List<Persona> pasajeros1 =getPasajeros();
-        
+
+        List<Persona> pasajeros1 = getPasajeros();
         boolean encontrado = false;
         int posicion = 0;
+
         if (getPasajeros().isEmpty()) {
             getPasajeros().add(reserva.getPersona());
         } else {
@@ -82,7 +78,6 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
                 getPasajeros().add(reserva.getPersona());
             }
         }
-
     }
 
     @Override
@@ -114,7 +109,6 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
         ArrayList<Ruta> rutasEncontradas = new ArrayList<>();
 
         for (Iterator it = getRutas().iterator(); it.hasNext();) {
-
             ruta = (Ruta) it.next();
             fechaBusqueda = Utilities.formatDateWithoutTimeInAStringForBetweenWhere(busqueda.getFecha());
             fechaRuta = Utilities.formatDateWithoutTimeInAStringForBetweenWhere(ruta.getFechaSalida());
@@ -124,7 +118,6 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
                     && fechaBusqueda.equalsIgnoreCase(fechaRuta)) {
 
                 rutasEncontradas.add(ruta);
-                System.err.println("encontro ruta.....");
             }
         }
         enviarNotificacion("busquedaRuta", rutasEncontradas);
@@ -191,7 +184,7 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
         for (int i = 0; i < getReservas().size(); i++) {
             Reserva reserva = (Reserva) getReservas().get(i);
             if (reserva.getId().intValue() == idReserva) {
-                reserva.getCheck().add(fabricaCheck.crearCheckOut(reserva.getCheck().size()+1, confirmacion));
+                reserva.getCheck().add(fabricaCheck.crearCheckOut(reserva.getCheck().size() + 1, confirmacion));
                 getReservas().set(i, reserva);
                 break;
             }
@@ -217,34 +210,6 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
         mensaje.setObjeto(objeto);
         setChanged();
         notifyObservers(mensaje);
-    }
-
-    /**
-     * @return the reserva
-     */
-    public ArrayList<Reserva> getReservas() {
-        return reservas;
-    }
-
-    /**
-     * @param reserva the reserva to set
-     */
-    public void setReservas(ArrayList<Reserva> reserva) {
-        this.reservas = reserva;
-    }
-
-    /**
-     * @return the rutas
-     */
-    public ArrayList getRutas() {
-        return rutas;
-    }
-
-    /**
-     * @param rutas the rutas to set
-     */
-    public void setRutas(ArrayList rutas) {
-        this.rutas = rutas;
     }
 
     @Override
@@ -295,6 +260,19 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
         enviarNotificacion("cargarMenuNumeroSillas", CargaDatos.getInstance().cargarMenuSillas());
     }
 
+    @Override
+    public void hacerEncuesta(Encuesta encuesta) {
+        Integer idReserva = encuesta.getIdReserva();
+        for (int i = 0; i < getReservas().size(); i++) {
+            Reserva reserva = (Reserva) getReservas().get(i);
+            if (reserva.getId().intValue() == idReserva) {
+                reserva.setEncuesta(encuesta);
+                getReservas().set(i, reserva);
+                break;
+            }
+        }
+    }
+
     /**
      * @return the pasajeros
      */
@@ -309,16 +287,31 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
         this.pasajeros = pasajeros;
     }
 
-    @Override
-    public void hacerEncuesta(Encuesta encuesta) {
-        Integer idReserva = encuesta.getIdReserva();
-        for (int i = 0; i < getReservas().size(); i++) {
-            Reserva reserva = (Reserva) getReservas().get(i);
-            if (reserva.getId().intValue() == idReserva) {
-                reserva.setEncuesta(encuesta);
-                getReservas().set(i, reserva);
-                break;
-            }
-        }
+    /**
+     * @return the reserva
+     */
+    public ArrayList<Reserva> getReservas() {
+        return reservas;
+    }
+
+    /**
+     * @param reserva the reserva to set
+     */
+    public void setReservas(ArrayList<Reserva> reserva) {
+        this.reservas = reserva;
+    }
+
+    /**
+     * @return the rutas
+     */
+    public ArrayList getRutas() {
+        return rutas;
+    }
+
+    /**
+     * @param rutas the rutas to set
+     */
+    public void setRutas(ArrayList rutas) {
+        this.rutas = rutas;
     }
 }

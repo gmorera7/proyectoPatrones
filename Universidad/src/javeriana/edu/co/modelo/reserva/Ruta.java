@@ -7,7 +7,7 @@ import java.util.Date;
  * @author javeriana.edu.co
  */
 public class Ruta {
-    
+
     private Integer id;
     private String destino;
     private String origen;
@@ -87,7 +87,6 @@ public class Ruta {
         this.precio = precio;
     }
 
-  
     /**
      * @return the noVuelo
      */
@@ -129,7 +128,5 @@ public class Ruta {
     public void setFechaLlegada(Date fechaLlegada) {
         this.fechaLlegada = fechaLlegada;
     }
-    
-    
-    
+
 }

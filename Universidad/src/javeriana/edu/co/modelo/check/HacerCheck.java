@@ -11,5 +11,5 @@ public interface HacerCheck {
     public void hacerCheckOut(Integer idReserva, boolean confirmacion);
 
     public void hacerCheckFood(Integer idReserva, boolean confirmacion);
-    
+
 }
