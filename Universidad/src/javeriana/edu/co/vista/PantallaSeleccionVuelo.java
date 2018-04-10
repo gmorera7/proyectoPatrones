@@ -1,9 +1,11 @@
 package javeriana.edu.co.vista;
 
+import java.text.SimpleDateFormat;
 import javeriana.edu.co.control.ControlSeleccionVuelo;
 import javeriana.edu.co.modelo.mensaje.Mensaje;
 import javeriana.edu.co.modelo.busqueda.Busqueda;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.DefaultListModel;
@@ -87,19 +89,20 @@ public class PantallaSeleccionVuelo extends javax.swing.JFrame implements Observ
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(372, Short.MAX_VALUE)
-                .addComponent(btnContinuar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnCancelar)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
                 .addGap(198, 198, 198)
                 .addComponent(jLabel1)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(479, Short.MAX_VALUE)
+                        .addComponent(btnContinuar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCancelar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(jScrollPane1)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -127,12 +130,14 @@ public class PantallaSeleccionVuelo extends javax.swing.JFrame implements Observ
 
         String seleccion = (String) rutas.getSelectedValue();
         System.err.println("ruta " + rutas.getSelectedValue());
-        String[] parts = seleccion.split("--");
+        if (rutas.getSelectedValue() != null) {
+            String[] parts = seleccion.split("--");
 
-        if (parts != null && parts.length > 0) {
-            PantallaDatosBasicos.getInstance().setIdRuta(Integer.parseInt(parts[1]));
-            PantallaSeleccionVuelo.getInstance().setVisible(false);
-            PantallaDatosBasicos.getInstance().setVisible(true);
+            if (parts != null && parts.length > 0) {
+                PantallaDatosBasicos.getInstance().setIdRuta(Integer.parseInt(parts[1]));
+                PantallaSeleccionVuelo.getInstance().setVisible(false);
+                PantallaDatosBasicos.getInstance().setVisible(true);
+            }
         }
 
     }//GEN-LAST:event_btnContinuarActionPerformed
@@ -171,7 +176,9 @@ public class PantallaSeleccionVuelo extends javax.swing.JFrame implements Observ
 
             for (int i = 0; i < rutasRespuesta.size(); i++) {
                 Ruta ruta = rutasRespuesta.get(i);
-                String cadena = "id --" + ruta.getId() + "-- Origen --" + ruta.getOrigen() + "-- Destino --" + ruta.getDestino() + "--";
+
+                String cadena = "id --" + ruta.getId() + "-- Origen --" + ruta.getOrigen()
+                        + "-- Destino --" + ruta.getDestino() + "--" + " Fecha Salida: " + new SimpleDateFormat("MM-dd-yyyy hh:mm").format(ruta.getFechaSalida());
                 model.addElement(cadena);
             }
             rutas.setModel(model);

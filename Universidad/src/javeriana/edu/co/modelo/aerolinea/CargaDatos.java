@@ -18,7 +18,7 @@ import javeriana.edu.co.modelo.reserva.Ruta;
 public class CargaDatos {
 
     private static CargaDatos instance = null;
-    private Ruta ruta1, ruta2, ruta3, ruta4;
+    private Ruta ruta1, ruta2, ruta3, ruta4,ruta5,ruta6;
     private String[] tiposDocumento, ciudadesOrigen, ciudadesDestino, tipoComida, comidaEspecial, sillas;
     private ArrayList reservas = new ArrayList<>();
 
@@ -37,9 +37,9 @@ public class CargaDatos {
         ArrayList rutas = new ArrayList<>();
         try {
 
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            String stringFechaLlegada = "2018-04-15 07:00:00";
-            String stringFechaSalida = "2018-04-15 08:00:00";
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+            String stringFechaLlegada = "2018-04-17 09:00";
+            String stringFechaSalida = "2018-04-17 08:00";
             ruta1 = new Ruta();
             ruta1.setId(1);
             ruta1.setDestino("ARMENIA");
@@ -49,8 +49,8 @@ public class CargaDatos {
             ruta1.setPrecio(300000L);
             ruta1.setFechaSalida(sdf.parse(stringFechaSalida));
             ruta1.setFechaLlegada(sdf.parse(stringFechaLlegada));
-
             rutas.add(ruta1);
+            
             ruta2 = new Ruta();
             ruta2.setId(2);
             ruta2.setDestino("PASTO");
@@ -64,10 +64,10 @@ public class CargaDatos {
 
             ruta3 = new Ruta();
             ruta3.setId(3);
-            ruta3.setDestino("MEDELLIN");
+            ruta3.setDestino("CALI");
             ruta3.setDuracionVuelo("1");
             ruta3.setNoVuelo("V3");
-            ruta3.setOrigen("CALI");
+            ruta3.setOrigen("TUNJA");
             ruta3.setPrecio(250000L);
             ruta3.setFechaSalida(sdf.parse(stringFechaSalida));
             ruta3.setFechaLlegada(sdf.parse(stringFechaLlegada));
@@ -83,6 +83,33 @@ public class CargaDatos {
             ruta4.setFechaSalida(sdf.parse(stringFechaSalida));
             ruta4.setFechaLlegada(sdf.parse(stringFechaLlegada));
             rutas.add(ruta4);
+            
+            stringFechaLlegada = "2018-04-16 11:00";
+            stringFechaSalida = "2018-04-16 10:00";
+                        
+            ruta5 = new Ruta();
+            ruta5.setId(5);
+            ruta5.setDestino("CALI");
+            ruta5.setDuracionVuelo("1");
+            ruta5.setNoVuelo("V5");
+            ruta5.setOrigen("ARMENIA");
+            ruta5.setPrecio(300000L);
+            ruta5.setFechaSalida(sdf.parse(stringFechaSalida));
+            ruta5.setFechaLlegada(sdf.parse(stringFechaLlegada));
+            rutas.add(ruta5);
+            
+            
+            
+            ruta6 = new Ruta();
+            ruta6.setId(6);
+            ruta6.setDestino("CALI");
+            ruta6.setDuracionVuelo("1");
+            ruta6.setNoVuelo("V6");
+            ruta6.setOrigen("ARMENIA");
+            ruta6.setPrecio(300000L);
+            ruta6.setFechaSalida(sdf.parse(stringFechaSalida));
+            ruta6.setFechaLlegada(sdf.parse(stringFechaLlegada));
+            rutas.add(ruta6);
 
         } catch (ParseException ex) {
             Logger.getLogger(Aerolinea.class.getName()).log(Level.SEVERE, null, ex);

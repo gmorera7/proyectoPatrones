@@ -22,7 +22,6 @@ import javeriana.edu.co.modelo.usuario.Persona;
  */
 public class Reporte extends Observable implements HacerCheck, Observer, HacerReporte {
 
-    
     private Reserva reserva;
     public static HacerCheck aerolinea = Aerolinea.getInstance();
     public static AccionReserva reservar = Aerolinea.getInstance();
@@ -123,7 +122,7 @@ public class Reporte extends Observable implements HacerCheck, Observer, HacerRe
         int contador = 0;
         int porcentaje = 0;
         int totalRango = revervasCheckFoodNoOK.size();
-        
+
         for (int i = 0; i < revervasCheckFoodOK.size(); i++) {
             Reserva reservaLocal = (Reserva) revervasCheckFoodOK.get(i);
             Date fechaSalida = reservaLocal.getRuta().getFechaSalida();
@@ -152,12 +151,16 @@ public class Reporte extends Observable implements HacerCheck, Observer, HacerRe
             Date fechaSalida = reservaLocal.getRuta().getFechaSalida();
 
             if (fechaSalida.after(fechaInicial) && fechaSalida.before(FechaFinal)) {
-                totalRango++;
 
                 if (reservaLocal.getComida() instanceof ComidaEspecial) {
 
                     for (int l = 0; l < reservaLocal.getCheck().size(); l++) {
                         Check check = reservaLocal.getCheck().get(l);
+                        // SUMAR LOS QUE ESTAN CONFIRMADOS
+                        if (check instanceof CheckFood && check.getConfirmacion()) {
+                            totalRango++;
+                        }
+                        // SUMAR DE LOS CONFIRMADOS CUALES NO ESTAN OK
                         if (check instanceof CheckFood && !check.getConfirmacion()) {
                             contador++;
                         }

@@ -79,7 +79,7 @@ public class Notificacion implements INotificacion, Observer {
 
         // Lo enviamos.
         Transport t = session.getTransport("smtp");
-        t.connect("gmorera1987@gmail.com", "");
+        t.connect("gmorera1987@gmail.com", "nicole77");
         t.sendMessage(message, message.getAllRecipients());
 
         // Cierre.
