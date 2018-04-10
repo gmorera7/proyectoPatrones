@@ -17,7 +17,7 @@ public class Encuesta extends javax.swing.JFrame implements AccionesPantalla{
         if (instance == null) {
             instance = new Encuesta();
             instance.initComponents();
-            
+            instance.iniciarComponentes();
         }
         return instance;
     }

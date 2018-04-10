@@ -19,9 +19,9 @@ import javeriana.edu.co.modelo.usuario.Persona;
  *
  * @author javeriana.edu.co
  */
-public class Reporte extends Observable implements HacerCheck, Observer ,HacerReporte {
+public class Reporte extends Observable implements HacerCheck, Observer, HacerReporte {
 
-    static Aerolinea aerolinea;
+    static Aerolinea aerolinea = Aerolinea.getInstance();
 
     Reserva reserva;
 
@@ -41,7 +41,6 @@ public class Reporte extends Observable implements HacerCheck, Observer ,HacerRe
     public static Reporte getInstance() {
         if (instance == null) {
             instance = new Reporte();
-            aerolinea = Aerolinea.getInstance();
         }
         return instance;
     }
@@ -119,8 +118,9 @@ public class Reporte extends Observable implements HacerCheck, Observer ,HacerRe
 
     public void reporte1(Date fechaInicial, Date FechaFinal) {
         int contador = 0;
-        int totalRango = revervasCheckFoodNoOK.size();
         int porcentaje = 0;
+        int totalRango = revervasCheckFoodNoOK.size();
+        
         for (int i = 0; i < revervasCheckFoodOK.size(); i++) {
             Reserva reservaLocal = (Reserva) revervasCheckFoodOK.get(i);
             Date fechaSalida = reservaLocal.getRuta().getFechaSalida();

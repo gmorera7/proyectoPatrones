@@ -35,7 +35,6 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
     
     
     protected Aerolinea() {
-
     }
 
     public static Aerolinea getInstance() {
@@ -68,11 +67,11 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
         if (getPasajeros().isEmpty()) {
             getPasajeros().add(reserva.getPersona());
         } else {
-            for (int i = 0; i < getPasajeros().size(); i++) {
-                if (getPasajeros().get(i).getNumeroDocumento().equalsIgnoreCase(reserva.getPersona().getNumeroDocumento())
-                        && getPasajeros().get(i).getTipoDocumento().equalsIgnoreCase(reserva.getPersona().getTipoDocumento())) {
+            for (int contador = 0; contador < getPasajeros().size(); contador++) {
+                if (getPasajeros().get(contador).getNumeroDocumento().equalsIgnoreCase(reserva.getPersona().getNumeroDocumento())
+                        && getPasajeros().get(contador).getTipoDocumento().equalsIgnoreCase(reserva.getPersona().getTipoDocumento())) {
                     encontrado = true;
-                    posicion = i;
+                    posicion = contador;
                     break;
                 }
             }
@@ -123,8 +122,7 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
                     && ruta.getDestino().equalsIgnoreCase(busqueda.getDestino())
                     && fechaBusqueda.equalsIgnoreCase(fechaRuta)) {
 
-                rutasEncontradas.add(ruta);
-                System.err.println("encontro ruta.....");
+                rutasEncontradas.add(ruta);                
             }
         }
         enviarNotificacion("busquedaRuta", rutasEncontradas);
@@ -158,8 +156,8 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
                         reservasEncontradas.add(reserva);
                     }
                 } else {
-                    for (int i = 0; i < reserva.getCheck().size(); i++) {
-                        if (reserva.getCheck().get(i) instanceof CheckFood) {
+                    for (int contador = 0; contador < reserva.getCheck().size(); contador++) {
+                        if (reserva.getCheck().get(contador) instanceof CheckFood) {
                             agregar = false;
                         }
                     }
@@ -176,11 +174,11 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
 
     @Override
     public void hacerCheckIn(Integer idReserva, boolean confirmacion) {
-        for (int i = 0; i < reservas.size(); i++) {
-            Reserva reserva = (Reserva) reservas.get(i);
+        for (int contador = 0; contador < reservas.size(); contador++) {
+            Reserva reserva = (Reserva) reservas.get(contador);
             if (reserva.getId().intValue() == idReserva) {
                 reserva.getCheck().add(fabricaCheck.crearCheckIn(reserva.getCheck().size(), confirmacion));
-                reservas.set(i, reserva);
+                reservas.set(contador, reserva);
                 break;
             }
         }
@@ -188,11 +186,11 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
 
     @Override
     public void hacerCheckOut(Integer idReserva, boolean confirmacion) {
-        for (int i = 0; i < getReservas().size(); i++) {
-            Reserva reserva = (Reserva) getReservas().get(i);
+        for (int contador = 0; contador < getReservas().size(); contador++) {
+            Reserva reserva = (Reserva) getReservas().get(contador);
             if (reserva.getId().intValue() == idReserva) {
                 reserva.getCheck().add(fabricaCheck.crearCheckOut(reserva.getCheck().size()+1, confirmacion));
-                getReservas().set(i, reserva);
+                getReservas().set(contador, reserva);
                 break;
             }
         }
@@ -200,11 +198,11 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
 
     @Override
     public void hacerCheckFood(Integer idReserva, boolean confirmacion) {
-        for (int i = 0; i < getReservas().size(); i++) {
-            Reserva reserva = (Reserva) getReservas().get(i);
+        for (int contador = 0; contador < getReservas().size(); contador++) {
+            Reserva reserva = (Reserva) getReservas().get(contador);
             if (reserva.getId().intValue() == idReserva) {
                 reserva.getCheck().add(fabricaCheck.crearCheckFood(reserva.getCheck().size(), confirmacion));
-                getReservas().set(i, reserva);
+                getReservas().set(contador, reserva);
                 break;
             }
         }
@@ -259,8 +257,8 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
                 if (reserva.getCheck() == null || reserva.getCheck().isEmpty()) {
                     reservasEncontradas.add(reserva);
                 } else {
-                    for (int i = 0; i < reserva.getCheck().size(); i++) {
-                        if (reserva.getCheck().get(i) instanceof CheckOut) {
+                    for (int contador = 0; contador < reserva.getCheck().size(); contador++) {
+                        if (reserva.getCheck().get(contador) instanceof CheckOut) {
                             agregar = false;
                         }
                     }
@@ -312,11 +310,11 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
     @Override
     public void hacerEncuesta(Encuesta encuesta) {
         Integer idReserva = encuesta.getIdReserva();
-        for (int i = 0; i < getReservas().size(); i++) {
-            Reserva reserva = (Reserva) getReservas().get(i);
+        for (int contador = 0; contador < getReservas().size(); contador++) {
+            Reserva reserva = (Reserva) getReservas().get(contador);
             if (reserva.getId().intValue() == idReserva) {
                 reserva.setEncuesta(encuesta);
-                getReservas().set(i, reserva);
+                getReservas().set(contador, reserva);
                 break;
             }
         }
