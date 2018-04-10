@@ -17,9 +17,7 @@ import javeriana.edu.co.modelo.reserva.Ruta;
 public class PantallaSeleccionVuelo extends javax.swing.JFrame implements Observer, AccionesPantalla {
 
     private static PantallaSeleccionVuelo instance = null;
-    
     private static Aerolinea aerolinea = Aerolinea.getInstance();
-
     private Busqueda busqueda;
 
     protected PantallaSeleccionVuelo() {
@@ -30,7 +28,6 @@ public class PantallaSeleccionVuelo extends javax.swing.JFrame implements Observ
             instance = new PantallaSeleccionVuelo();
             instance.initComponents();
             instance.iniciarComponentes();
-
         }
         return instance;
     }
@@ -136,8 +133,6 @@ public class PantallaSeleccionVuelo extends javax.swing.JFrame implements Observ
             PantallaDatosBasicos.getInstance().setIdRuta(Integer.parseInt(parts[1]));
             PantallaSeleccionVuelo.getInstance().setVisible(false);
             PantallaDatosBasicos.getInstance().setVisible(true);
-        } else {
-            // dEBE SELECCIONAR
         }
 
     }//GEN-LAST:event_btnContinuarActionPerformed

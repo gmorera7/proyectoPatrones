@@ -5,7 +5,7 @@ package javeriana.edu.co.modelo.mensaje;
  * @author javeriana.edu.co
  */
 public class Mensaje {
-    
+
     private String accion;
     private Object objeto;
 
@@ -36,5 +36,5 @@ public class Mensaje {
     public void setObjeto(Object objeto) {
         this.objeto = objeto;
     }
-    
+
 }

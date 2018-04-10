@@ -20,4 +20,6 @@ public interface HacerReporte {
 
     public void reporte6(Date fechaInicial, Date FechaFinal);
 
+    public void hacerEncuesta(Integer idEncuesta, String calificacion);
+
 }

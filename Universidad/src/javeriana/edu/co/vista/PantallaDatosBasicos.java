@@ -40,7 +40,6 @@ public class PantallaDatosBasicos extends javax.swing.JFrame implements Acciones
 
     @Override
     public void limpiarCampos() {
-        //txtTipoDocumento.setModel(new javax.swing.DefaultComboBoxModel(new String[]{"Cedula", "Pasaporte", "Nit"}));
         txtPrimerNombre.setText("");
         txtSegundoNombre.setText("");
         txtPrimerApellido.setText("");
@@ -223,7 +222,7 @@ public class PantallaDatosBasicos extends javax.swing.JFrame implements Acciones
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtTipoDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTipoDocumentoActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_txtTipoDocumentoActionPerformed
 
     private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
@@ -282,5 +281,4 @@ public class PantallaDatosBasicos extends javax.swing.JFrame implements Acciones
             txtTipoDocumento.setModel(new javax.swing.DefaultComboBoxModel((String[]) mensaje.getObjeto()));
         }
     }
-
 }

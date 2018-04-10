@@ -1,5 +1,7 @@
 package javeriana.edu.co.control;
 
+import javeriana.edu.co.modelo.aerolinea.AccionReserva;
+import javeriana.edu.co.modelo.aerolinea.AccionRutas;
 import javeriana.edu.co.modelo.aerolinea.Aerolinea;
 import javeriana.edu.co.modelo.reserva.Reserva;
 
@@ -10,40 +12,41 @@ import javeriana.edu.co.modelo.reserva.Reserva;
 public class ControlServiciosEspeciales implements IServiciosEspeciales {
 
     private static ControlServiciosEspeciales instance = null;
+    private AccionReserva reservar = Aerolinea.getInstance();
+    private AccionRutas rutas = Aerolinea.getInstance();
 
     protected ControlServiciosEspeciales() {
-
     }
 
     public static ControlServiciosEspeciales getInstance() {
         if (instance == null) {
-            instance = new ControlServiciosEspeciales();            
+            instance = new ControlServiciosEspeciales();
         }
         return instance;
     }
 
     @Override
     public void consultarRutaPorId(Integer id) {
-        Aerolinea.getInstance().consultarRutaPorId(id);
+        rutas.consultarRutaPorId(id);
     }
 
     @Override
     public void crearReserva(Reserva reserva) {
-        Aerolinea.getInstance().hacerReserva(reserva);
+        reservar.hacerReserva(reserva);
     }
 
     @Override
     public void cargarMenuComidaEspecial() {
-        Aerolinea.getInstance().cargarMenuComidaEspecial();
+        reservar.cargarMenuComidaEspecial();
     }
 
     @Override
     public void cargarMenuTipoComida() {
-        Aerolinea.getInstance().cargarMenuTipoComida();
+        reservar.cargarMenuTipoComida();
     }
 
     @Override
     public void cargarNumeroSillas() {
-        Aerolinea.getInstance().cargarNumeroSillas();
+        reservar.cargarNumeroSillas();
     }
 }

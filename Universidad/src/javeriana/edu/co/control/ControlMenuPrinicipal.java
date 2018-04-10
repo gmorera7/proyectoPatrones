@@ -20,7 +20,7 @@ public class ControlMenuPrinicipal implements IControlMenuPrincipal {
     public static ControlMenuPrinicipal getInstance() {
         if (instance == null) {
             instance = new ControlMenuPrinicipal();
-            aerolinea = Aerolinea.getInstance();            
+            aerolinea = Aerolinea.getInstance();
         }
         return instance;
     }
@@ -34,5 +34,4 @@ public class ControlMenuPrinicipal implements IControlMenuPrincipal {
     public void cargarCatalogosCiudadesDestino() {
         aerolinea.cargarCiudadesDestino();
     }
-
 }

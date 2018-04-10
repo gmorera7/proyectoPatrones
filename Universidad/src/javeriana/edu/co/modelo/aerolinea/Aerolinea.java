@@ -29,10 +29,9 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
     private ArrayList reservas = new ArrayList<>();
     private ArrayList rutas = new ArrayList<>();
     private List<Persona> pasajeros = new ArrayList<>();
-
-    private static FabricaCheckAbstracta fabricaCheck;
+    private static FabricaCheckAbstracta fabricaCheck = FabricaCheck.getInstance();
     private static Aerolinea instance = null;
-    
+
     
     protected Aerolinea() {
     }
@@ -40,7 +39,6 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
     public static Aerolinea getInstance() {
         if (instance == null) {
             instance = new Aerolinea();
-            fabricaCheck = FabricaCheck.getInstance();
             CargaDatos.getInstance().cargarRutas();
             CargaDatos.getInstance().cargarReservas();
         }
@@ -59,11 +57,11 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
     }
 
     public void crearActualizarPasajeros(Reserva reserva) {
-        
-        List<Persona> pasajeros1 =getPasajeros();
-        
+
+        List<Persona> pasajeros1 = getPasajeros();
         boolean encontrado = false;
         int posicion = 0;
+
         if (getPasajeros().isEmpty()) {
             getPasajeros().add(reserva.getPersona());
         } else {
@@ -81,7 +79,6 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
                 getPasajeros().add(reserva.getPersona());
             }
         }
-
     }
 
     @Override
@@ -113,7 +110,6 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
         ArrayList<Ruta> rutasEncontradas = new ArrayList<>();
 
         for (Iterator it = getRutas().iterator(); it.hasNext();) {
-
             ruta = (Ruta) it.next();
             fechaBusqueda = Utilities.formatDateWithoutTimeInAStringForBetweenWhere(busqueda.getFecha());
             fechaRuta = Utilities.formatDateWithoutTimeInAStringForBetweenWhere(ruta.getFechaSalida());
@@ -121,8 +117,7 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
             if (ruta.getOrigen().equalsIgnoreCase(busqueda.getOrigen())
                     && ruta.getDestino().equalsIgnoreCase(busqueda.getDestino())
                     && fechaBusqueda.equalsIgnoreCase(fechaRuta)) {
-
-                rutasEncontradas.add(ruta);                
+                rutasEncontradas.add(ruta);
             }
         }
         enviarNotificacion("busquedaRuta", rutasEncontradas);
@@ -189,6 +184,7 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
         for (int contador = 0; contador < getReservas().size(); contador++) {
             Reserva reserva = (Reserva) getReservas().get(contador);
             if (reserva.getId().intValue() == idReserva) {
+
                 reserva.getCheck().add(fabricaCheck.crearCheckOut(reserva.getCheck().size()+1, confirmacion));
                 getReservas().set(contador, reserva);
                 break;
@@ -215,34 +211,6 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
         mensaje.setObjeto(objeto);
         setChanged();
         notifyObservers(mensaje);
-    }
-
-    /**
-     * @return the reserva
-     */
-    public ArrayList<Reserva> getReservas() {
-        return reservas;
-    }
-
-    /**
-     * @param reserva the reserva to set
-     */
-    public void setReservas(ArrayList<Reserva> reserva) {
-        this.reservas = reserva;
-    }
-
-    /**
-     * @return the rutas
-     */
-    public ArrayList getRutas() {
-        return rutas;
-    }
-
-    /**
-     * @param rutas the rutas to set
-     */
-    public void setRutas(ArrayList rutas) {
-        this.rutas = rutas;
     }
 
     @Override
@@ -318,5 +286,33 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
                 break;
             }
         }
+    }
+
+    /**
+     * @return the reserva
+     */
+    public ArrayList<Reserva> getReservas() {
+        return reservas;
+    }
+
+    /**
+     * @param reserva the reserva to set
+     */
+    public void setReservas(ArrayList<Reserva> reserva) {
+        this.reservas = reserva;
+    }
+
+    /**
+     * @return the rutas
+     */
+    public ArrayList getRutas() {
+        return rutas;
+    }
+
+    /**
+     * @param rutas the rutas to set
+     */
+    public void setRutas(ArrayList rutas) {
+        this.rutas = rutas;
     }
 }

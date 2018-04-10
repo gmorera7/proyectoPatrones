@@ -5,7 +5,6 @@ import java.util.Observer;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.NoSuchProviderException;
@@ -26,7 +25,6 @@ public class Notificacion implements INotificacion, Observer {
     private static Notificacion instance = null;
     private Reserva reserva;
 
-    
     protected Notificacion() {
     }
 
@@ -45,7 +43,6 @@ public class Notificacion implements INotificacion, Observer {
         } catch (MessagingException ex) {
             Logger.getLogger(Notificacion.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     @Override
@@ -55,7 +52,6 @@ public class Notificacion implements INotificacion, Observer {
         if (mensaje.getAccion().equalsIgnoreCase("buscarReserva")) {
             reserva = (Reserva) mensaje.getObjeto();
             String email = reserva.getPersona().getCorreoElectronico();
-
         }
     }
 
@@ -79,7 +75,7 @@ public class Notificacion implements INotificacion, Observer {
                 new InternetAddress("gmorera1987@gmail.com"));
         message.setSubject("Reserva CheckFood Gastronomic AIR");
         message.setText(
-                "Se realizo exitosamente el checkFood para la reserva: "+idReserva+" por favor tu calificacion la puedes realizar en nuestra aplicacion." );
+                "Se realizo exitosamente el checkFood para la reserva: " + idReserva + " por favor tu calificacion la puedes realizar en nuestra aplicacion.");
 
         // Lo enviamos.
         Transport t = session.getTransport("smtp");
@@ -88,7 +84,5 @@ public class Notificacion implements INotificacion, Observer {
 
         // Cierre.
         t.close();
-
     }
-
 }
