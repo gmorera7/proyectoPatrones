@@ -1,5 +1,6 @@
 package javeriana.edu.co.vista;
 
+import java.text.SimpleDateFormat;
 import javeriana.edu.co.control.ControlCheckIn;
 import javeriana.edu.co.modelo.mensaje.Mensaje;
 import java.util.Observable;
@@ -20,8 +21,7 @@ public class PantallaCheckIn extends javax.swing.JFrame implements AccionesPanta
     private static PantallaCheckIn instance = null;
     private Reserva reserva;
     private Aerolinea aerolinea = Aerolinea.getInstance();
-    
-    
+
     protected PantallaCheckIn() {
     }
 
@@ -35,13 +35,13 @@ public class PantallaCheckIn extends javax.swing.JFrame implements AccionesPanta
     }
 
     @Override
-    public void iniciarComponentes() {   
+    public void iniciarComponentes() {
         aerolinea.addObserver(Reporte.getInstance());
         aerolinea.addObserver(PantallaCheckIn.getInstance());
-        txtNombrePasajero.setVisible(false);
-        txtDestino.setVisible(false);
-        txtOrigen.setVisible(false);
-        txtFecha.setVisible(false);
+        //  txtNombrePasajero.setVisible(false);
+        //  txtDestino.setVisible(false);
+        //  txtOrigen.setVisible(false);
+        //  txtFecha.setVisible(false);
         btnHacerCheck.setEnabled(false);
     }
 
@@ -71,7 +71,7 @@ public class PantallaCheckIn extends javax.swing.JFrame implements AccionesPanta
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        txtFecha = new com.toedter.calendar.JDateChooser();
+        txtFecha = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -99,6 +99,8 @@ public class PantallaCheckIn extends javax.swing.JFrame implements AccionesPanta
                 btnCancelarActionPerformed(evt);
             }
         });
+
+        txtOrigen.setToolTipText("");
 
         jLabel3.setText("Origen");
 
@@ -147,7 +149,7 @@ public class PantallaCheckIn extends javax.swing.JFrame implements AccionesPanta
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtNombrePasajero)
-                    .addComponent(txtFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtFecha))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -156,23 +158,21 @@ public class PantallaCheckIn extends javax.swing.JFrame implements AccionesPanta
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(bntConsultar)
-                            .addComponent(txtNumeroReserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))
-                        .addGap(30, 30, 30)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel5)
-                            .addComponent(txtNombrePasajero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(26, 26, 26)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(txtDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bntConsultar)
+                    .addComponent(txtNumeroReserva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtOrigen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel5)
+                    .addComponent(txtNombrePasajero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6)
                     .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -200,23 +200,27 @@ public class PantallaCheckIn extends javax.swing.JFrame implements AccionesPanta
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void bntConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntConsultarActionPerformed
-        String numeroReserva = txtNumeroReserva.getText();
-        controlCheckIn.consultarReserva(Integer.parseInt(numeroReserva));
-        if (reserva != null) {
-            txtNombrePasajero.setText(reserva.getPersona().getNombreCompleto());
-            txtFecha.setDate(reserva.getFecha());
-            txtOrigen.setText(reserva.getRuta().getOrigen());
-            txtDestino.setText(reserva.getRuta().getDestino());
 
-            txtNombrePasajero.setVisible(true);
-            txtDestino.setVisible(true);
-            txtOrigen.setVisible(true);
-            txtFecha.setVisible(true);
-            btnHacerCheck.setEnabled(true);
+        if (txtNumeroReserva.getText() != null) {
+            String numeroReserva = txtNumeroReserva.getText();
+            controlCheckIn.consultarReserva(Integer.parseInt(numeroReserva));
+            if (reserva != null) {
+                txtNombrePasajero.setText(reserva.getPersona().getNombreCompleto());
+                txtFecha.setText(new SimpleDateFormat("MM-dd-yyyy hh:mm").format(reserva.getFecha()));
+                txtOrigen.setText(reserva.getRuta().getOrigen());
+                txtDestino.setText(reserva.getRuta().getDestino());
+
+                txtNombrePasajero.setVisible(true);
+                txtDestino.setVisible(true);
+                txtOrigen.setVisible(true);
+                txtFecha.setVisible(true);
+                btnHacerCheck.setEnabled(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontro valores");
+            }
         } else {
-            JOptionPane.showMessageDialog(null, "No se encontro valores");
+            JOptionPane.showMessageDialog(null, "Por favor ingrese el número de reserva");
         }
-
     }//GEN-LAST:event_bntConsultarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -230,7 +234,7 @@ public class PantallaCheckIn extends javax.swing.JFrame implements AccionesPanta
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JTextField txtDestino;
-    private com.toedter.calendar.JDateChooser txtFecha;
+    private javax.swing.JTextField txtFecha;
     private javax.swing.JTextField txtNombrePasajero;
     private javax.swing.JTextField txtNumeroReserva;
     private javax.swing.JTextField txtOrigen;

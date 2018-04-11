@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javeriana.edu.co.modelo.comida.Comida;
+import javeriana.edu.co.modelo.comida.ComidaRegular;
 import javeriana.edu.co.modelo.comida.FabricaComidaEspecial;
 import javeriana.edu.co.modelo.reserva.Reserva;
 import javeriana.edu.co.modelo.reserva.Ruta;
@@ -98,7 +100,8 @@ public class CargaDatos {
             ruta5.setFechaLlegada(sdf.parse(stringFechaLlegada));
             rutas.add(ruta5);
             
-            
+            stringFechaLlegada = "2018-04-16 09:00";
+            stringFechaSalida = "2018-04-16 08:00";
             
             ruta6 = new Ruta();
             ruta6.setId(6);
@@ -141,82 +144,149 @@ public class CargaDatos {
 
     public void cargarReservas() {
         Integer id1, id2, id3;
+        
+        Comida comida = new ComidaRegular();
+        comida.setDescripcion("REGULAR");
+        
 
         Pasajero pasajero1 = new Pasajero();
         pasajero1.setTipoDocumento("CEDULA");
-        pasajero1.setNumeroDocumento("1107045881");
-        pasajero1.setPrimerNombre("CARLOS");
-        pasajero1.setSegundoNombre("ANDRES");
-        pasajero1.setPrimerApellido("ROJAS");
-        pasajero1.setSegundoApellido("MORALES");
+        pasajero1.setNumeroDocumento("1");
+        pasajero1.setPrimerNombre("A");
+        pasajero1.setSegundoNombre("A");
+        pasajero1.setPrimerApellido("A");
+        pasajero1.setSegundoApellido("A");
         pasajero1.setTelefono("3268452");
         pasajero1.setDireccion("CALLE 54 65-85");
         pasajero1.setCorreoElectronico("gmorera1987@gmail.com");
 
         Pasajero pasajero2 = new Pasajero();
         pasajero2.setTipoDocumento("CEDULA");
-        pasajero2.setNumeroDocumento("1107045882");
-        pasajero2.setPrimerNombre("ANDREA");
-        pasajero2.setSegundoNombre("CAROLINA");
-        pasajero2.setPrimerApellido("MORALES");
-        pasajero2.setSegundoApellido("RENDON");
+        pasajero2.setNumeroDocumento("2");
+        pasajero2.setPrimerNombre("B");
+        pasajero2.setSegundoNombre("B");
+        pasajero2.setPrimerApellido("B");
+        pasajero2.setSegundoApellido("B");
         pasajero2.setTelefono("3269875");
         pasajero2.setDireccion("CALLE 12 25-14");
         pasajero2.setCorreoElectronico("gmorera1987@gmail.com");
 
         Pasajero pasajero3 = new Pasajero();
         pasajero3.setTipoDocumento("CEDULA");
-        pasajero3.setNumeroDocumento("1107045883");
-        pasajero3.setPrimerNombre("JULIAN");
-        pasajero3.setSegundoNombre("ANTONIO");
-        pasajero3.setPrimerApellido("MORALES");
-        pasajero3.setSegundoApellido("ZULUAGA");
+        pasajero3.setNumeroDocumento("3");
+        pasajero3.setPrimerNombre("C");
+        pasajero3.setSegundoNombre("C");
+        pasajero3.setPrimerApellido("C");
+        pasajero3.setSegundoApellido("C");
         pasajero3.setTelefono("3269875");
         pasajero3.setDireccion("CALLE 12 25-14");
         pasajero3.setCorreoElectronico("gmorera1987@gmail.com");
+        
+        Pasajero pasajero4 = new Pasajero();
+        pasajero4.setTipoDocumento("CEDULA");
+        pasajero4.setNumeroDocumento("4");
+        pasajero4.setPrimerNombre("D");
+        pasajero4.setSegundoNombre("D");
+        pasajero4.setPrimerApellido("D");
+        pasajero4.setSegundoApellido("D");
+        pasajero4.setTelefono("3268496");
+        pasajero4.setDireccion("CALLE 58 25-14");
+        pasajero4.setCorreoElectronico("gmorera1987@gmail.com");
+        
+        Pasajero pasajero5 = new Pasajero();
+        pasajero5.setTipoDocumento("CEDULA");
+        pasajero5.setNumeroDocumento("5");
+        pasajero5.setPrimerNombre("E");
+        pasajero5.setSegundoNombre("E");
+        pasajero5.setPrimerApellido("E");
+        pasajero5.setSegundoApellido("E");
+        pasajero5.setTelefono("3269875");
+        pasajero5.setDireccion("CALLE 12 25-14");
+        pasajero5.setCorreoElectronico("gmorera1987@gmail.com");
+        
+        Pasajero pasajero6 = new Pasajero();
+        pasajero6.setTipoDocumento("CEDULA");
+        pasajero6.setNumeroDocumento("6");
+        pasajero6.setPrimerNombre("F");
+        pasajero6.setSegundoNombre("F");
+        pasajero6.setPrimerApellido("F");
+        pasajero6.setSegundoApellido("F");
+        pasajero6.setTelefono("3269874");
+        pasajero6.setDireccion("CALLE 50 25-14");
+        pasajero6.setCorreoElectronico("gmorera1987@gmail.com");
 
         Reserva uno = new Reserva();
         uno.setPersona(pasajero1);
-        uno.setComida(FabricaComidaEspecial.getInstance().comidaBajaColesterol());
-        uno.setRuta(ruta2);
-
+        uno.setComida(FabricaComidaEspecial.getInstance().comidaVetariana());
+        uno.setRuta(ruta5);
         uno.setFecha(new Date());
         uno.setNumeroSilla("1");
         uno.setCheck(new ArrayList<>());
-        id1 = reservas.size() + 1;
-        uno.setId(id1);
-        reservas.add(uno);
-
+      
         Reserva dos = new Reserva();
         dos.setPersona(pasajero2);
-
-        dos.setComida(FabricaComidaEspecial.getInstance().comidaMar());
-        dos.setRuta(ruta2);
+        dos.setComida(FabricaComidaEspecial.getInstance().comidaBajaProteinas());
+        dos.setRuta(ruta5);
         dos.setFecha(new Date());
         dos.setNumeroSilla("2");
         dos.setCheck(new ArrayList<>());
-        id2 = reservas.size() + 1;
-        dos.setId(id2);
-        reservas.add(dos);
-
+        
         Reserva tres = new Reserva();
         tres.setPersona(pasajero3);
-        tres.setComida(FabricaComidaEspecial.getInstance().comidaBajaEnGrasa());
-        tres.setRuta(ruta2);
+        tres.setComida(comida);
+        tres.setRuta(ruta5);
         tres.setFecha(new Date());
         tres.setNumeroSilla("3");
         tres.setCheck(new ArrayList<>());
-        id3 = reservas.size() + 1;
-        tres.setId(id3);
-        reservas.add(tres);
+        
+        Reserva cuatro = new Reserva();
+        cuatro.setPersona(pasajero4);
+        cuatro.setComida(FabricaComidaEspecial.getInstance().comidaVetariana());
+        cuatro.setRuta(ruta6);
+        cuatro.setFecha(new Date());
+        cuatro.setNumeroSilla("4");
+        cuatro.setCheck(new ArrayList<>());
+        
+        
+        Reserva cinco = new Reserva();
+        cinco.setPersona(pasajero5);
+        cinco.setComida(FabricaComidaEspecial.getInstance().comidaBajaProteinas());
+        cinco.setRuta(ruta6);
+        cinco.setFecha(new Date());
+        cinco.setNumeroSilla("5");
+        cinco.setCheck(new ArrayList<>());
+        
+        Reserva seis = new Reserva();
+        seis.setPersona(pasajero6);
+        seis.setComida(comida);
+        seis.setRuta(ruta6);
+        seis.setFecha(new Date());
+        seis.setNumeroSilla("6");
+        seis.setCheck(new ArrayList<>());
+        
+        Reserva siete = new Reserva();
+        siete.setPersona(pasajero4);
+        siete.setComida(FabricaComidaEspecial.getInstance().comidaMar());
+        siete.setRuta(ruta4);
+        siete.setFecha(new Date());
+        siete.setNumeroSilla("1");
+        siete.setCheck(new ArrayList<>());
+        
         Aerolinea.getInstance().hacerReserva(uno);
         Aerolinea.getInstance().hacerReserva(dos);
         Aerolinea.getInstance().hacerReserva(tres);
+        Aerolinea.getInstance().hacerReserva(cuatro);
+        Aerolinea.getInstance().hacerReserva(cinco);
+        Aerolinea.getInstance().hacerReserva(seis);
+        Aerolinea.getInstance().hacerReserva(siete);
 
-        Aerolinea.getInstance().hacerCheckIn(id1, true);
-        Aerolinea.getInstance().hacerCheckIn(id2, true);
-        Aerolinea.getInstance().hacerCheckIn(id3, true);
-
+        Aerolinea.getInstance().hacerCheckIn(1, true);
+        Aerolinea.getInstance().hacerCheckIn(2, true);
+        Aerolinea.getInstance().hacerCheckIn(3, true);
+        Aerolinea.getInstance().hacerCheckIn(4, true);
+        Aerolinea.getInstance().hacerCheckIn(5, true);
+        Aerolinea.getInstance().hacerCheckIn(6, true);
+        Aerolinea.getInstance().hacerCheckIn(7, true);
     }
 
     public String[] cargarTiposDocumento() {

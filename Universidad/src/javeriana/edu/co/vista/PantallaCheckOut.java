@@ -5,6 +5,7 @@ import javeriana.edu.co.modelo.mensaje.Mensaje;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javeriana.edu.co.control.IControlCheckOut;
 import javeriana.edu.co.modelo.aerolinea.Aerolinea;
@@ -134,7 +135,11 @@ public class PantallaCheckOut extends javax.swing.JFrame implements Observer, Ac
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-        controlCheckOut.consultarReservasPorVuelo(txtNumeroVuelo.getText());
+        if (txtNumeroVuelo.getText() != null) {
+            controlCheckOut.consultarReservasPorVuelo(txtNumeroVuelo.getText());
+        } else {
+            JOptionPane.showMessageDialog(null, "Por favor ingrese el numero de vuelo en el formulario");
+        }
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed

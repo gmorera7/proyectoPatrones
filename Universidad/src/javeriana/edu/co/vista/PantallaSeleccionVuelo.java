@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javeriana.edu.co.modelo.aerolinea.Aerolinea;
 import javeriana.edu.co.modelo.reserva.Ruta;
 
@@ -128,16 +129,20 @@ public class PantallaSeleccionVuelo extends javax.swing.JFrame implements Observ
 
     private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
 
-        String seleccion = (String) rutas.getSelectedValue();
-        System.err.println("ruta " + rutas.getSelectedValue());
         if (rutas.getSelectedValue() != null) {
-            String[] parts = seleccion.split("--");
+            String seleccion = (String) rutas.getSelectedValue();
+            System.err.println("ruta " + rutas.getSelectedValue());
+            if (rutas.getSelectedValue() != null) {
+                String[] parts = seleccion.split("--");
 
-            if (parts != null && parts.length > 0) {
-                PantallaDatosBasicos.getInstance().setIdRuta(Integer.parseInt(parts[1]));
-                PantallaSeleccionVuelo.getInstance().setVisible(false);
-                PantallaDatosBasicos.getInstance().setVisible(true);
+                if (parts != null && parts.length > 0) {
+                    PantallaDatosBasicos.getInstance().setIdRuta(Integer.parseInt(parts[1]));
+                    PantallaSeleccionVuelo.getInstance().setVisible(false);
+                    PantallaDatosBasicos.getInstance().setVisible(true);
+                }
             }
+        } else {
+            JOptionPane.showMessageDialog(null, "Por favor seleccione un vuelo");
         }
 
     }//GEN-LAST:event_btnContinuarActionPerformed

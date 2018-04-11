@@ -61,7 +61,7 @@ public class Notificacion implements INotificacion, Observer {
         props.setProperty("mail.smtp.host", "smtp.gmail.com");
         props.setProperty("mail.smtp.starttls.enable", "true");
         props.setProperty("mail.smtp.port", "587");
-        props.setProperty("mail.smtp.user", "gmorera1987@gmail.com");
+        props.setProperty("mail.smtp.user", "gastronomicaircolombia@gmail.com");
         props.setProperty("mail.smtp.auth", "true");
 
         // Preparamos la sesion
@@ -69,17 +69,17 @@ public class Notificacion implements INotificacion, Observer {
 
         // Construimos el mensaje
         MimeMessage message = new MimeMessage(session);
-        message.setFrom(new InternetAddress("gmorera1987@gmail.com"));
+        message.setFrom(new InternetAddress("gastronomicaircolombia@gmail.com"));
         message.addRecipient(
                 Message.RecipientType.TO,
-                new InternetAddress("gmorera1987@gmail.com"));
+                new InternetAddress("gastronomicaircolombia@gmail.com"));
         message.setSubject("Reserva CheckFood Gastronomic AIR");
         message.setText(
                 "Se realizo exitosamente el checkFood para la reserva: " + idReserva + " por favor tu calificacion la puedes realizar en nuestra aplicacion.");
 
         // Lo enviamos.
         Transport t = session.getTransport("smtp");
-        t.connect("gmorera1987@gmail.com", "nicole77");
+        t.connect("gastronomicaircolombia@gmail.com", "agencia1234");
         t.sendMessage(message, message.getAllRecipients());
 
         // Cierre.

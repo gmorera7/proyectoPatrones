@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javeriana.edu.co.control.IControlPantallaAbastecedor;
 import javeriana.edu.co.reportes.Reporte;
@@ -23,7 +24,6 @@ public class PantallaAbastecedor extends javax.swing.JFrame implements Observer,
     private static PantallaAbastecedor instance = null;
     private Reporte reporte = Reporte.getInstance();
 
-    
     protected PantallaAbastecedor() {
     }
 
@@ -144,7 +144,11 @@ public class PantallaAbastecedor extends javax.swing.JFrame implements Observer,
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-        controlPantallaAbastecedor.reporte6(txtFechaInicio.getDate(), txtFechaFinal.getDate());
+        if (txtFechaInicio.getDate() != null && txtFechaFinal.getDate() != null) {
+            controlPantallaAbastecedor.reporte6(txtFechaInicio.getDate(), txtFechaFinal.getDate());
+        } else {
+            JOptionPane.showMessageDialog(null, "Por favor ingrese el valor de las fechas");
+        }
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -192,6 +196,6 @@ public class PantallaAbastecedor extends javax.swing.JFrame implements Observer,
 
     @Override
     public void limpiarCampos() {
-        
+
     }
 }

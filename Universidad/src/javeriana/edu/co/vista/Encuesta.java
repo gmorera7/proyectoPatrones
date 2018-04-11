@@ -42,7 +42,12 @@ public class Encuesta extends javax.swing.JFrame implements AccionesPantalla{
 
         jLabel1.setText("Número Reserva :");
 
-        txtCalificacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", " " }));
+        txtCalificacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5" }));
+        txtCalificacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCalificacionActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Calificación:");
 
@@ -125,6 +130,10 @@ public class Encuesta extends javax.swing.JFrame implements AccionesPantalla{
         PantallaMenuPrincipal.getInstance().setVisible(true);
         limpiarCampos();        
     }//GEN-LAST:event_btnEnviarActionPerformed
+
+    private void txtCalificacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCalificacionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCalificacionActionPerformed
 
    
 

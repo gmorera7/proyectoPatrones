@@ -9,6 +9,7 @@ import javeriana.edu.co.modelo.aerolinea.AccionReserva;
 import javeriana.edu.co.modelo.aerolinea.Aerolinea;
 import javeriana.edu.co.modelo.check.Check;
 import javeriana.edu.co.modelo.check.CheckFood;
+import javeriana.edu.co.modelo.check.CheckOut;
 import javeriana.edu.co.modelo.check.HacerCheck;
 import javeriana.edu.co.modelo.comida.ComidaEspecial;
 import javeriana.edu.co.modelo.encuesta.Encuesta;
@@ -155,13 +156,15 @@ public class Reporte extends Observable implements HacerCheck, Observer, HacerRe
                 if (reservaLocal.getComida() instanceof ComidaEspecial) {
 
                     for (int l = 0; l < reservaLocal.getCheck().size(); l++) {
-                        Check check = reservaLocal.getCheck().get(l);
+                        Object check = reservaLocal.getCheck().get(l);
+                        Check objeto = (Check) check;
+
                         // SUMAR LOS QUE ESTAN CONFIRMADOS
-                        if (check instanceof CheckFood && check.getConfirmacion()) {
+                        if (objeto instanceof CheckOut && objeto.getConfirmacion()) {
                             totalRango++;
                         }
                         // SUMAR DE LOS CONFIRMADOS CUALES NO ESTAN OK
-                        if (check instanceof CheckFood && !check.getConfirmacion()) {
+                        if (objeto instanceof CheckFood && !objeto.getConfirmacion()) {
                             contador++;
                         }
                     }

@@ -172,7 +172,7 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
         for (int contador = 0; contador < reservas.size(); contador++) {
             Reserva reserva = (Reserva) reservas.get(contador);
             if (reserva.getId().intValue() == idReserva) {
-                reserva.getCheck().add(fabricaCheck.crearCheckIn(reserva.getCheck().size(), confirmacion));
+                reserva.getCheck().add(fabricaCheck.crearCheckIn(reserva.getCheck().size()+1, confirmacion));
                 reservas.set(contador, reserva);
                 break;
             }
@@ -197,7 +197,7 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
         for (int contador = 0; contador < getReservas().size(); contador++) {
             Reserva reserva = (Reserva) getReservas().get(contador);
             if (reserva.getId().intValue() == idReserva) {
-                reserva.getCheck().add(fabricaCheck.crearCheckFood(reserva.getCheck().size(), confirmacion));
+                reserva.getCheck().add(fabricaCheck.crearCheckFood(reserva.getCheck().size()+1, confirmacion));
                 getReservas().set(contador, reserva);
                 break;
             }

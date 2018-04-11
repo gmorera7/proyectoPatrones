@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javeriana.edu.co.control.IControlPantallaAvion;
 import javeriana.edu.co.modelo.aerolinea.Aerolinea;
@@ -135,7 +136,11 @@ public class PantallaAvion extends javax.swing.JFrame implements Observer, Accio
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-        controlPantallaAvion.consultarReservasPorVuelo(txtNumeroVuelo.getText());
+        if (txtNumeroVuelo.getText() != null) {
+            controlPantallaAvion.consultarReservasPorVuelo(txtNumeroVuelo.getText());
+        } else {
+            JOptionPane.showMessageDialog(null, "Por favor ingrese el número del vuelo");
+        }
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
@@ -146,7 +151,7 @@ public class PantallaAvion extends javax.swing.JFrame implements Observer, Accio
             idReserva = (String) tabla.getValueAt(fila, 1);
             if (tabla.getValueAt(fila, 5) != null) {
                 checkFood = (boolean) tabla.getValueAt(fila, 5);
-                controlPantallaAvion.realizarCheckFood(Integer.parseInt(idReserva),checkFood);
+                controlPantallaAvion.realizarCheckFood(Integer.parseInt(idReserva), checkFood);
             }
         }
         limpiarCampos();
@@ -155,7 +160,7 @@ public class PantallaAvion extends javax.swing.JFrame implements Observer, Accio
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        limpiarCampos(); 
+        limpiarCampos();
         PantallaAvion.getInstance().setVisible(false);
         PantallaAerolinea.getInstance().setVisible(true);
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -196,7 +201,7 @@ public class PantallaAvion extends javax.swing.JFrame implements Observer, Accio
 
     @Override
     public void iniciarComponentes() {
-         aerolinea.addObserver(PantallaAvion.getInstance());
+        aerolinea.addObserver(PantallaAvion.getInstance());
     }
 
     @Override

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javeriana.edu.co.control.ControlReportes;
 import javeriana.edu.co.control.IControlReportes;
@@ -15,7 +16,7 @@ import javeriana.edu.co.reportes.ReporteComida;
  *
  * @author javeriana.edu.co
  */
-public class PantallaDepartamentoRelaciones extends javax.swing.JFrame implements Observer ,AccionesPantalla {
+public class PantallaDepartamentoRelaciones extends javax.swing.JFrame implements Observer, AccionesPantalla {
 
     private DefaultTableModel modelo;
     private DefaultTableModel modelo2;
@@ -35,7 +36,6 @@ public class PantallaDepartamentoRelaciones extends javax.swing.JFrame implement
         return instance;
     }
 
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -193,11 +193,17 @@ public class PantallaDepartamentoRelaciones extends javax.swing.JFrame implement
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
-        controlReportes.reporte4(txtFechaFinal.getDate(), txtFechaFinal.getDate());
-        controlReportes.reporte5(txtFechaFinal.getDate(), txtFechaFinal.getDate());
+        iniciarComponentes();
+        if (txtFechaFinal.getDate() != null && txtFechaInicial.getDate() != null) {
+            controlReportes.reporte4(txtFechaFinal.getDate(), txtFechaFinal.getDate());
+            controlReportes.reporte5(txtFechaFinal.getDate(), txtFechaFinal.getDate());
+        } else {
+            JOptionPane.showMessageDialog(null, "Por favor seleccione las fechas del formulario");
+        }
     }//GEN-LAST:event_btnConsultarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        limpiarCampos();
         PantallaMenuReporte.getInstance().setVisible(true);
         PantallaDepartamentoRelaciones.getInstance().setVisible(false);
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -262,6 +268,59 @@ public class PantallaDepartamentoRelaciones extends javax.swing.JFrame implement
     }
 
     @Override
-    public void limpiarCampos() {        
+    public void limpiarCampos() {
+         tabla.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "NOMBRE", "DIRECCION", "FECHA", "COMIDA"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, true, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+         
+         tabla2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "NOMBRE", "DIRECCION", "FECHA", "COMIDA"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
     }
 }
