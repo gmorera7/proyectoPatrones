@@ -1,7 +1,6 @@
 package javeriana.edu.co.vista;
 
 import javeriana.edu.co.modelo.mensaje.Mensaje;
-import javeriana.edu.co.modelo.usuario.Pasajero;
 import javeriana.edu.co.modelo.comida.Comida;
 import javeriana.edu.co.modelo.comida.ComidaRegular;
 import java.util.Date;
@@ -11,7 +10,7 @@ import javeriana.edu.co.control.ControlServiciosEspeciales;
 import javeriana.edu.co.control.IServiciosEspeciales;
 import javeriana.edu.co.modelo.aerolinea.Aerolinea;
 import javeriana.edu.co.modelo.comida.FabricaComidaEspecial;
-import javeriana.edu.co.modelo.comida.FabricaComidaEspecialAbstracta;
+import javeriana.edu.co.modelo.comida.IFabricaComidaEspecialAbstracta;
 import javeriana.edu.co.modelo.reserva.Reserva;
 import javeriana.edu.co.modelo.reserva.Ruta;
 import javeriana.edu.co.modelo.usuario.Persona;
@@ -23,7 +22,7 @@ import javeriana.edu.co.modelo.usuario.Persona;
 public class PantallaServiciosEspeciales extends javax.swing.JFrame implements IAccionesPantalla, Observer {
 
     private IServiciosEspeciales controlServiciosEspeciales = ControlServiciosEspeciales.getInstance();
-    private static FabricaComidaEspecialAbstracta fabricaComidaEspecial = FabricaComidaEspecial.getInstance();
+    private static IFabricaComidaEspecialAbstracta fabricaComidaEspecial = FabricaComidaEspecial.getInstance();
     private static Aerolinea aerolinea = Aerolinea.getInstance();
     private Integer idRuta;
     private Ruta ruta;

@@ -4,7 +4,7 @@ package javeriana.edu.co.modelo.comida;
  *
  * @author javeriana.edu.co
  */
-public class FabricaComidaEspecial extends FabricaComidaEspecialAbstracta {
+public class FabricaComidaEspecial implements IFabricaComidaEspecialAbstracta {
 
     private static FabricaComidaEspecial instance = null;
 
@@ -19,75 +19,75 @@ public class FabricaComidaEspecial extends FabricaComidaEspecialAbstracta {
     }
 
     @Override
-    public ComidaEspecial comidaVetariana() {
-        ComidaEspecial comidaVegetaria = new ComidaEspecial();
+    public Comida comidaVetariana() {
+        Comida comidaVegetaria = new ComidaEspecial();
         comidaVegetaria.setDescripcion("COMIDA VEGETARIANA");
         return comidaVegetaria;
     }
 
     @Override
-    public ComidaEspecial comidaMar() {
-        ComidaEspecial comidaMar = new ComidaEspecial();
+    public Comida comidaMar() {
+        Comida comidaMar = new ComidaEspecial();
         comidaMar.setDescripcion("COMIDA DE MAR");
         return comidaMar;
 
     }
 
     @Override
-    public ComidaEspecial comidaDiabeticos() {
-        ComidaEspecial comidaDiabeticos = new ComidaEspecial();
+    public Comida comidaDiabeticos() {
+        Comida comidaDiabeticos = new ComidaEspecial();
         comidaDiabeticos.setDescripcion("COMIDA PARA DIABETICOS");
         return comidaDiabeticos;
 
     }
 
     @Override
-    public ComidaEspecial comidaBajaEnGrasa() {
-        ComidaEspecial comidaBajaEnGrasa = new ComidaEspecial();
+    public Comida comidaBajaEnGrasa() {
+        Comida comidaBajaEnGrasa = new ComidaEspecial();
         comidaBajaEnGrasa.setDescripcion("COMIDA BAJA EN GRASA");
         return comidaBajaEnGrasa;
 
     }
 
     @Override
-    public ComidaEspecial comidaBajaColesterol() {
-        ComidaEspecial comidaBajaColesterol = new ComidaEspecial();
+    public Comida comidaBajaColesterol() {
+        Comida comidaBajaColesterol = new ComidaEspecial();
         comidaBajaColesterol.setDescripcion("COMIDA BAJA EN COLESTEROL");
         return comidaBajaColesterol;
     }
 
     @Override
-    public ComidaEspecial comidaBajaProteinas() {
-        ComidaEspecial comidaBajaProteinas = new ComidaEspecial();
+    public Comida comidaBajaProteinas() {
+        Comida comidaBajaProteinas = new ComidaEspecial();
         comidaBajaProteinas.setDescripcion("COMIDA BAJA EN PROTEINAS");
         return comidaBajaProteinas;
 
     }
 
     @Override
-    public ComidaEspecial comidaBajaCalorias() {
-        ComidaEspecial comidaBajaCalorias = new ComidaEspecial();
+    public Comida comidaBajaCalorias() {
+        Comida comidaBajaCalorias = new ComidaEspecial();
         comidaBajaCalorias.setDescripcion("COMIDA BAJA EN CALORIAS");
         return comidaBajaCalorias;
     }
 
     @Override
-    public ComidaEspecial comidaLibreLactosa() {
-        ComidaEspecial comidaLibreLactosa = new ComidaEspecial();
+    public Comida comidaLibreLactosa() {
+        Comida comidaLibreLactosa = new ComidaEspecial();
         comidaLibreLactosa.setDescripcion("COMIDA LIBRE DE LACTOSA");
         return comidaLibreLactosa;
     }
 
     @Override
-    public ComidaEspecial comidaParaNinos() {
-        ComidaEspecial comidaParaNinos = new ComidaEspecial();
+    public Comida comidaParaNinos() {
+        Comida comidaParaNinos = new ComidaEspecial();
         comidaParaNinos.setDescripcion("COMIDA PARA NIÑOS");
         return comidaParaNinos;
     }
 
     @Override
-    public ComidaEspecial crearComidaPorDescripcion(String descripcion) {
-        ComidaEspecial comidaEspecial = null;
+    public Comida crearComidaPorDescripcion(String descripcion) {
+        Comida comidaEspecial = null;
         if (descripcion.equalsIgnoreCase("COMIDA VEGETARIANA")) {
             comidaEspecial = comidaVetariana();
         } else if (descripcion.equalsIgnoreCase("COMIDA DE MAR")) {
