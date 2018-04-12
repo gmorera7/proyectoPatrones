@@ -1,7 +1,7 @@
 package javeriana.edu.co.control;
 
-import javeriana.edu.co.modelo.aerolinea.AccionReserva;
 import javeriana.edu.co.modelo.aerolinea.Aerolinea;
+import javeriana.edu.co.modelo.aerolinea.IAccionReserva;
 
 /**
  *
@@ -10,7 +10,7 @@ import javeriana.edu.co.modelo.aerolinea.Aerolinea;
 public class ControlDatosBasicos implements IControlDatosBasicos {
 
     private static ControlDatosBasicos instance = null;
-    private AccionReserva aerolinea = Aerolinea.getInstance();
+    private IAccionReserva aerolinea = Aerolinea.getInstance();
 
     protected ControlDatosBasicos() {
 

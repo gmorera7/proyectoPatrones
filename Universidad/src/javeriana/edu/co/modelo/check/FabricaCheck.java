@@ -6,7 +6,7 @@ import java.util.Date;
  *
  * @author javeriana.edu.co
  */
-public class FabricaCheck extends FabricaCheckAbstracta {
+public class FabricaCheck implements IFabricaCheckAbstracta{
 
     private static FabricaCheck instance = null;
 
@@ -21,8 +21,8 @@ public class FabricaCheck extends FabricaCheckAbstracta {
     }
 
     @Override
-    public CheckIn crearCheckIn(Integer id , boolean confirmacion) {
-        CheckIn checkIn = new CheckIn();
+    public Check crearCheckIn(Integer id , boolean confirmacion) {
+        Check checkIn = new CheckIn();
         checkIn.setConfirmacion(confirmacion);
         checkIn.setId(id);
         checkIn.setFecha(new Date());
@@ -31,8 +31,8 @@ public class FabricaCheck extends FabricaCheckAbstracta {
     }
 
     @Override
-    public CheckOut crearCheckOut(Integer id,boolean confirmacion) {
-        CheckOut checkOut = new CheckOut();
+    public Check crearCheckOut(Integer id,boolean confirmacion) {
+        Check checkOut = new CheckOut();
         checkOut.setConfirmacion(confirmacion);
         checkOut.setId(id);
         checkOut.setFecha(new Date());
@@ -41,8 +41,8 @@ public class FabricaCheck extends FabricaCheckAbstracta {
     }
 
     @Override
-    public CheckFood crearCheckFood(Integer id,boolean confirmacion) {
-        CheckFood checkFood = new CheckFood();
+    public Check crearCheckFood(Integer id,boolean confirmacion) {
+        Check checkFood = new CheckFood();
         checkFood.setConfirmacion(confirmacion);
         checkFood.setId(id);
         checkFood.setFecha(new Date());

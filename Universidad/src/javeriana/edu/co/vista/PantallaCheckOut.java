@@ -15,7 +15,7 @@ import javeriana.edu.co.modelo.reserva.Reserva;
  *
  * @author javeriana.edu.co
  */
-public class PantallaCheckOut extends javax.swing.JFrame implements Observer, AccionesPantalla {
+public class PantallaCheckOut extends javax.swing.JFrame implements Observer, IAccionesPantalla {
 
     private DefaultTableModel modelo;
     private ArrayList<Reserva> reservasRespuesta;

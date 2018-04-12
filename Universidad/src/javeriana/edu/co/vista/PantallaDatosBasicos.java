@@ -7,20 +7,21 @@ import javeriana.edu.co.control.ControlDatosBasicos;
 import javeriana.edu.co.modelo.aerolinea.Aerolinea;
 import javeriana.edu.co.modelo.mensaje.Mensaje;
 import javeriana.edu.co.modelo.usuario.FabricaPersona;
+import javeriana.edu.co.modelo.usuario.IFabricaPersonaAbstracta;
 import javeriana.edu.co.modelo.usuario.Pasajero;
+import javeriana.edu.co.modelo.usuario.Persona;
 
 /**
  *
  * @author javeriana.edu.co
  */
-public class PantallaDatosBasicos extends javax.swing.JFrame implements AccionesPantalla, Observer {
+public class PantallaDatosBasicos extends javax.swing.JFrame implements IAccionesPantalla, Observer {
 
     private static PantallaDatosBasicos instance = null;
-
     private Integer idRuta;
-
+    private IFabricaPersonaAbstracta fabrica = FabricaPersona.getInstance();
     private static Aerolinea aerolinea = Aerolinea.getInstance();
-
+    
     protected PantallaDatosBasicos() {
     }
 
@@ -231,14 +232,15 @@ public class PantallaDatosBasicos extends javax.swing.JFrame implements Acciones
                 && txtPrimerNombre.getText() != null && txtSegundoNombre.getText() != null
                 && txtPrimerApellido.getText() != null && txtSegundoApellido.getText() != null
                 && txtDireccion.getText() != null && txtCorreo.getText() != null && txtTelefono.getText() != null) {
+
+            Persona pasajero = fabrica.crearPasajero(txtTipoDocumento.getSelectedItem().toString(), txtNumeroDocumento.getText(), txtPrimerNombre.getText(), txtSegundoNombre.getText(), txtPrimerApellido.getText(), txtSegundoApellido.getText(), txtDireccion.getText(), txtCorreo.getText(), txtTelefono.getText());
             
-            Pasajero pasajero = FabricaPersona.getInstance().crearPasajero(txtTipoDocumento.getSelectedItem().toString(), txtNumeroDocumento.getText(), txtPrimerNombre.getText(), txtSegundoNombre.getText(), txtPrimerApellido.getText(), txtSegundoApellido.getText(), txtDireccion.getText(), txtCorreo.getText(), txtTelefono.getText());
             PantallaDatosBasicos.getInstance().limpiarCampos();
             PantallaDatosBasicos.getInstance().setVisible(false);
             PantallaServiciosEspeciales.getInstance().setPasajero(pasajero);
             PantallaServiciosEspeciales.getInstance().setIdRuta(idRuta);
             PantallaServiciosEspeciales.getInstance().setVisible(true);
-            
+
         } else {
             JOptionPane.showMessageDialog(null, "Por favor ingrese todos los valores del formulario");
         }

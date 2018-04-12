@@ -1,9 +1,9 @@
 package javeriana.edu.co.control;
 
-import javeriana.edu.co.modelo.aerolinea.AccionReserva;
-import javeriana.edu.co.modelo.aerolinea.AccionRutas;
 import javeriana.edu.co.modelo.aerolinea.Aerolinea;
 import javeriana.edu.co.modelo.reserva.Reserva;
+import javeriana.edu.co.modelo.aerolinea.IAccionReserva;
+import javeriana.edu.co.modelo.aerolinea.IAccionRutas;
 
 /**
  *
@@ -12,8 +12,8 @@ import javeriana.edu.co.modelo.reserva.Reserva;
 public class ControlServiciosEspeciales implements IServiciosEspeciales {
 
     private static ControlServiciosEspeciales instance = null;
-    private AccionReserva reservar = Aerolinea.getInstance();
-    private AccionRutas rutas = Aerolinea.getInstance();
+    private IAccionReserva reservar = Aerolinea.getInstance();
+    private IAccionRutas rutas = Aerolinea.getInstance();
 
     protected ControlServiciosEspeciales() {
     }

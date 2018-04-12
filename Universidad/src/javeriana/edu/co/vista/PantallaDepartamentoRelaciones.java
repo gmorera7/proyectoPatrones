@@ -16,7 +16,7 @@ import javeriana.edu.co.reportes.ReporteComida;
  *
  * @author javeriana.edu.co
  */
-public class PantallaDepartamentoRelaciones extends javax.swing.JFrame implements Observer, AccionesPantalla {
+public class PantallaDepartamentoRelaciones extends javax.swing.JFrame implements Observer, IAccionesPantalla {
 
     private DefaultTableModel modelo;
     private DefaultTableModel modelo2;

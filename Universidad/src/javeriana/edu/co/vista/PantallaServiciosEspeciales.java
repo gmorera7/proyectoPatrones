@@ -14,26 +14,27 @@ import javeriana.edu.co.modelo.comida.FabricaComidaEspecial;
 import javeriana.edu.co.modelo.comida.FabricaComidaEspecialAbstracta;
 import javeriana.edu.co.modelo.reserva.Reserva;
 import javeriana.edu.co.modelo.reserva.Ruta;
+import javeriana.edu.co.modelo.usuario.Persona;
 
 /**
  *
  * @author javeriana.edu.co
  */
-public class PantallaServiciosEspeciales extends javax.swing.JFrame implements AccionesPantalla, Observer {
-    
+public class PantallaServiciosEspeciales extends javax.swing.JFrame implements IAccionesPantalla, Observer {
+
     private IServiciosEspeciales controlServiciosEspeciales = ControlServiciosEspeciales.getInstance();
     private static FabricaComidaEspecialAbstracta fabricaComidaEspecial = FabricaComidaEspecial.getInstance();
     private static Aerolinea aerolinea = Aerolinea.getInstance();
     private Integer idRuta;
     private Ruta ruta;
     private Reserva reserva;
-    private Pasajero pasajero;
-    
+    private Persona pasajero;
+
     private static PantallaServiciosEspeciales instance = null;
-    
+
     protected PantallaServiciosEspeciales() {
     }
-    
+
     public static PantallaServiciosEspeciales getInstance() {
         if (instance == null) {
             instance = new PantallaServiciosEspeciales();
@@ -42,13 +43,13 @@ public class PantallaServiciosEspeciales extends javax.swing.JFrame implements A
         }
         return instance;
     }
-    
+
     @Override
     public void limpiarCampos() {
         txtComidaEspecial.setVisible(false);
         jLabel4.setVisible(false);
     }
-    
+
     @Override
     public void iniciarComponentes() {
         aerolinea.addObserver(PantallaServiciosEspeciales.getInstance());
@@ -58,7 +59,7 @@ public class PantallaServiciosEspeciales extends javax.swing.JFrame implements A
         txtComidaEspecial.setVisible(false);
         jLabel4.setVisible(false);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -160,7 +161,7 @@ public class PantallaServiciosEspeciales extends javax.swing.JFrame implements A
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
-        
+
         controlServiciosEspeciales.consultarRutaPorId(idRuta);
         String comidaSeleccionada = txtTipoComida.getSelectedItem().toString();
         Comida comida = (comidaSeleccionada.equalsIgnoreCase("REGULAR")) ? new ComidaRegular() : fabricaComidaEspecial.crearComidaPorDescripcion(txtComidaEspecial.getSelectedItem().toString());
@@ -173,13 +174,13 @@ public class PantallaServiciosEspeciales extends javax.swing.JFrame implements A
         reserva.setNumeroSilla(txtNumeroSillas.getSelectedItem().toString());
         reserva.setPersona(pasajero);
         reserva.setRuta(ruta);
-        
+
         controlServiciosEspeciales.crearReserva(reserva);
         PantallaServiciosEspeciales.getInstance().limpiarCampos();
         PantallaServiciosEspeciales.getInstance().setVisible(false);
         PantallaConfirmacionReserva.getInstance().setReserva(reserva);
         PantallaConfirmacionReserva.getInstance().setVisible(true);
-        
+
         limpiarCampos();
     }//GEN-LAST:event_btnContinuarActionPerformed
 
@@ -213,14 +214,14 @@ public class PantallaServiciosEspeciales extends javax.swing.JFrame implements A
     /**
      * @return the pasajero
      */
-    public Pasajero getPasajero() {
+    public Persona getPasajero() {
         return pasajero;
     }
 
     /**
      * @param pasajero the pasajero to set
      */
-    public void setPasajero(Pasajero pasajero) {
+    public void setPasajero(Persona pasajero) {
         this.pasajero = pasajero;
     }
 
@@ -237,27 +238,27 @@ public class PantallaServiciosEspeciales extends javax.swing.JFrame implements A
     public void setIdRuta(Integer idRuta) {
         this.idRuta = idRuta;
     }
-    
+
     @Override
     public void update(Observable o, Object arg) {
         Mensaje mensaje = (Mensaje) arg;
-        
+
         if (mensaje.getAccion().equalsIgnoreCase("busquedaRutaPorId")) {
             ruta = (Ruta) mensaje.getObjeto();
         }
-        
+
         if (mensaje.getAccion().equalsIgnoreCase("hacerReserva")) {
             reserva = (Reserva) mensaje.getObjeto();
         }
-        
+
         if (mensaje.getAccion().equalsIgnoreCase("cargarMenuNumeroSillas")) {
             txtNumeroSillas.setModel(new javax.swing.DefaultComboBoxModel((String[]) mensaje.getObjeto()));
         }
-        
+
         if (mensaje.getAccion().equalsIgnoreCase("cargarMenuTipoComida")) {
             txtTipoComida.setModel(new javax.swing.DefaultComboBoxModel((String[]) mensaje.getObjeto()));
         }
-        
+
         if (mensaje.getAccion().equalsIgnoreCase("cargarMenuComidaEspecial")) {
             txtComidaEspecial.setModel(new javax.swing.DefaultComboBoxModel((String[]) mensaje.getObjeto()));
         }

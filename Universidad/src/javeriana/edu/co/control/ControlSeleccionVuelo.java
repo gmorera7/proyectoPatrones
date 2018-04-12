@@ -1,8 +1,8 @@
 package javeriana.edu.co.control;
 
-import javeriana.edu.co.modelo.aerolinea.AccionRutas;
 import javeriana.edu.co.modelo.aerolinea.Aerolinea;
 import javeriana.edu.co.modelo.busqueda.Busqueda;
+import javeriana.edu.co.modelo.aerolinea.IAccionRutas;
 
 /**
  *
@@ -12,7 +12,7 @@ public class ControlSeleccionVuelo implements IControlSeleccionVuelo {
 
     private static ControlSeleccionVuelo instance = null;
 
-    private AccionRutas aerolinea = Aerolinea.getInstance();
+    private IAccionRutas aerolinea = Aerolinea.getInstance();
 
     protected ControlSeleccionVuelo() {
 

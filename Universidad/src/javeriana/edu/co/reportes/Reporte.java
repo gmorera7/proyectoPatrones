@@ -5,27 +5,28 @@ import java.util.Date;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
-import javeriana.edu.co.modelo.aerolinea.AccionReserva;
 import javeriana.edu.co.modelo.aerolinea.Aerolinea;
 import javeriana.edu.co.modelo.check.Check;
 import javeriana.edu.co.modelo.check.CheckFood;
 import javeriana.edu.co.modelo.check.CheckOut;
-import javeriana.edu.co.modelo.check.HacerCheck;
 import javeriana.edu.co.modelo.comida.ComidaEspecial;
 import javeriana.edu.co.modelo.encuesta.Encuesta;
 import javeriana.edu.co.modelo.mensaje.Mensaje;
 import javeriana.edu.co.modelo.reserva.Reserva;
 import javeriana.edu.co.modelo.usuario.Persona;
+import javeriana.edu.co.modelo.aerolinea.IAccionReserva;
+import javeriana.edu.co.modelo.check.IHacerCheck;
+import javeriana.edu.co.modelo.usuario.Pasajero;
 
 /**
  *
  * @author javeriana.edu.co
  */
-public class Reporte extends Observable implements HacerCheck, Observer, HacerReporte {
+public class Reporte extends Observable implements IHacerCheck, Observer, HacerReporte {
 
     private Reserva reserva;
-    public static HacerCheck aerolinea = Aerolinea.getInstance();
-    public static AccionReserva reservar = Aerolinea.getInstance();
+    public static IHacerCheck aerolinea = Aerolinea.getInstance();
+    public static IAccionReserva reservar = Aerolinea.getInstance();
 
     private ArrayList revervasCheckInt = new ArrayList();
     private ArrayList revervasCheckOut = new ArrayList();
@@ -199,7 +200,8 @@ public class Reporte extends Observable implements HacerCheck, Observer, HacerRe
 
                     reporte = new ReporteComida();
                     reporte.setDescripcion(reservaLocal.getComida().getDescripcion());
-                    reporte.setDireccion(reservaLocal.getPersona().getDireccion());
+                    Pasajero pasa = (Pasajero) reservaLocal.getPersona();
+                    reporte.setDireccion(pasa.getDireccion());
                     reporte.setFecha(reservaLocal.getFecha());
                     reporte.setNombre(reservaLocal.getPersona().getNombreCompleto());
                     reportes.add(reporte);
@@ -225,7 +227,8 @@ public class Reporte extends Observable implements HacerCheck, Observer, HacerRe
 
                         reporte = new ReporteComida();
                         reporte.setDescripcion(reservaLocal.getComida().getDescripcion());
-                        reporte.setDireccion(reservaLocal.getPersona().getDireccion());
+                        Pasajero pasa = (Pasajero) reservaLocal.getPersona();
+                        reporte.setDireccion(pasa.getDireccion());
                         reporte.setFecha(encuesta.getFecha());
                         reporte.setNombre(reservaLocal.getPersona().getNombreCompleto());
                         reportes.add(reporte);

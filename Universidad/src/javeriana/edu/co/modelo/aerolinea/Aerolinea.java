@@ -1,38 +1,38 @@
 package javeriana.edu.co.modelo.aerolinea;
 
-import javeriana.edu.co.modelo.mensaje.HacerNotificacion;
 import javeriana.edu.co.modelo.mensaje.Mensaje;
 import javeriana.edu.co.modelo.busqueda.Busqueda;
 import javeriana.edu.co.modelo.check.CheckFood;
 import javeriana.edu.co.modelo.check.CheckOut;
 import java.util.Observable;
 import javeriana.edu.co.modelo.check.FabricaCheck;
-import javeriana.edu.co.modelo.check.HacerCheck;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import javeriana.edu.co.modelo.check.FabricaCheckAbstracta;
+import javeriana.edu.co.modelo.check.Check;
+import javeriana.edu.co.modelo.check.IFabricaCheckAbstracta;
 import javeriana.edu.co.modelo.comida.ComidaEspecial;
 import javeriana.edu.co.modelo.encuesta.Encuesta;
 import javeriana.edu.co.modelo.reserva.Reserva;
 import javeriana.edu.co.modelo.reserva.Ruta;
 import javeriana.edu.co.modelo.usuario.Persona;
 import javeriana.edu.co.utilidades.Utilities;
+import javeriana.edu.co.modelo.check.IHacerCheck;
+import javeriana.edu.co.modelo.mensaje.IHacerNotificacion;
 
 /**
  *
  * @author javeriana.edu.co
  */
-public class Aerolinea extends Observable implements AccionReserva, AccionRutas, HacerCheck, HacerNotificacion {
+public class Aerolinea extends Observable implements IAccionReserva, IAccionRutas, IHacerCheck, IHacerNotificacion {
 
     private ArrayList reservas = new ArrayList<>();
     private ArrayList rutas = new ArrayList<>();
     private List<Persona> pasajeros = new ArrayList<>();
-    private static FabricaCheckAbstracta fabricaCheck = FabricaCheck.getInstance();
+    private static IFabricaCheckAbstracta fabricaCheck = FabricaCheck.getInstance();
     private static Aerolinea instance = null;
 
-    
     protected Aerolinea() {
     }
 
@@ -51,8 +51,8 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
         reserva.setCheck(new ArrayList<>());
         reserva.setId(getReservas().size() + 1);
         getReservas().add(getReservas().size(), reserva);
-
         crearActualizarPasajeros(reserva);
+
         enviarNotificacion("hacerReserva", reserva);
     }
 
@@ -172,7 +172,8 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
         for (int contador = 0; contador < reservas.size(); contador++) {
             Reserva reserva = (Reserva) reservas.get(contador);
             if (reserva.getId().intValue() == idReserva) {
-                reserva.getCheck().add(fabricaCheck.crearCheckIn(reserva.getCheck().size()+1, confirmacion));
+                Check nuevo = fabricaCheck.crearCheckIn(reserva.getCheck().size() + 1, confirmacion);
+                reserva.getCheck().add(nuevo);
                 reservas.set(contador, reserva);
                 break;
             }
@@ -184,8 +185,8 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
         for (int contador = 0; contador < getReservas().size(); contador++) {
             Reserva reserva = (Reserva) getReservas().get(contador);
             if (reserva.getId().intValue() == idReserva) {
-
-                reserva.getCheck().add(fabricaCheck.crearCheckOut(reserva.getCheck().size()+1, confirmacion));
+                Check nuevo = fabricaCheck.crearCheckOut(reserva.getCheck().size() + 1, confirmacion);
+                reserva.getCheck().add(nuevo);
                 getReservas().set(contador, reserva);
                 break;
             }
@@ -197,7 +198,8 @@ public class Aerolinea extends Observable implements AccionReserva, AccionRutas,
         for (int contador = 0; contador < getReservas().size(); contador++) {
             Reserva reserva = (Reserva) getReservas().get(contador);
             if (reserva.getId().intValue() == idReserva) {
-                reserva.getCheck().add(fabricaCheck.crearCheckFood(reserva.getCheck().size()+1, confirmacion));
+                Check nuevo = fabricaCheck.crearCheckFood(reserva.getCheck().size() + 1, confirmacion);
+                reserva.getCheck().add(nuevo);
                 getReservas().set(contador, reserva);
                 break;
             }

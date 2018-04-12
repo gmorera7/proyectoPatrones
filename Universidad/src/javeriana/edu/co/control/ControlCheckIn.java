@@ -1,9 +1,9 @@
 package javeriana.edu.co.control;
 
-import javeriana.edu.co.modelo.aerolinea.AccionReserva;
 import javeriana.edu.co.reportes.Reporte;
 import javeriana.edu.co.modelo.aerolinea.Aerolinea;
-import javeriana.edu.co.modelo.check.HacerCheck;
+import javeriana.edu.co.modelo.aerolinea.IAccionReserva;
+import javeriana.edu.co.modelo.check.IHacerCheck;
 
 /**
  *
@@ -12,8 +12,8 @@ import javeriana.edu.co.modelo.check.HacerCheck;
 public class ControlCheckIn implements IControlCheckIn {
 
     private static ControlCheckIn instance = null;
-    private static HacerCheck reporteCheckin = Reporte.getInstance();
-    private static AccionReserva aerolinea = Aerolinea.getInstance();
+    private static IHacerCheck reporteCheckin = Reporte.getInstance();
+    private static IAccionReserva aerolinea = Aerolinea.getInstance();
 
     protected ControlCheckIn() {
     }

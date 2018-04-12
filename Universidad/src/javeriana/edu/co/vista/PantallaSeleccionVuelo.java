@@ -17,7 +17,7 @@ import javeriana.edu.co.modelo.reserva.Ruta;
  *
  * @author javeriana.edu.co
  */
-public class PantallaSeleccionVuelo extends javax.swing.JFrame implements Observer, AccionesPantalla {
+public class PantallaSeleccionVuelo extends javax.swing.JFrame implements Observer, IAccionesPantalla {
 
     private static PantallaSeleccionVuelo instance = null;
     private static Aerolinea aerolinea = Aerolinea.getInstance();

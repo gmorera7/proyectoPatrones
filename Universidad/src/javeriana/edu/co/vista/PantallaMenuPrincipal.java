@@ -12,7 +12,7 @@ import javeriana.edu.co.modelo.aerolinea.Aerolinea;
  *
  * @author javeriana.edu.co
  */
-public class PantallaMenuPrincipal extends javax.swing.JFrame implements Observer, AccionesPantalla {
+public class PantallaMenuPrincipal extends javax.swing.JFrame implements Observer, IAccionesPantalla {
 
     private static PantallaMenuPrincipal instance = null;
     private Aerolinea aerolinea = Aerolinea.getInstance();
@@ -215,7 +215,7 @@ public class PantallaMenuPrincipal extends javax.swing.JFrame implements Observe
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnEncuestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEncuestaActionPerformed
-        Encuesta.getInstance().setVisible(true);
+        PantallaEncuesta.getInstance().setVisible(true);
         PantallaMenuPrincipal.getInstance().setVisible(false);
     }//GEN-LAST:event_btnEncuestaActionPerformed
 

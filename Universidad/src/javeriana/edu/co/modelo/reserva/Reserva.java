@@ -1,11 +1,11 @@
 package javeriana.edu.co.modelo.reserva;
 
-import javeriana.edu.co.modelo.usuario.Pasajero;
 import javeriana.edu.co.modelo.check.Check;
 import javeriana.edu.co.modelo.comida.Comida;
 import javeriana.edu.co.modelo.encuesta.Encuesta;
 import java.util.ArrayList;
 import java.util.Date;
+import javeriana.edu.co.modelo.usuario.Persona;
 
 /**
  *
@@ -21,7 +21,7 @@ public class Reserva {
     private Comida comida;
     private Ruta ruta;
     private ArrayList<Check> check;
-    private Pasajero persona;
+    private Persona persona;
 
     public Reserva() {
         check = new ArrayList<>();
@@ -128,14 +128,14 @@ public class Reserva {
     /**
      * @return the persona
      */
-    public Pasajero getPersona() {
+    public Persona getPersona() {
         return persona;
     }
 
     /**
      * @param persona the persona to set
      */
-    public void setPersona(Pasajero persona) {
+    public void setPersona(Persona persona) {
         this.persona = persona;
     }
 

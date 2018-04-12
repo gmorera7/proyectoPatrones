@@ -6,7 +6,7 @@ import javeriana.edu.co.modelo.reserva.Reserva;
  *
  * @author javeriana.edu.co
  */
-public class PantallaConfirmacionReserva extends javax.swing.JFrame implements AccionesPantalla {
+public class PantallaConfirmacionReserva extends javax.swing.JFrame implements IAccionesPantalla {
 
     private Reserva reserva;
 

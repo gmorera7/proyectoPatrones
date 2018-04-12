@@ -10,7 +10,7 @@ import javeriana.edu.co.reportes.Reporte;
  *
  * @author javariana.edu.co
  */
-public class PantallaReportePorcentaje extends javax.swing.JFrame implements Observer, AccionesPantalla {
+public class PantallaReportePorcentaje extends javax.swing.JFrame implements Observer, IAccionesPantalla {
 
     private static PantallaReportePorcentaje instance = null;
 

@@ -1,11 +1,11 @@
 package javeriana.edu.co.control;
 
-import javeriana.edu.co.modelo.aerolinea.AccionReserva;
 import javeriana.edu.co.reportes.Reporte;
 import javeriana.edu.co.modelo.aerolinea.Aerolinea;
-import javeriana.edu.co.modelo.check.HacerCheck;
 import javeriana.edu.co.notificacion.INotificacion;
 import javeriana.edu.co.notificacion.Notificacion;
+import javeriana.edu.co.modelo.aerolinea.IAccionReserva;
+import javeriana.edu.co.modelo.check.IHacerCheck;
 
 /**
  *
@@ -14,9 +14,9 @@ import javeriana.edu.co.notificacion.Notificacion;
 public class ControlPantallaAvion implements IControlPantallaAvion {
 
     private static ControlPantallaAvion instance = null;
-    private static AccionReserva aerolinea = Aerolinea.getInstance();
+    private static IAccionReserva aerolinea = Aerolinea.getInstance();
     private INotificacion notificacion = Notificacion.getInstance();
-    private HacerCheck reporte = Reporte.getInstance();
+    private IHacerCheck reporte = Reporte.getInstance();
 
     protected ControlPantallaAvion() {
     }

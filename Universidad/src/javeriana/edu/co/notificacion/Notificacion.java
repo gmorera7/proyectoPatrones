@@ -15,6 +15,7 @@ import javax.mail.internet.MimeMessage;
 import javeriana.edu.co.modelo.aerolinea.Aerolinea;
 import javeriana.edu.co.modelo.mensaje.Mensaje;
 import javeriana.edu.co.modelo.reserva.Reserva;
+import javeriana.edu.co.modelo.usuario.Pasajero;
 
 /**
  *
@@ -24,6 +25,7 @@ public class Notificacion implements INotificacion, Observer {
 
     private static Notificacion instance = null;
     private Reserva reserva;
+    private static String correo;
 
     protected Notificacion() {
     }
@@ -51,7 +53,8 @@ public class Notificacion implements INotificacion, Observer {
 
         if (mensaje.getAccion().equalsIgnoreCase("buscarReserva")) {
             reserva = (Reserva) mensaje.getObjeto();
-            String email = reserva.getPersona().getCorreoElectronico();
+            Pasajero pasajero = (Pasajero) reserva.getPersona();
+            correo = pasajero.getCorreoElectronico();
         }
     }
 
@@ -69,10 +72,10 @@ public class Notificacion implements INotificacion, Observer {
 
         // Construimos el mensaje
         MimeMessage message = new MimeMessage(session);
-        message.setFrom(new InternetAddress("gastronomicaircolombia@gmail.com"));
+        message.setFrom(new InternetAddress(correo));
         message.addRecipient(
                 Message.RecipientType.TO,
-                new InternetAddress("gastronomicaircolombia@gmail.com"));
+                new InternetAddress(correo));
         message.setSubject("Reserva CheckFood Gastronomic AIR");
         message.setText(
                 "Se realizo exitosamente el checkFood para la reserva: " + idReserva + " por favor tu calificacion la puedes realizar en nuestra aplicacion.");

@@ -1,7 +1,7 @@
 package javeriana.edu.co.control;
 
-import javeriana.edu.co.modelo.aerolinea.AccionRutas;
 import javeriana.edu.co.modelo.aerolinea.Aerolinea;
+import javeriana.edu.co.modelo.aerolinea.IAccionRutas;
 
 /**
  *
@@ -9,7 +9,7 @@ import javeriana.edu.co.modelo.aerolinea.Aerolinea;
  */
 public class ControlMenuPrinicipal implements IControlMenuPrincipal {
 
-    private static AccionRutas aerolinea;
+    private static IAccionRutas aerolinea;
 
     private static ControlMenuPrinicipal instance = null;
 

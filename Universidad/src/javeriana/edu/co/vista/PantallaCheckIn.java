@@ -15,7 +15,7 @@ import javeriana.edu.co.reportes.Reporte;
  *
  * @author javeriana.edu.co
  */
-public class PantallaCheckIn extends javax.swing.JFrame implements AccionesPantalla, Observer {
+public class PantallaCheckIn extends javax.swing.JFrame implements IAccionesPantalla, Observer {
 
     private IControlCheckIn controlCheckIn = ControlCheckIn.getInstance();
     private static PantallaCheckIn instance = null;

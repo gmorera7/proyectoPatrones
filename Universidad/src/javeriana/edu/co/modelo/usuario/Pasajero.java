@@ -4,7 +4,7 @@ package javeriana.edu.co.modelo.usuario;
  *
  * @author javeriana.edu.co
  */
-public class Pasajero extends Persona {
+public class Pasajero extends Persona{
 
     private String telefono;
     private String direccion;
@@ -51,5 +51,7 @@ public class Pasajero extends Persona {
     public void setCorreoElectronico(String correoElectronico) {
         this.correoElectronico = correoElectronico;
     }
+
+   
 
 }

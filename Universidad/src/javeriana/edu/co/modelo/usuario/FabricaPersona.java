@@ -4,7 +4,7 @@ package javeriana.edu.co.modelo.usuario;
  *
  * @author javeriana.edu.co
  */
-public class FabricaPersona extends FabricaPersonaAbstracta {
+public class FabricaPersona implements IFabricaPersonaAbstracta {
 
     private static FabricaPersona instance = null;
 

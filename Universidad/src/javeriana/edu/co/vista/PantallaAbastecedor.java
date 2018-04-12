@@ -16,7 +16,7 @@ import javeriana.edu.co.reportes.ReporteComidaProteina;
  *
  * @author javeriana.edu.co
  */
-public class PantallaAbastecedor extends javax.swing.JFrame implements Observer, AccionesPantalla {
+public class PantallaAbastecedor extends javax.swing.JFrame implements Observer, IAccionesPantalla {
 
     private IControlPantallaAbastecedor controlPantallaAbastecedor = ControlPantallaAbastecedor.getInstance();
     private DefaultTableModel modelo;
