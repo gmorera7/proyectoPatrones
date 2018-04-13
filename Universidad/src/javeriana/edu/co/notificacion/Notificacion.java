@@ -16,6 +16,7 @@ import javeriana.edu.co.modelo.aerolinea.Aerolinea;
 import javeriana.edu.co.modelo.mensaje.Mensaje;
 import javeriana.edu.co.modelo.reserva.Reserva;
 import javeriana.edu.co.modelo.usuario.Pasajero;
+import javeriana.edu.co.utilidades.IParametrosCorreo;
 
 /**
  *
@@ -61,10 +62,10 @@ public class Notificacion implements INotificacion, Observer {
     public static void enviarCorreo(Integer idReserva) throws NoSuchProviderException, MessagingException {
         // Propiedades de la conexión
         Properties props = new Properties();
-        props.setProperty("mail.smtp.host", "smtp.gmail.com");
+        props.setProperty("mail.smtp.host", IParametrosCorreo.HOST);
         props.setProperty("mail.smtp.starttls.enable", "true");
-        props.setProperty("mail.smtp.port", "587");
-        props.setProperty("mail.smtp.user", "gastronomicaircolombia@gmail.com");
+        props.setProperty("mail.smtp.port", IParametrosCorreo.PORT);
+        props.setProperty("mail.smtp.user", IParametrosCorreo.CORREO);
         props.setProperty("mail.smtp.auth", "true");
 
         // Preparamos la sesion
@@ -78,11 +79,12 @@ public class Notificacion implements INotificacion, Observer {
                 new InternetAddress(correo));
         message.setSubject("Reserva CheckFood Gastronomic AIR");
         message.setText(
-                "Se realizo exitosamente el checkFood para la reserva: " + idReserva + " por favor tu calificacion la puedes realizar en nuestra aplicacion.");
+                "Se realizo exitosamente el checkFood para la reserva: " + idReserva
+                + " por favor tu calificacion la puedes realizar en nuestra aplicacion.");
 
         // Lo enviamos.
         Transport t = session.getTransport("smtp");
-        t.connect("gastronomicaircolombia@gmail.com", "agencia1234");
+        t.connect(IParametrosCorreo.CORREO, IParametrosCorreo.CONTRA);
         t.sendMessage(message, message.getAllRecipients());
 
         // Cierre.
