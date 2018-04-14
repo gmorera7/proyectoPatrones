@@ -11,7 +11,7 @@ package javeriana.edu.co.calculardesviacion.control;
  */
 public interface IControlVista {
     
-    public void adicionarElementoMemoria(int numero);
+    public void adicionarElementoMemoria(Double numero);
     
     public Double calcularMediaAritmetica();
     

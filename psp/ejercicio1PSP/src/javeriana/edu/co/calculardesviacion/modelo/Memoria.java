@@ -8,7 +8,7 @@ import java.util.LinkedList;
  */
 public class Memoria implements DesviacionEstandar {
 
-    private LinkedList<Integer> lista = new LinkedList<Integer>();
+    private LinkedList<Double> lista = new LinkedList<Double>();
 
     private static Memoria instance = null;
 
@@ -23,17 +23,17 @@ public class Memoria implements DesviacionEstandar {
     }
 
     @Override
-    public void adicionarElemento(Integer valor) {
+    public void adicionarElemento(Double valor) {
         lista.add(valor);
     }
 
     @Override
     public Double mediaAritmetica() {
-        Integer suma = 0;
+        Double suma = 0.0;
         for (int contador = 0; contador < lista.size(); contador++) {
             suma += lista.get(contador);
         }
-        return (suma.doubleValue() / lista.size());
+        return (suma / lista.size());
     }
 
     @Override

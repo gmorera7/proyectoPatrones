@@ -15,6 +15,6 @@ public interface DesviacionEstandar {
 
     public Double desviacionEstandar(Double media);
     
-    public void adicionarElemento(Integer valor);
+    public void adicionarElemento(Double valor);
 
 }

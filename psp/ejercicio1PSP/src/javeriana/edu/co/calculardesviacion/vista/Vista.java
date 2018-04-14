@@ -28,12 +28,12 @@ public class Vista {
 
         System.err.println("Por favor la cantidad de numeros : ");
         Scanner entradaEscaner = new Scanner(System.in); //Creación de un objeto Scanner
-        int cantidadNumeros = entradaEscaner.nextInt();
+        double cantidadNumeros = entradaEscaner.nextDouble();
 
         for (int contador = 0; contador < cantidadNumeros; contador++) {
             System.err.println("ingresar el numero " + contador + " :");
             entradaEscaner = new Scanner(System.in); //Creación de un objeto Scanner
-            int numero = entradaEscaner.nextInt();
+            double numero = entradaEscaner.nextDouble();
             controlVista.adicionarElementoMemoria(numero);
         }
         Double media = controlVista.calcularMediaAritmetica();

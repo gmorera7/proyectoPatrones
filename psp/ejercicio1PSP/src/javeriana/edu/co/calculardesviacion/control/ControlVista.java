@@ -29,7 +29,7 @@ public class ControlVista implements IControlVista {
     }
 
     @Override
-    public void adicionarElementoMemoria(int numero) {
+    public void adicionarElementoMemoria(Double numero) {
         memoria.adicionarElemento(numero);
     }
 
